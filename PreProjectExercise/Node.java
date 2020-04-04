@@ -24,4 +24,3 @@ class Node {
 		return data.toString();
 	}
 }
-
