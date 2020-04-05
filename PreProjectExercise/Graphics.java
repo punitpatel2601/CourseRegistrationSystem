@@ -93,12 +93,21 @@ public class Graphics extends JFrame {
         i.add(insertStudent);
         i.add(returntoMain);
         
+<<<<<<< HEAD
 
         insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText()); });
         returntoMain.addActionListener((ActionEvent e) -> {return; });
 
         return i;
 
+=======
+        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText());});
+        returntoMain.addActionListener((ActionEvent e) -> {return;});
+    }
+    
+    private JPanel createTreeGUI() {
+    	
+>>>>>>> afb740c96bc516ab42a4c07fd568db90fed6c329
     }
 
     public static void main(String[] args) {
