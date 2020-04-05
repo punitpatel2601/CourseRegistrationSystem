@@ -98,6 +98,10 @@ public class Graphics extends JFrame {
         returntoMain.addActionListener((ActionEvent e) -> {return;});
 
     }
+    
+    private JPanel createTreeGUI() {
+    	
+    }
 
     public static void main(String[] args) {
         new Graphics(600, 450);
