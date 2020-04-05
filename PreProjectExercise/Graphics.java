@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class Graphics extends JFrame {
     private Actions actions;
@@ -60,10 +61,10 @@ public class Graphics extends JFrame {
         p.add(createTree);
 
         // add actions to these buttons here
-        insert.addActionListener((ActionEvent e) -> {insertGUI()});
-        find.addActionListener((ActionEvent e) -> {findGUI()});
-        browse.addActionListener((ActionEvent e) ->{browseGUI()});
-        createTree.addActionListener((ActionEvent e) -> {createTreeGUI()});
+        insert.addActionListener((ActionEvent e) -> {insertGUI();});
+        find.addActionListener((ActionEvent e) -> {findGUI();});
+        browse.addActionListener((ActionEvent e) ->{browseGUI();});
+        createTree.addActionListener((ActionEvent e) -> {createTreeGUI();});
 
         return p;
     }
@@ -93,8 +94,8 @@ public class Graphics extends JFrame {
         i.add(returntoMain);
         
 
-        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText())});
-        returntoMain.addActionListener((ActionEvent e) -> {return});
+        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText());});
+        returntoMain.addActionListener((ActionEvent e) -> {return;});
 
     }
 
