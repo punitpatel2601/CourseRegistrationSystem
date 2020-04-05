@@ -12,9 +12,9 @@ public class Graphics extends JFrame {
         setTitle("ProjectApplication");
         setSize(width, height);
         setLayout(new BorderLayout());
+
         add("North", createNPanel());
         add("Center", createCPanel());
-
         add("South", createSPanel());
 
         setVisible(true);
