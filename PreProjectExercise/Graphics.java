@@ -1,10 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-<<<<<<< HEAD
-
-=======
->>>>>>> 2ef7d285979487ca70a3a1f39249897d243fd1ee
 
 public class Graphics extends JFrame {
     private Actions actions;
@@ -98,13 +94,10 @@ public class Graphics extends JFrame {
         i.add(returntoMain);
         
 
-<<<<<<< HEAD
         insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText()); });
         returntoMain.addActionListener((ActionEvent e) -> {return; });
-=======
-        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText());});
-        returntoMain.addActionListener((ActionEvent e) -> {return;});
->>>>>>> 2ef7d285979487ca70a3a1f39249897d243fd1ee
+
+        return i;
 
     }
 

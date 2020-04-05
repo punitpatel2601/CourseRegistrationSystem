@@ -8,9 +8,10 @@ public class Actions {
     }
 
     public void insert(String id, String fac, String major, String yr){
-        @Override
-        public void actionPerformed(){
             myTree.insert(id, fac, major, yr);
-        }
+    }
+
+    public void find(Node start, String id){
+        
     }
 }
