@@ -60,11 +60,42 @@ public class Graphics extends JFrame {
         p.add(createTree);
 
         // add actions to these buttons here
-        insert.addActionListener((ActionEvent e) -> {actions.insert()});
-        find.addActionListener((ActionEvent e) -> {actions.find()});
-        browse.addActionListener((ActionEvent e) ->);
+        insert.addActionListener((ActionEvent e) -> {insertGUI()});
+        find.addActionListener((ActionEvent e) -> {findGUI()});
+        browse.addActionListener((ActionEvent e) ->{browseGUI()});
+        createTree.addActionListener((ActionEvent e) -> {createTreeGUI()});
 
         return p;
+    }
+
+    private JPanel findGUI(){
+
+    }
+
+    private JPanel browseGUI(){
+        
+    }
+
+    private JPanel insertGUI(){
+        JPanel i = new JPanel();
+        i.setLayout(new FlowLayout());
+        JTextField id = new JTextField();
+        JTextField faculty = new JTextField();
+        JTextField major = new JTextField();
+        JTextField year = new JTextField();
+        JButton insertStudent = new JButton("Insert");
+        JButton returntoMain = new JButton("Return to Main Window");
+        i.add(id);
+        i.add(faculty);
+        i.add(major);
+        i.add(year);
+        i.add(insertStudent);
+        i.add(returntoMain);
+        
+
+        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText())});
+        returntoMain.addActionListener((ActionEvent e) -> {return});
+
     }
 
     public static void main(String[] args) {
