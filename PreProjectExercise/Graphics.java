@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Graphics extends JFrame {
+    private Actions actions;
 
     public Graphics(int wPixels, int hPixels) {
         prepareGUI(wPixels, hPixels);
@@ -59,6 +60,9 @@ public class Graphics extends JFrame {
         p.add(createTree);
 
         // add actions to these buttons here
+        insert.addActionListener((ActionEvent e) -> {actions.insert()});
+        find.addActionListener((ActionEvent e) -> {actions.find()});
+        browse.addActionListener((ActionEvent e) ->);
 
         return p;
     }
