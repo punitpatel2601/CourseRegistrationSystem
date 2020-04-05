@@ -7,6 +7,6 @@ Course Registration System
 
 # Authors and UCID numbers
 Punit Patel     -   30064251
-Tom Pritchard   -   300#####
+Tom Pritchard   -   30053765
 Armaan Mohar    -   300#####
 *** Enter your complete UCID please ***
