@@ -61,22 +61,39 @@ public class Graphics extends JFrame {
         p.add(createTree);
 
         // add actions to these buttons here
-        insert.addActionListener((ActionEvent e) -> {insertGUI();});
-        find.addActionListener((ActionEvent e) -> {findGUI();});
-        browse.addActionListener((ActionEvent e) ->{browseGUI();});
-        createTree.addActionListener((ActionEvent e) -> {createTreeGUI();});
+        insert.addActionListener((ActionEvent e) -> {
+            insertGUI();
+        });
+        find.addActionListener((ActionEvent e) -> {
+            findGUI();
+        });
+        browse.addActionListener((ActionEvent e) -> {
+            browseGUI();
+        });
+        createTree.addActionListener((ActionEvent e) -> {
+            createTreeGUI();
+        });
 
         return p;
     }
 
-    private JPanel findGUI(){
-
+    private void createTreeGUI() {
     }
 
-    private JPanel browseGUI(){
-        
+    private void findGUI() {
+        int stuID;
+        try {
+            stuID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Student's ID: "));
+            if (stuID < 1) {
+                JOptionPane.showMessageDialog(null, "ID cannot be less than one.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid ID.");
+        }
+        // check for the stuID in tree.
     }
 
+<<<<<<< HEAD
     private JPanel insertGUI(){
         JPanel i = new JPanel();
         i.setLayout(new FlowLayout());
@@ -99,6 +116,37 @@ public class Graphics extends JFrame {
     
     private JPanel createTreeGUI() {
     	
+=======
+    private void browseGUI() {
+    }
+
+    private void insertGUI() {
+        JPanel jp = new JPanel();
+        JTextField stID = new JTextField(8);
+        JTextField faculty = new JTextField(10);
+        JTextField major = new JTextField(10);
+        JTextField year = new JTextField(5);
+
+        jp.setLayout(new FlowLayout());
+
+        jp.add(new JLabel("Enter the student ID: "));
+        jp.add(stID);
+        jp.add(new JLabel("Enter Faculty: "));
+        jp.add(faculty);
+        jp.add(new JLabel("Enter student's major: "));
+        jp.add(major);
+        jp.add(new JLabel("Enter the year: "));
+        jp.add(year);
+
+        int res = JOptionPane.showConfirmDialog(null, jp, "Insert a new node", JOptionPane.OK_CANCEL_OPTION);
+        // checking the values
+        if (res == JOptionPane.OK_OPTION) {
+            System.out.println("id: " + stID.getText());
+            System.out.println("f: " + faculty.getText());
+            System.out.println("mjr: " + major.getText());
+            System.out.println("y: " + year.getText());
+        }
+>>>>>>> ff27286c4d645ebd6638f701ead06a483ac625f0
     }
 
     public static void main(String[] args) {
