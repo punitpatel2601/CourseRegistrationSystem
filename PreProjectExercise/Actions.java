@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Actions {
     private BinSearchTree myTree;
     private Graphics graphics;
@@ -13,5 +16,13 @@ public class Actions {
 
     public void find(Node start, String id){
         
+    }
+    
+    public void browse(PrintWriter printer) {
+    	try {
+    		myTree.print_tree(myTree.root, printer);
+    	} catch (IOException e) {
+    		e.getStackTrace();
+    	}
     }
 }

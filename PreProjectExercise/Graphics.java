@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 
 public class Graphics extends JFrame {
     private Actions actions;
+    private PrintWriter printer;
 
     public Graphics(int wPixels, int hPixels) {
         prepareGUI(wPixels, hPixels);
@@ -62,19 +64,32 @@ public class Graphics extends JFrame {
 
         // add actions to these buttons here
         insert.addActionListener((ActionEvent e) -> {insertGUI();});
-        find.addActionListener((ActionEvent e) -> {findGUI();});
+       // find.addActionListener((ActionEvent e) -> {findGUI();});
         browse.addActionListener((ActionEvent e) ->{browseGUI();});
-        createTree.addActionListener((ActionEvent e) -> {createTreeGUI();});
+       // createTree.addActionListener((ActionEvent e) -> {createTreeGUI();});
 
         return p;
     }
 
-    private JPanel findGUI(){
+    //private JPanel findGUI(){
 
-    }
+    //}
 
     private JPanel browseGUI(){
-        
+    	StringWriter buffer = new StringWriter();
+    	PrintWriter printer = new PrintWriter(buffer);
+    	JPanel i = new JPanel();
+    	i.setLayout(new FlowLayout());
+    	JTextArea textArea = new JTextArea();
+    	JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
+    												   JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    	actions.browse(printer);
+    	String contents = buffer.toString();
+    	textArea.setText(contents);
+
+    	this.add(scroll);
+    	this.setVisible(true);
+    	return i;
     }
 
     private JPanel insertGUI(){
@@ -93,22 +108,14 @@ public class Graphics extends JFrame {
         i.add(insertStudent);
         i.add(returntoMain);
         
-<<<<<<< HEAD
-
-        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText()); });
-        returntoMain.addActionListener((ActionEvent e) -> {return; });
-
-        return i;
-
-=======
         insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText());});
         returntoMain.addActionListener((ActionEvent e) -> {return;});
+        return i;
     }
     
-    private JPanel createTreeGUI() {
+   // private JPanel createTreeGUI() {
     	
->>>>>>> afb740c96bc516ab42a4c07fd568db90fed6c329
-    }
+    //}
 
     public static void main(String[] args) {
         new Graphics(600, 450);
