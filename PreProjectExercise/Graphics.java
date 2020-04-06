@@ -95,6 +95,19 @@ public class Graphics extends JFrame {
         return i;
     }
 
+    private void createTreeGUI() {
+        String filename = "";
+        try {
+            filename = JOptionPane.showInputDialog(null, "Please enter filename: " );
+            if(filename == null){
+                JOptionPane.showInputDialog(null,"File has to be in format: nameofFile.txt");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid filename");
+        }
+        actions.createTree(filename);
+    }
+
     private void findGUI() {
         int stuID = 0;
         try {
