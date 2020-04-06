@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 
 public class Graphics extends JFrame {
     private Actions actions;
+    private PrintWriter printer;
 
     public Graphics(int wPixels, int hPixels) {
         prepareGUI(wPixels, hPixels);
@@ -17,7 +19,7 @@ public class Graphics extends JFrame {
         add("North", createNPanel());
         add("Center", createCPanel());
         add("South", createSPanel());
-        
+
         setVisible(true);
     }
 
@@ -73,15 +75,31 @@ public class Graphics extends JFrame {
         createTree.addActionListener((ActionEvent e) -> {
             createTreeGUI();
         });
-
         return p;
+    }
+
+    private JPanel browseGUI() {
+        StringWriter buffer = new StringWriter();
+        PrintWriter printer = new PrintWriter(buffer);
+        JPanel i = new JPanel();
+        i.setLayout(new FlowLayout());
+        JTextArea textArea = new JTextArea();
+        JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        actions.browse(printer);
+        String contents = buffer.toString();
+        textArea.setText(contents);
+
+        this.add(scroll);
+        this.setVisible(true);
+        return i;
     }
 
     private void createTreeGUI() {
     }
 
     private void findGUI() {
-        int stuID;
+        int stuID = 0;
         try {
             stuID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Student's ID: "));
             if (stuID < 1) {
@@ -94,9 +112,12 @@ public class Graphics extends JFrame {
         actions.find(stuID);
     }
 
+<<<<<<< HEAD
     private void browseGUI() {
     }
 
+=======
+>>>>>>> 202c435b5369520e8ee5e1e5a567aa423e749dc9
     private void insertGUI() {
         JPanel jp = new JPanel();
         JTextField stID = new JTextField(8);

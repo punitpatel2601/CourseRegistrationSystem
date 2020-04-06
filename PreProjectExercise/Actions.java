@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -42,8 +44,12 @@ public class Actions {
         } 
         
     }
-
-    public void browse(){
-        myTree.print_tree(myTree.root, out);
+    
+    public void browse(PrintWriter printer) {
+    	try {
+    		myTree.print_tree(myTree.root, printer);
+    	} catch (IOException e) {
+    		e.getStackTrace();
+    	}
     }
 }
