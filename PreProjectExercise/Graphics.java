@@ -99,9 +99,6 @@ public class Graphics extends JFrame {
     	return i;
 	}
 
-    private void createTreeGUI() {
-    }
-
     private void findGUI() {
         int stuID;
         try {
@@ -115,9 +112,9 @@ public class Graphics extends JFrame {
         // check for the stuID in tree.
     }
     
-   // private JPanel createTreeGUI() {
+    private JPanel createTreeGUI() {
     	
-    //}
+    }
 
     private void insertGUI() {
         JPanel jp = new JPanel();
