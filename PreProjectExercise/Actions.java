@@ -15,7 +15,7 @@ public class Actions {
     public Actions(Graphics g) {
         this.graphics = g;
         this.myTree = new BinSearchTree();
-        //myTree.destroy();
+        // myTree.destroy();
     }
 
     public void insert(String id, String fac, String major, String yr) {
@@ -46,7 +46,6 @@ public class Actions {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void browse(PrintWriter printer) {

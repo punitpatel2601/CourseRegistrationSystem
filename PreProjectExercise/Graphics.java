@@ -6,6 +6,7 @@ import java.io.*;
 public class Graphics extends JFrame {
     private Actions actions;
     private PrintWriter printer;
+    private JTextArea jta;
 
     public Graphics(int wPixels, int hPixels) {
         actions = new Actions(this);
@@ -40,9 +41,9 @@ public class Graphics extends JFrame {
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
 
-        JTextArea ta = new JTextArea();
-        ta.setEnabled(false);
-        JScrollPane sp = new JScrollPane(ta);
+        jta = new JTextArea();
+        jta.setEnabled(true);
+        JScrollPane sp = new JScrollPane(jta);
 
         p.add("Center", sp);
 
@@ -79,23 +80,13 @@ public class Graphics extends JFrame {
         return p;
     }
 
-    private JPanel browseGUI() {
+    private void browseGUI() {
         StringWriter buffer = new StringWriter();
         PrintWriter printer = new PrintWriter(buffer);
-        JPanel i = new JPanel();
-        i.setLayout(new FlowLayout());
-        JTextArea textArea = new JTextArea();
-        JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        JScrollBar scrollBar = new JScrollBar();
-        scroll.add(scrollBar);
-        actions.browse(printer);
-        String contents = buffer.toString();
-        textArea.setText(contents);
 
-        this.add(scroll);
-        this.setVisible(true);
-        return i;
+        actions.browse(printer);
+        String content = buffer.toString();
+        jta.append(content);
     }
 
     private void createTreeGUI() {
@@ -146,10 +137,6 @@ public class Graphics extends JFrame {
         int res = JOptionPane.showConfirmDialog(null, jp, "Insert a new node", JOptionPane.OK_CANCEL_OPTION);
         // checking the values
         if (res == JOptionPane.OK_OPTION) {
-            System.out.println("id: " + stID.getText());
-            System.out.println("f: " + faculty.getText());
-            System.out.println("mjr: " + major.getText());
-            System.out.println("y: " + year.getText());
             actions.insert(stID.getText(), faculty.getText(), major.getText(), year.getText());
         }
     }
