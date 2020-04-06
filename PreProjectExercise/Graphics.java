@@ -91,32 +91,9 @@ public class Graphics extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid ID.");
         }
         // check for the stuID in tree.
+        actions.find(stuID);
     }
 
-<<<<<<< HEAD
-    private JPanel insertGUI(){
-        JPanel i = new JPanel();
-        i.setLayout(new FlowLayout());
-        JTextField id = new JTextField();
-        JTextField faculty = new JTextField();
-        JTextField major = new JTextField();
-        JTextField year = new JTextField();
-        JButton insertStudent = new JButton("Insert");
-        JButton returntoMain = new JButton("Return to Main Window");
-        i.add(id);
-        i.add(faculty);
-        i.add(major);
-        i.add(year);
-        i.add(insertStudent);
-        i.add(returntoMain);
-        
-        insertStudent.addActionListener((ActionEvent e) -> {actions.insert(id.getText(), faculty.getText(), major.getText(), year.getText());});
-        returntoMain.addActionListener((ActionEvent e) -> {return;});
-    }
-    
-    private JPanel createTreeGUI() {
-    	
-=======
     private void browseGUI() {
     }
 
@@ -145,8 +122,8 @@ public class Graphics extends JFrame {
             System.out.println("f: " + faculty.getText());
             System.out.println("mjr: " + major.getText());
             System.out.println("y: " + year.getText());
+            actions.insert(stID.getText(), faculty.getText(), major.getText(), year.getText());
         }
->>>>>>> ff27286c4d645ebd6638f701ead06a483ac625f0
     }
 
     public static void main(String[] args) {

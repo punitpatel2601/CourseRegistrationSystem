@@ -18,8 +18,9 @@ public class Actions {
             myTree.insert(id, fac, major, yr);
     }
 
-    public void find(Node start, String id){
-        Node n = myTree.find(myTree.root, id);
+    public void find(int id){
+        String ID = String.valueOf(id);
+        Node n = myTree.find(myTree.root, ID);
         if( n == null){
             JOptionPane.showMessageDialog(null,"No such student found!", "Error Message", JOptionPane.ERROR_MESSAGE);
         } else {
