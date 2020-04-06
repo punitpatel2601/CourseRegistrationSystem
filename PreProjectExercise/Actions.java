@@ -6,15 +6,18 @@ import java.io.FileReader;
 import javax.swing.JOptionPane;
 
 /**
- * controls all backend functionality
- * Initializes database
- * Utilizes required functions from BinSearchTree
- * @author A. Mohar, 
+ * controls all backend functionality, Initializes database, Utilizes required
+ * functions from BinSearchTree
+ * 
+ * @author P. Patel
+ * @author A. Mohar
+ * @author T. Pritchard
  * @version 1.0
  * @since April 6, 2020
  * 
  */
 public class Actions {
+
     /**
      * the tree
      */
@@ -25,8 +28,9 @@ public class Actions {
      */
     private Graphics graphics;
 
-    /** 
+    /**
      * connects to frontend and initializes BinSearchTree
+     * 
      * @param g
      */
     public Actions(Graphics g) {
@@ -37,6 +41,7 @@ public class Actions {
 
     /**
      * inserts new student into tree
+     * 
      * @param id
      * @param fac
      * @param major
@@ -48,6 +53,7 @@ public class Actions {
 
     /**
      * searches for student info based on id input
+     * 
      * @param id
      */
     public void find(int id) {
@@ -62,10 +68,11 @@ public class Actions {
 
     /**
      * opens specified file and fills the tree with file data
+     * 
      * @param fileName
-     * @throws FileNotFoundException
+     * 
      */
-    public void createTree(String fileName) throws FileNotFoundException{
+    public void createTree(String fileName) {
         try {
             Scanner sc = new Scanner(new FileReader(fileName));
             String line;
@@ -76,23 +83,24 @@ public class Actions {
                 insert(columns[0], columns[1], columns[2], columns[3]);
             }
             sc.close();
-        } catch(FileNotFoundException f){
+        } catch (FileNotFoundException f) {
             JOptionPane.showMessageDialog(null, f.getMessage(), "File not found", JOptionPane.ERROR_MESSAGE);
         }
-         
+
     }
 
     /**
      * prints the whole tree out
+     * 
      * @param printer
-     * @throws IOException
      */
-    public void browse(PrintWriter printer) throws IOException {
+    public void browse(PrintWriter printer) {
         try {
-            if(!myTree.empty()){
-            myTree.print_tree(myTree.root, printer);
-            } else{
-                JOptionPane.showMessageDialog(null, "First create a tree to initialize database!", "Tree is empty!", JOptionPane.ERROR_MESSAGE);
+            if (!myTree.empty()) {
+                myTree.print_tree(myTree.root, printer);
+            } else {
+                JOptionPane.showMessageDialog(null, "First create a tree to initialize database!", "Tree is empty!",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
             e.getStackTrace();

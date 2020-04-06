@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import java.util.IllegalFormatException;
 
 public class Graphics extends JFrame {
+
     /**
      * handles backend functions of buttons
      */
@@ -26,14 +26,9 @@ public class Graphics extends JFrame {
      * @param wPixels
      * @param hPixels
      */
-    public Graphics(int wPixels, int hPixels) throws Exception {
+    public Graphics(int wPixels, int hPixels) {
         actions = new Actions(this);
-        try {
-            prepareGUI(wPixels, hPixels);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        prepareGUI(wPixels, hPixels);
     }
 
     /**
@@ -42,19 +37,14 @@ public class Graphics extends JFrame {
      * @param width
      * @param height
      */
-    private void prepareGUI(int width, int height) throws Exception {
+    private void prepareGUI(int width, int height) {
         setTitle("ProjectApplication");
         setSize(width, height);
         setLayout(new BorderLayout());
 
         add("North", createNPanel());
         add("Center", createCPanel());
-        try {
-            add("South", createSPanel());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        add("South", createSPanel());
 
         setVisible(true);
     }
@@ -84,7 +74,7 @@ public class Graphics extends JFrame {
         return p;
     }
 
-    private JPanel createSPanel() throws Exception, IOException {
+    private JPanel createSPanel() {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
 
@@ -106,46 +96,32 @@ public class Graphics extends JFrame {
             findGUI();
         });
         browse.addActionListener((ActionEvent e) -> {
-            try {
-                browseGUI();
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            browseGUI();
         });
         createTree.addActionListener((ActionEvent e) -> {
-            try {
-                createTreeGUI();
-            } catch (Exception e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            createTreeGUI();
         });
         return p;
     }
 
     /**
-     * @throws IOException
+     * 
      */
-    private void browseGUI() throws IOException {
+    private void browseGUI() {
         StringWriter buffer = new StringWriter();
         PrintWriter printer = new PrintWriter(buffer);
 
-        try {
-            actions.browse(printer);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        actions.browse(printer);
+
         String content = buffer.toString();
-        jta.append(content);
+        jta.setText(content);
     }
 
     /**
-     * prompts user for filename and then calls backend to load data from file to BinSearchTree
-     * @throws Exception
+     * prompts user for filename and then calls backend to load data from file to
+     * BinSearchTree
      */
-    private void createTreeGUI() throws Exception {
+    private void createTreeGUI() {
         String filename = "";
         String ext = ".txt";
         try {
@@ -154,7 +130,7 @@ public class Graphics extends JFrame {
                 JOptionPane.showInputDialog(null, "File has to be in format: nameofFile.txt");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Invalid filename");
+            JOptionPane.showMessageDialog(null, "Invalid filename!!");
         }
         actions.createTree(filename);
 
@@ -162,20 +138,18 @@ public class Graphics extends JFrame {
 
     /**
      * Graphical user interface which allows user to search for student by id
-     * @throws NumberFormatException
      */
-    private void findGUI() throws NumberFormatException {
+    private void findGUI() {
         int stuID = 0;
-            try {
-                while(stuID < 1){
+        try {
+            while (stuID < 1) {
                 stuID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Student's ID: "));
-                }
-                actions.find(stuID);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Must be a numeric number!");
             }
+            actions.find(stuID);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Must be a numeric number!");
+        }
     }
-
 
     /**
      * prompts user for id, faculty, major, and year of new student
@@ -198,18 +172,22 @@ public class Graphics extends JFrame {
         jp.add(new JLabel("Enter the year: "));
         jp.add(year);
 
-        
-        
-
         int res = JOptionPane.showConfirmDialog(null, jp, "Insert a new node", JOptionPane.OK_CANCEL_OPTION);
-        
+
         // checking the values
         if (res == JOptionPane.OK_OPTION) {
-            actions.insert(stID.getText(), faculty.getText(), major.getText(), year.getText());
+            if ((stID.getText().length() != 0) && (faculty.getText().length() != 0) && (major.getText().length() != 0)
+                    && (year.getText().length() != 0)) {
+                actions.insert(stID.getText(), faculty.getText(), major.getText(), year.getText());
+                browseGUI();
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter all informations", "Incomplete details",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new Graphics(600, 450);
     }
 }
