@@ -173,11 +173,32 @@ public class Graphics extends JFrame {
         jp.add(year);
 
         int res = JOptionPane.showConfirmDialog(null, jp, "Insert a new node", JOptionPane.OK_CANCEL_OPTION);
+    
 
         // checking the values
         if (res == JOptionPane.OK_OPTION) {
             if ((stID.getText().length() != 0) && (faculty.getText().length() != 0) && (major.getText().length() != 0)
                     && (year.getText().length() != 0)) {
+                        if( stID.getText().matches("[a-zA-Z_]+")){
+                            JOptionPane.showMessageDialog(null,"ID must be a numeric number");
+                            return;
+                        }
+                
+                        if( year.getText().matches("[a-zA-Z_]+")){
+                            JOptionPane.showMessageDialog(null,"year must be a numeric number");
+                            return;
+                        }
+                
+                        if( !faculty.getText().matches("[a-zA-Z_]+")){
+                            JOptionPane.showMessageDialog(null,"faculty must be a name");
+                            return;
+                        }
+                
+                        if( !major.getText().matches("[a-zA-Z_]+")){
+                            JOptionPane.showMessageDialog(null,"major must be a name");
+                            return;
+                        }
+                        
                 actions.insert(stID.getText(), faculty.getText(), major.getText(), year.getText());
                 browseGUI();
             } else {
