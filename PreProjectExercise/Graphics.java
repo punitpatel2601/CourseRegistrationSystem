@@ -19,7 +19,7 @@ public class Graphics extends JFrame {
         add("North", createNPanel());
         add("Center", createCPanel());
         add("South", createSPanel());
-        
+
         setVisible(true);
     }
 
@@ -78,32 +78,28 @@ public class Graphics extends JFrame {
         return p;
     }
 
-    //private JPanel findGUI(){
+    private JPanel browseGUI() {
+        StringWriter buffer = new StringWriter();
+        PrintWriter printer = new PrintWriter(buffer);
+        JPanel i = new JPanel();
+        i.setLayout(new FlowLayout());
+        JTextArea textArea = new JTextArea();
+        JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        actions.browse(printer);
+        String contents = buffer.toString();
+        textArea.setText(contents);
 
-    //}
-
-    private JPanel browseGUI(){
-    	StringWriter buffer = new StringWriter();
-    	PrintWriter printer = new PrintWriter(buffer);
-    	JPanel i = new JPanel();
-    	i.setLayout(new FlowLayout());
-    	JTextArea textArea = new JTextArea();
-    	JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-    												   JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    	actions.browse(printer);
-    	String contents = buffer.toString();
-    	textArea.setText(contents);
-
-    	this.add(scroll);
-    	this.setVisible(true);
-    	return i;
-	}
+        this.add(scroll);
+        this.setVisible(true);
+        return i;
+    }
 
     private void createTreeGUI() {
     }
 
     private void findGUI() {
-        int stuID;
+        int stuID = 0;
         try {
             stuID = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the Student's ID: "));
             if (stuID < 1) {
@@ -114,10 +110,6 @@ public class Graphics extends JFrame {
         }
         // check for the stuID in tree.
     }
-    
-   // private JPanel createTreeGUI() {
-    	
-    //}
 
     private void insertGUI() {
         JPanel jp = new JPanel();
