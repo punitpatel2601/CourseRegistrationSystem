@@ -31,7 +31,7 @@ public class Actions {
     /**
      * connects to frontend and initializes BinSearchTree
      * 
-     * @param g
+     * @param g Graphics object
      */
     public Actions(Graphics g) {
         this.graphics = g;
@@ -42,10 +42,10 @@ public class Actions {
     /**
      * inserts new student into tree
      * 
-     * @param id
-     * @param fac
-     * @param major
-     * @param yr
+     * @param id    id of the student
+     * @param fac   faculty of the student
+     * @param major major of the student
+     * @param yr    year of the student
      */
     public void insert(String id, String fac, String major, String yr) {
         myTree.insert(id, fac, major, yr);
@@ -54,7 +54,7 @@ public class Actions {
     /**
      * searches for student info based on id input
      * 
-     * @param id
+     * @param id id of the student to be searched for
      */
     public void find(int id) {
         String ID = String.valueOf(id);
@@ -69,7 +69,7 @@ public class Actions {
     /**
      * opens specified file and fills the tree with file data
      * 
-     * @param fileName
+     * @param fileName name of the file which has data
      * 
      */
     public void createTree(String fileName) {
@@ -92,7 +92,7 @@ public class Actions {
     /**
      * prints the whole tree out
      * 
-     * @param printer
+     * @param printer PrintWriter object
      */
     public void browse(PrintWriter printer) {
         try {
