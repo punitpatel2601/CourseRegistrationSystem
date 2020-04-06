@@ -87,6 +87,8 @@ public class Graphics extends JFrame {
         JTextArea textArea = new JTextArea();
         JScrollPane scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollBar scrollBar = new JScrollBar();
+        scroll.add(scrollBar);
         actions.browse(printer);
         String contents = buffer.toString();
         textArea.setText(contents);

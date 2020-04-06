@@ -15,7 +15,7 @@ public class Actions {
     public Actions(Graphics g) {
         this.graphics = g;
         this.myTree = new BinSearchTree();
-        myTree.destroy();
+        //myTree.destroy();
     }
 
     public void insert(String id, String fac, String major, String yr) {
@@ -38,7 +38,8 @@ public class Actions {
             String line;
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
-                String[] columns = line.split(" ");
+                String[] columns = new String[4];
+                columns = line.split(" ");
                 insert(columns[0], columns[1], columns[2], columns[3]);
             }
             sc.close();
