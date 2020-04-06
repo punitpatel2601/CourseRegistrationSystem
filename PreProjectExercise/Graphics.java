@@ -8,6 +8,7 @@ public class Graphics extends JFrame {
     private PrintWriter printer;
 
     public Graphics(int wPixels, int hPixels) {
+        actions = new Actions(this);
         prepareGUI(wPixels, hPixels);
     }
 
@@ -98,12 +99,12 @@ public class Graphics extends JFrame {
     private void createTreeGUI() {
         String filename = "";
         try {
-            filename = JOptionPane.showInputDialog(null, "Please enter filename: " );
-            if(filename == null){
-                JOptionPane.showInputDialog(null,"File has to be in format: nameofFile.txt");
+            filename = JOptionPane.showInputDialog(null, "Please enter filename: ");
+            if (filename == null || filename == "") {
+                JOptionPane.showInputDialog(null, "File has to be in format: nameofFile.txt");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Invalid filename");
+            JOptionPane.showMessageDialog(null, "Invalid filename");
         }
         actions.createTree(filename);
     }

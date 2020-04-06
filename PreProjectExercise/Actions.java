@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,45 +12,47 @@ public class Actions {
     private BinSearchTree myTree;
     private Graphics graphics;
 
-    public Actions(Graphics g, BinSearchTree t){
+    public Actions(Graphics g) {
         this.graphics = g;
-        this.myTree = t;
+        this.myTree = new BinSearchTree();
+        myTree.destroy();
     }
 
-    public void insert(String id, String fac, String major, String yr){
-            myTree.insert(id, fac, major, yr);
+    public void insert(String id, String fac, String major, String yr) {
+        myTree.insert(id, fac, major, yr);
     }
 
-    public void find(int id){
+    public void find(int id) {
         String ID = String.valueOf(id);
         Node n = myTree.find(myTree.root, ID);
-        if( n == null){
-            JOptionPane.showMessageDialog(null,"No such student found!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        if (n == null) {
+            JOptionPane.showMessageDialog(null, "No such student found!", "Error Message", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, n.data.toString(), "Student Found", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public void createTree(String fileName){
+    public void createTree(String fileName) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            String line = null;
-            while((line = br.readLine()) != null){
-            String [] columns = line.split(" ");
-            myTree.insert(columns[0], columns[1], columns[2], columns[3]);
+            Scanner sc = new Scanner(new FileReader(fileName));
+            String line;
+            while (sc.hasNextLine()) {
+                line = sc.nextLine();
+                String[] columns = line.split(" ");
+                insert(columns[0], columns[1], columns[2], columns[3]);
             }
-            br.close();
+            sc.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } 
-        
+        }
+
     }
-    
+
     public void browse(PrintWriter printer) {
-    	try {
-    		myTree.print_tree(myTree.root, printer);
-    	} catch (IOException e) {
-    		e.getStackTrace();
-    	}
+        try {
+            myTree.print_tree(myTree.root, printer);
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
     }
 }
