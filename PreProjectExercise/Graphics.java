@@ -96,6 +96,16 @@ public class Graphics extends JFrame {
     }
 
     private void createTreeGUI() {
+        String filename = "";
+        try {
+            filename = JOptionPane.showInputDialog(null, "Please enter filename: " );
+            if(filename == null){
+                JOptionPane.showInputDialog(null,"File has to be in format: nameofFile.txt");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Invalid filename");
+        }
+        actions.createTree(filename);
     }
 
     private void findGUI() {
@@ -112,12 +122,6 @@ public class Graphics extends JFrame {
         actions.find(stuID);
     }
 
-<<<<<<< HEAD
-    private void browseGUI() {
-    }
-
-=======
->>>>>>> 202c435b5369520e8ee5e1e5a567aa423e749dc9
     private void insertGUI() {
         JPanel jp = new JPanel();
         JTextField stID = new JTextField(8);
