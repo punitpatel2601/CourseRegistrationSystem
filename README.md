@@ -2,27 +2,29 @@
 A final project of course registration system in Java.
 
 # Description
-    We are creating a course registration system. 
-    These are the following directories in the repository and their descriptions.
+We are creating a course registration system. 
+These are the following directories in the repository and their descriptions.
 
-    PreProject Exercise:
-        Implementation of graphical user interface for a given courseCatalogue system.
-        Using GUI buttons to load data from file, search for specific data, View or Browse all data
-        Asking user to insert new Data via GUI
+	PreProject Exercise:
+		Implementation of graphical user interface for a given courseCatalogue system.
+		Using GUI buttons to load data from file, search for specific data, View or Browse all data
+		Asking user to insert new Data via GUI
 
 	Design:
 		Design of the project.
-        Class diagrams, modular and deployment view.
-    
-    CourseRegiSys:
-        Contains the main course registration project.
-        /src - contains all of the source files.
-	
+		Class diagrams, modular and deployment view.
 
-# Authors
+	CourseRegiSys:
+		Contains the main course registration project.
+		/src - contains all of the source files.
+
+@Authors
+
 Punit Patel     -   30064251
-    punit.patel1@ucalgary.ca
+punit.patel1@ucalgary.ca
+
 Tom Pritchard   -   30053765
     *** email id ***
+
 Armaan Mohar    -   30055449
-    *** email id ***
+armaan.mohar1@ucalgary.ca
