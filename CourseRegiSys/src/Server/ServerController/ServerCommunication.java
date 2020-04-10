@@ -1,5 +1,6 @@
 package Server.ServerController;
 
+import Server.ServerModel.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,6 +13,7 @@ public class ServerCommunication {
     private BufferedReader socketIn;    //msg to write to client
     private PrintWriter socketOut;  //msg to read from socket
     private ExecutorService pool;   //threadpool
+    private Model model;
     
     public ServerCommunication(int port) {
     	try {
@@ -20,21 +22,45 @@ public class ServerCommunication {
     	} catch(IOException e) {
     		e.printStackTrace();
     	}
+    	model = new Model();
+    }
+    
+    public void initializeServer() {
+    	try {
+    		aSocket = serverSocket.accept();
+    		System.out.println("Connection accepted by server!");
+    		socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
+    		socketOut = new PrintWriter(aSocket.getOutputStream(), true);
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	closeConnection();
     }
     
     public void runServer() {
     	try {
     		while(true) {
-    			aSocket = serverSocket.accept();
-    			System.out.println("Connection accepted by server!");
-    			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
-    			socketOut = new PrintWriter(aSocket.getOutputStream(), true);
-    			
+    			String line = socketIn.readLine();
+    			String[] inputs = line.split(" ");
+    			int choice = Integer.parseInt(inputs[0]);
+    			switch(choice) {
+    			case 1:
+    				
+    			case 2:
+    				
+    			case 3:
+    				
+    			case 4:
+    				
+    			case 5:
+    				
+    			default:
+    				
+    			}
     		}
     	} catch (IOException e) {
-    		e.printStackTrace();
+    		e.getStackTrace();
     	}
-    	closeConnection();
     }
     
     public void closeConnection() {
@@ -48,6 +74,7 @@ public class ServerCommunication {
     
     public static void main(String[] args) {
 		ServerCommunication serverCom = new ServerCommunication(9898);
+		serverCom.initializeServer();
 		serverCom.runServer();
 	}
 }
