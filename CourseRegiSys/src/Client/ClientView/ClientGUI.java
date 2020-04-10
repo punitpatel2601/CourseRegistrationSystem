@@ -1,23 +1,23 @@
 package Client.ClientView;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
-public class ClientGUI extends JFrame {
-    private ClientActions actions;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-    public ClientGUI(int wPixels, int hPixels) {
-        actions = new ClientActions(this);
-        prepareGUI(wPixels, hPixels);
+import Client.ClientController.ClientCommunication;
+
+public class ClientGUI extends JFrame {
+    private ClientCommunication actions;
+
+    public ClientGUI() {
+        actions = new ClientCommunication("localhost", 9898);
+        prepareGUI();
     }
 
-    private void prepareGUI(int width, int height) {
+    private void prepareGUI() {
         setTitle("Course Registration System");
         setSize(400, 300);
         setLayout(new FlowLayout());
@@ -70,11 +70,11 @@ public class ClientGUI extends JFrame {
     }
 
     private void studentCourses() {
-        // actions.showStudentCourses();
+        actions.showStudentCourses();
     }
 
     private void viewAllCourses() {
-        // actions.viewAllCourses();
+        actions.viewAllCourses();
     }
 
     private void removeCourse() {
@@ -84,7 +84,7 @@ public class ClientGUI extends JFrame {
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        // actions.removeCourse();
+        actions.removeCourse(cName, cID);
     }
 
     private void addTheCourse() {
@@ -94,7 +94,7 @@ public class ClientGUI extends JFrame {
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        // actions.addCourse();
+        actions.addCourse(cName, cID);
     }
 
     private void searchCourse() {
@@ -104,7 +104,7 @@ public class ClientGUI extends JFrame {
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        // actions.searchCourse();
+        actions.searchCourse(cName, cID);
     }
 
     private int callInputForID() {
@@ -127,9 +127,5 @@ public class ClientGUI extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
         return name;
-    }
-
-    public static void main(String[] args) {
-        new ClientGUI(650, 400);
     }
 }
