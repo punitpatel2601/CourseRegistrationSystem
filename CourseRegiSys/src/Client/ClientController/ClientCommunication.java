@@ -29,17 +29,14 @@ public class ClientCommunication {
 		try {
 			while (running) {
 				socketOut.println(line);
-				// response = socketIn.readLine();
+				response = socketIn.readLine();
 				System.out.println(response);
+				break;
 			}
 		} catch (Exception e) {
 			System.out.println("Sending error" + e.getMessage());
+			running = false;
 		}
-	}
-
-	public static void main(String[] args) {
-		ClientCommunication clientCom = new ClientCommunication("localhost", 9898);
-		ClientGUI cgi = new ClientGUI();
 	}
 
 	public void showStudentCourses() {
@@ -66,5 +63,10 @@ public class ClientCommunication {
 		String line = "5 ";
 		line = line + " " + name + " " + id;
 		communicate(line);
+	}
+
+	public static void main(String[] args) {
+		ClientCommunication clientCom = new ClientCommunication("localhost", 9898);
+		ClientGUI cgi = new ClientGUI(clientCom);
 	}
 }

@@ -12,8 +12,8 @@ import Client.ClientController.ClientCommunication;
 public class ClientGUI extends JFrame {
     private ClientCommunication actions;
 
-    public ClientGUI() {
-        actions = new ClientCommunication("localhost", 9898);
+    public ClientGUI(ClientCommunication ccm) {
+        actions = ccm;
         prepareGUI();
     }
 
