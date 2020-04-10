@@ -59,13 +59,14 @@ public class CourseCatalogue {
         return st;
     }
 
-    public void coursesTaken() {
-        System.out.println("Courses taken by students are ");
-        for (int i = 0; i < courseList.size(); i++) {
-            if (courseList.get(i).checkStudentNumber() != 0) {
-                System.out.println(courseList.get(i).getCourseName() + " " + courseList.get(i).getCourseNum());
-            }
-        }
+    public ArrayList<Course> coursesTaken() {
+    	ArrayList<Course> courses = new ArrayList<Course>();
+    	for (Course c : courseList) {
+    		if (c.checkStudentNumber() != 0) {
+    			courses.add(c);
+    		}
+    	}
+    	return courses;
     }
 
     public void removeCourse(String coursename, int coursenum) {

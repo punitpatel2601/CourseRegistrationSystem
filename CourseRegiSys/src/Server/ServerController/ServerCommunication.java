@@ -43,17 +43,21 @@ public class ServerCommunication {
     			String line = socketIn.readLine();
     			String[] inputs = line.split(" ");
     			int choice = Integer.parseInt(inputs[0]);
+    			String courseName = inputs[1];
+    			int courseId = Integer.parseInt(inputs[2]);
     			switch(choice) {
     			case 1:
-    				
+    				model.searchCourse(courseName, courseId);
     			case 2:
-    				
+    				model.addCourse(courseName, courseId);
     			case 3:
-    				
+    				model.removeCourse(courseName, courseId);
     			case 4:
-    				
+    				String fullCatalogue = model.viewAllCourses();
+    				socketOut.println(fullCatalogue);
     			case 5:
-    				
+    				String takenCourses = model.coursesTaken();
+    				socketOut.println(takenCourses);
     			default:
     				
     			}
