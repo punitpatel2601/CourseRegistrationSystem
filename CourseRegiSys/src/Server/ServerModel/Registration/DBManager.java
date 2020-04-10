@@ -1,20 +1,32 @@
 package Server.ServerModel.Registration;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DBManager {
     ArrayList<Course> courseList;
+    Scanner scan;
+    String fileName;
 
     public DBManager() {
         courseList = new ArrayList<Course>();
+        fileName = "courses.txt";
     }
 
-    @SuppressWarnings("rawtypes")
-    public ArrayList readFromDataBase() {
-        // TODO Auto-generated method stub
-        courseList.add(new Course("ENGG", 233));
-        courseList.add(new Course("ENSF", 409));
-        courseList.add(new Course("PHYS", 259));
+    public ArrayList<Course> readFromDataBase() {
+    	try {
+    		scan = new Scanner(new FileReader(fileName));
+    		String line;
+    		while(scan.hasNextLine()) {
+    			line = scan.nextLine();
+    			String[] inputs = line.split(" ");
+    			courseList.add(new Course(inputs[0], Integer.parseInt(inputs[1])));
+    		}
+    	} catch (FileNotFoundException e) {
+    		e.getStackTrace();
+    	}
         return courseList;
     }
 
