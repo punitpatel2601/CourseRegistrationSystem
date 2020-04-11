@@ -47,38 +47,40 @@ public class ServerCommunication {
 				e.printStackTrace();
 				running = false;
 			}
-			if (line == "" || line == null) {
+			if (line.isEmpty() || line == null) {
 				break;
 			}
+
 			String[] inputs = line.split(" ");
 			int choice = Integer.parseInt(inputs[0]);
-			 String courseName = inputs[1];
-			 int courseId = Integer.parseInt(inputs[2]);
+			String courseName = inputs[1];
+			int courseId = Integer.parseInt(inputs[2]);
+
 			switch (choice) {
 				case 1:
-					 String searchedCourse = model.searchCourse(courseName, courseId);
-					 socketOut.println(searchedCourse);
-					socketOut.println("Option 1");
+					String searchedCourse = model.searchCourse(courseName, courseId);
+					socketOut.println(searchedCourse);
+					// socketOut.println("Option 1");
 					break;
 				case 2:
-					 String addedCourse = model.addCourse(courseName, courseId);
-					 socketOut.println(addedCourse);
-					socketOut.println("option 2");
+					String addedCourse = model.addCourse(courseName, courseId);
+					socketOut.println(addedCourse);
+					// socketOut.println("option 2");
 					break;
 				case 3:
 					String remove = model.removeCourse(courseName, courseId);
 					socketOut.println(remove);
-					socketOut.println("option 3");
+					// socketOut.println("option 3");
 					break;
 				case 4:
-					 String fullCatalogue = model.viewAllCourses();
-					 socketOut.println(fullCatalogue);
-					socketOut.println("option 4");
+					String fullCatalogue = model.viewAllCourses();
+					socketOut.println(fullCatalogue);
+					// socketOut.println("option 4");
 					break;
 				case 5:
-					 String takenCourses = model.coursesTaken();
-					 socketOut.println(takenCourses);
-					socketOut.println("option 5");
+					String takenCourses = model.coursesTaken();
+					socketOut.println(takenCourses);
+					// socketOut.println("option 5");
 					break;
 				default:
 					socketOut.println("default");

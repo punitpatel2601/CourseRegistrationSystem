@@ -6,14 +6,9 @@ public class CourseCatalogue {
     private ArrayList<Course> courseList;
 
     public CourseCatalogue() {
-        loadFromDataBase();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void loadFromDataBase() {
         DBManager db = new DBManager();
-        setCourseList(db.readFromDataBase());
-
+        courseList = new ArrayList<Course>();
+        courseList = db.readFromDataBase();
     }
 
     public void createCourseOffering(Course c, int secNum, int secCap) {
@@ -29,7 +24,7 @@ public class CourseCatalogue {
                 return c;
             }
         }
-        
+
         return null;
     }
 
@@ -37,23 +32,16 @@ public class CourseCatalogue {
     // are private and are not exposed for use by other classes.
     // These methods are refereed to as helper methods or utility methods
     public String displayCourseNotFoundError() {
-        // TODO Auto-generated method stub
-        String err = "Course was not found!";
-        return err;
+        return "Course was not found!";
     }
 
     public String displayCourseNotAddedError() {
-        // TODO Auto-generated method stub
-        String err = "Course was not added!";
-        return err;
+        return "Course was not added!";
     }
 
     public String displayCourseNotRemovedError() {
-        // TODO Auto-generated method stub
-        String err = "Course was not removed!";
-        return err;
+        return "Course was not removed!";
     }
-
 
     public ArrayList<Course> getCourseList() {
         return courseList;
@@ -67,33 +55,27 @@ public class CourseCatalogue {
     public String toString() {
         String st = "All courses in the catalogue: \n";
         for (Course c : courseList) {
-            st += c; // This line invokes the toString() method of Course
+            st += c.getCourseName() + " " + c.getCourseNum(); // This line invokes the toString() method of Course
             st += "\n";
         }
         return st;
     }
 
     public ArrayList<Course> coursesTaken() {
-    	ArrayList<Course> courses = new ArrayList<Course>();
-    	for (Course c : courseList) {
-    		if (c.checkStudentNumber() != 0) {
-    			courses.add(c);
-    		}
-    	}
-    	return courses;
+        ArrayList<Course> courses = new ArrayList<Course>();
+        for (Course c : courseList) {
+            if (c.checkStudentNumber() != 0) {
+                courses.add(c);
+            }
+        }
+        return courses;
     }
 
     public void removeCourse(String coursename, int coursenum) {
         String courseUpper = coursename.toUpperCase();
         int index = indexOfName(courseUpper, coursenum);
-       // if (index < 0) {
-         //   System.out.println(coursename + " " + coursenum + "is not found on the list ");
-          //  return;
-        //}
+
         courseList.remove(index);
-        //System.out.println(courseUpper + " " + coursenum + " has been removed from the list ");
-        //System.out.println(" The list after removing the course: " + courseUpper + " " + coursenum + " is :");
-       // printAllCourses();
     }
 
     private int indexOfName(String cname, int cid) {
