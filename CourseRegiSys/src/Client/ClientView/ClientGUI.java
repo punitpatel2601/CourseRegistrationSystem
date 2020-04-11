@@ -1,32 +1,45 @@
 package Client.ClientView;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import Client.ClientController.ClientCommunication;
 
 public class ClientGUI extends JFrame {
     private ClientCommunication actions;
+    private JTextArea jta;
 
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
+        jta = new JTextArea();
         prepareGUI();
     }
 
     private void prepareGUI() {
         setTitle("Course Registration System");
-        setSize(400, 300);
-        setLayout(new FlowLayout());
-        addButtons();
+        setSize(500, 500);
+        setLayout(new GridLayout(2, 1));
+
+        JScrollPane jsp = new JScrollPane(jta);
+
+        add(addButtons());
+        add(jsp);
 
         setVisible(true);
     }
 
-    public void addButtons() {
+    public JPanel addButtons() {
+        JPanel jp = new JPanel();
+        jp.setLayout(new FlowLayout());
+        jp.setSize(450, 150);
         JButton search = new JButton("Search the Catalogue");
         JButton addCourse = new JButton("Add course");
         JButton remove = new JButton("Remove course");
@@ -34,77 +47,89 @@ public class ClientGUI extends JFrame {
         JButton viewStuCourses = new JButton("View all the courses taken by students");
         JButton quit = new JButton("Quit");
 
-        add(search);
-        add(addCourse);
-        add(remove);
-        add(viewAll);
-        add(viewStuCourses);
-        add(quit);
+        jp.add(search);
+        jp.add(addCourse);
+        jp.add(remove);
+        jp.add(viewAll);
+        jp.add(viewStuCourses);
+        jp.add(quit);
 
         search.addActionListener((ActionEvent e) -> {
-            searchCourse();
+            guiSerOutput(searchCourse());
         });
         addCourse.addActionListener((ActionEvent e) -> {
-            addTheCourse();
+            guiSerOutput(addTheCourse());
         });
         remove.addActionListener((ActionEvent e) -> {
-            removeCourse();
+            guiSerOutput(removeCourse());
         });
         viewAll.addActionListener((ActionEvent e) -> {
-            viewAllCourses();
+            guiSerOutput(viewAllCourses());
         });
         viewStuCourses.addActionListener((ActionEvent e) -> {
-            studentCourses();
+            guiSerOutput(studentCourses());
         });
         quit.addActionListener((ActionEvent e) -> {
             quit();
         });
+
+        return jp;
+    }
+
+    private void guiSerOutput(String serverOutput) {
+        System.out.println("gui -> " + serverOutput);
+        if (serverOutput == null) {
+            jta.setText("Error in your input, Server can't process it!!");
+            return;
+        }
+        jta.setText(serverOutput);
     }
 
     private void quit() {
         int res = JOptionPane.showConfirmDialog(null, "Press OK to quit.", "Quit?", JOptionPane.OK_CANCEL_OPTION);
         if (res == JOptionPane.OK_OPTION) {
+            actions.closeCon();
             System.exit(0);
         }
         return;
     }
 
-    private void studentCourses() {
-        actions.showStudentCourses();
+    private String studentCourses() {
+        return actions.showStudentCourses();
     }
 
-    private void viewAllCourses() {
-        actions.viewAllCourses();
+    private String viewAllCourses() {
+        return actions.viewAllCourses();
     }
 
-    private void removeCourse() {
+    private String removeCourse() {
         String cName;
         int cID;
         cName = callInputForName();
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        actions.removeCourse(cName, cID);
+        return actions.removeCourse(cName, cID);
     }
 
-    private void addTheCourse() {
+    private String addTheCourse() {
         String cName;
         int cID;
         cName = callInputForName();
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        actions.addCourse(cName, cID);
+        return actions.addCourse(cName, cID);
     }
 
-    private void searchCourse() {
+    private String searchCourse() {
         String cName;
         int cID;
         cName = callInputForName();
         cID = callInputForID();
 
         System.out.println(cName + "\t" + cID);
-        actions.searchCourse(cName, cID);
+        return actions.searchCourse(cName, cID);
     }
 
     private int callInputForID() {
@@ -126,6 +151,7 @@ public class ClientGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid name entered, Please enter a String", "Error!",
                     JOptionPane.ERROR_MESSAGE);
         }
-        return name;
+        String[] mulWords = name.split(" ");
+        return mulWords[0];
     }
 }

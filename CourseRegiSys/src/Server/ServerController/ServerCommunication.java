@@ -40,7 +40,7 @@ public class ServerCommunication {
 		String line = "";
 		boolean running = true;
 		while (running) {
-			System.out.println("flag 1");
+			System.out.println("\n");
 			try {
 				line = socketIn.readLine();
 			} catch (Exception e) {
@@ -56,8 +56,9 @@ public class ServerCommunication {
 			// int courseId = Integer.parseInt(inputs[2]);
 			switch (choice) {
 				case 1:
-					// model.searchCourse(courseName, courseId);
-					socketOut.println("option 1");
+					// String searchedCourse = model.searchCourse(courseName, courseId);
+					// socketOut.println(searchedCourse);
+					socketOut.println("Option 1");
 					break;
 				case 2:
 					// model.addCourse(courseName, courseId);
