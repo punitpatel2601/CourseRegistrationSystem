@@ -32,6 +32,10 @@ public class DBManager {
     
     public static void main(String[] args) {
 		DBManager db = new DBManager();
+		ArrayList<Course> cl = db.readFromDataBase();
+		for (Course c : cl) {
+			System.out.println(c);
+		}
 	}
 
 }
