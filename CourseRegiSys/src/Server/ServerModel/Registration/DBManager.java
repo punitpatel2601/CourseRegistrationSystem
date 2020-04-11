@@ -29,5 +29,9 @@ public class DBManager {
     	}
         return courseList;
     }
+    
+    public static void main(String[] args) {
+		DBManager db = new DBManager();
+	}
 
 }
