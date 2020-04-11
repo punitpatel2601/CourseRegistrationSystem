@@ -35,4 +35,9 @@ public class Model {
 		}
 		return takenCourses;
 	}
+	public static void main(String[] args) {
+		Model m = new Model();
+		System.out.println("Model is initialized");
+		
+	}
 }
