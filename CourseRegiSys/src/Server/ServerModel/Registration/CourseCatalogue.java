@@ -29,17 +29,31 @@ public class CourseCatalogue {
                 return c;
             }
         }
-        displayCourseNotFoundError();
+        
         return null;
     }
 
     // Typically, methods that are called from other methods of the class
     // are private and are not exposed for use by other classes.
     // These methods are refereed to as helper methods or utility methods
-    private void displayCourseNotFoundError() {
+    public String displayCourseNotFoundError() {
         // TODO Auto-generated method stub
-        System.err.println("Course was not found!");
+        String err = "Course was not found!";
+        return err;
     }
+
+    public String displayCourseNotAddedError() {
+        // TODO Auto-generated method stub
+        String err = "Course was not added!";
+        return err;
+    }
+
+    public String displayCourseNotRemovedError() {
+        // TODO Auto-generated method stub
+        String err = "Course was not removed!";
+        return err;
+    }
+
 
     public ArrayList<Course> getCourseList() {
         return courseList;
@@ -72,14 +86,14 @@ public class CourseCatalogue {
     public void removeCourse(String coursename, int coursenum) {
         String courseUpper = coursename.toUpperCase();
         int index = indexOfName(courseUpper, coursenum);
-        if (index < 0) {
-            System.out.println(coursename + " " + coursenum + "is not found on the list ");
-            return;
-        }
+       // if (index < 0) {
+         //   System.out.println(coursename + " " + coursenum + "is not found on the list ");
+          //  return;
+        //}
         courseList.remove(index);
-        System.out.println(courseUpper + " " + coursenum + " has been removed from the list ");
-        System.out.println(" The list after removing the course: " + courseUpper + " " + coursenum + " is :");
-        printAllCourses();
+        //System.out.println(courseUpper + " " + coursenum + " has been removed from the list ");
+        //System.out.println(" The list after removing the course: " + courseUpper + " " + coursenum + " is :");
+       // printAllCourses();
     }
 
     private int indexOfName(String cname, int cid) {

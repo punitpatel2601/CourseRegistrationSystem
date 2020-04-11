@@ -12,19 +12,41 @@ public class Model {
 	}
 	
 	public String searchCourse(String courseName, int courseId) {
-		return cat.searchCat(courseName, courseId).toString();
+		Course courseSearched = cat.searchCat(courseName, courseId);
+		if(courseSearched == null){
+			String serr = cat.displayCourseNotFoundError();
+			return serr;
+		}
+		
+		return courseSearched.toString();
 	}
 	
-	public void addCourse(String courseName, int courseId) {
+	public String addCourse(String courseName, int courseId) {
 		cat.getCourseList().add(new Course(courseName, courseId));
+		Course confirm = cat.searchCat(courseName, courseId);
+		if(confirm == null){
+			String aerr = cat.displayCourseNotAddedError();
+			return aerr;
+		}
+		String success = cat.searchCat(courseName, courseId).toString() + " was successfully added!";
+		return success;
+		
 	}
 	
-	public void removeCourse(String courseName, int courseId) {
+	public String removeCourse(String courseName, int courseId) {
 		cat.removeCourse(courseName, courseId);
+		Course remove = cat.searchCat(courseName, courseId);
+		if(remove != null){
+			String rerr = cat.displayCourseNotRemovedError();
+			return rerr;
+		}
+		String r = "Course: "+courseName+" was successfully removed!";
+		return r;
+
 	}
 	
 	public String viewAllCourses() {
-		return cat.toString();
+		return cat.toString(); //if null?
 	}
 	
 	public String coursesTaken() {
@@ -38,6 +60,5 @@ public class Model {
 	public static void main(String[] args) {
 		Model m = new Model();
 		System.out.println("Model is initialized");
-		
-	}
+		}
 }

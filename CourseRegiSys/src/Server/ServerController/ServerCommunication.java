@@ -52,30 +52,32 @@ public class ServerCommunication {
 			}
 			String[] inputs = line.split(" ");
 			int choice = Integer.parseInt(inputs[0]);
-			// String courseName = inputs[1];
-			// int courseId = Integer.parseInt(inputs[2]);
+			 String courseName = inputs[1];
+			 int courseId = Integer.parseInt(inputs[2]);
 			switch (choice) {
 				case 1:
-					// String searchedCourse = model.searchCourse(courseName, courseId);
-					// socketOut.println(searchedCourse);
+					 String searchedCourse = model.searchCourse(courseName, courseId);
+					 socketOut.println(searchedCourse);
 					socketOut.println("Option 1");
 					break;
 				case 2:
-					// model.addCourse(courseName, courseId);
+					 String addedCourse = model.addCourse(courseName, courseId);
+					 socketOut.println(addedCourse);
 					socketOut.println("option 2");
 					break;
 				case 3:
-					// model.removeCourse(courseName, courseId);
+					String remove = model.removeCourse(courseName, courseId);
+					socketOut.println(remove);
 					socketOut.println("option 3");
 					break;
 				case 4:
-					// String fullCatalogue = model.viewAllCourses();
-					// socketOut.println(fullCatalogue);
+					 String fullCatalogue = model.viewAllCourses();
+					 socketOut.println(fullCatalogue);
 					socketOut.println("option 4");
 					break;
 				case 5:
-					// String takenCourses = model.coursesTaken();
-					// socketOut.println(takenCourses);
+					 String takenCourses = model.coursesTaken();
+					 socketOut.println(takenCourses);
 					socketOut.println("option 5");
 					break;
 				default:
@@ -98,6 +100,7 @@ public class ServerCommunication {
 
 	public static void main(String[] args) {
 		ServerCommunication serverCom = new ServerCommunication(9898);
+		System.out.println("Server is initialized...waiting for connection \n");
 		serverCom.initializeServer();
 		serverCom.runServer();
 	}
