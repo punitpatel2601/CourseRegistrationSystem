@@ -14,20 +14,25 @@ public class ServerCommunication {
 	private PrintWriter socketOut; // msg to read from socket
 	private ExecutorService pool; // threadpool
 	private Model model;
+	private boolean running;
 
 	public ServerCommunication(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
 			pool = Executors.newCachedThreadPool();
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Server is initialized!!	waiting for connection... ");
+		} catch (Exception e) {
+			e.getMessage();
 		}
 		model = new Model();
+		running = true;
+		initializeServer(); // initialize server with client
+		runServer(); // run the server
 	}
 
 	public void initializeServer() {
 		try {
-			aSocket = serverSocket.accept();
+			aSocket = serverSocket.accept(); // checks if client joined
 			System.out.println("Connection accepted by server!");
 			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
 			socketOut = new PrintWriter(aSocket.getOutputStream(), true);
@@ -38,24 +43,25 @@ public class ServerCommunication {
 
 	public void runServer() {
 		String line = "";
-		boolean running = true;
+
 		while (running) {
 			// System.out.println("\n");
 			try {
 				line = socketIn.readLine();
 			} catch (Exception e) {
-				e.printStackTrace();
 				running = false;
+				e.getMessage();
 			}
 
-			if (line.isEmpty() || line == null) {
+			if (line.isEmpty() || line == null) { // double checks for wrong input in server
+				System.out.println("Invalid request string.");
 				break;
 			}
 
-			String[] inputs = line.split(" ");
-			int choice = Integer.parseInt(inputs[0]);
-			String courseName = inputs[1];
-			int courseId = Integer.parseInt(inputs[2]);
+			String[] inputs = line.split(" "); // splits input string into different command and argument strings
+			int choice = Integer.parseInt(inputs[0]); // commandString
+			String courseName = inputs[1]; // args String
+			int courseId = Integer.parseInt(inputs[2]); // args String
 
 			switch (choice) {
 				case 1:
@@ -99,12 +105,13 @@ public class ServerCommunication {
 		} catch (IOException e) {
 			e.getStackTrace();
 		}
+		System.out.println("Client Disconnected!!");
 	}
 
 	public static void main(String[] args) {
 		ServerCommunication serverCom = new ServerCommunication(9898);
-		System.out.println("Server is initialized...waiting for connection \n");
-		serverCom.initializeServer();
-		serverCom.runServer();
+		if (serverCom.running == true) {
+			serverCom.closeConnection(); // close connection if connection is not closed before in default case
+		}
 	}
 }

@@ -62,7 +62,7 @@ public class Course {
     @Override
     public String toString() {
         String st = "";
-        st += getCourseName() + " " + getCourseNum();
+        st += getCourseName() + " " + getCourseNum() + "#";
 
         return st;
     }

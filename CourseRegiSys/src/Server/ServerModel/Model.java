@@ -6,53 +6,62 @@ import Server.ServerModel.Registration.*;
 
 public class Model {
 
-	CourseCatalogue cat;
+	CourseCatalogue cat; // the database catalogue, contains all courses avaliable
+	CourseCatalogue stuCat; // student selected courses
 
 	public Model() {
 		cat = new CourseCatalogue();
+		stuCat = new CourseCatalogue();
 	}
 
 	public String searchCourse(String courseName, int courseId) {
 		Course courseSearched = cat.searchCat(courseName, courseId);
-		if (courseSearched == null) {
+
+		if (courseSearched == null) { // if not found,display error
 			String serr = cat.displayCourseNotFoundError();
 			return serr;
 		}
 
-		return ("Found course: " + courseSearched.toString());
+		return ("Found course: #" + courseSearched.toString());
 	}
 
 	public String addCourse(String courseName, int courseId) {
-		cat.getCourseList().add(new Course(courseName, courseId));
-		Course confirm = cat.searchCat(courseName, courseId);
+		Course confirm = stuCat.searchCat(courseName, courseId);
 
 		if (confirm == null) {
-			return cat.displayCourseNotAddedError();
+			stuCat.getCourseList().add(new Course(courseName, courseId));
+			addCourse(courseName, courseId);
 		}
 
 		return cat.searchCat(courseName, courseId).toString() + " was successfully added!";
 	}
 
 	public String removeCourse(String courseName, int courseId) {
-		cat.removeCourse(courseName, courseId);
-		Course remove = cat.searchCat(courseName, courseId);
+		Course remove = stuCat.searchCat(courseName, courseId);
+
 		if (remove != null) {
-			return cat.displayCourseNotRemovedError();
+			stuCat.removeCourse(courseName, courseId);
+			removeCourse(courseName, courseId);
 		}
 
-		return "Course: " + courseName + " was successfully removed!";
+		return ("Course: " + courseName + " was successfully removed!");
 	}
 
 	public String viewAllCourses() {
+		if (cat.getCourseList().isEmpty()) {
+			return ("Critical Error: No DataBase Found!!");
+		}
 		return cat.toString(); // if null?
 	}
 
 	public String coursesTaken() {
-		ArrayList<Course> courses = cat.coursesTaken();
+		ArrayList<Course> courses = stuCat.coursesTaken();
 		String takenCourses = "";
+
 		for (Course c : courses) {
-			takenCourses += c.toString();
+			takenCourses += c.toString() + "#";
 		}
+
 		return takenCourses;
 	}
 

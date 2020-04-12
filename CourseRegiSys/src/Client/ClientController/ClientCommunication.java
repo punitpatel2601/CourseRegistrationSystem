@@ -9,11 +9,15 @@ import java.net.Socket;
 import Client.ClientView.ClientGUI;
 
 public class ClientCommunication {
-	private Socket aSocket;
+	private Socket aSocket; // socket
 	private PrintWriter socketOut; // msg to send to server
 	private BufferedReader socketIn; // msg to read from socket
+	private String ret; // return string to clientGUI
 
 	public ClientCommunication(String serverName, int port) {
+		ret = "";
+		new ClientGUI(this);
+
 		try {
 			aSocket = new Socket(serverName, port);
 			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
@@ -23,85 +27,70 @@ public class ClientCommunication {
 		}
 	}
 
-	public String communicate(String line) {
-		String response = "";
+	public String searchCourse(String name, int id) {
+		String line = "1 ";
+		line += name + " " + id;
+		ret = communicate(line);
 
-		try {
-			socketOut.println(line);
-			response = socketIn.readLine();
-			System.out.println(response);
-		} catch (Exception e) {
-			System.out.println("Sending error: " + e.getMessage());
-		}
-		return response;
-	}
-
-	public String showStudentCourses() {
-		String ret = communicate("1 stuCourses 0");
-		System.out.println("this -> " + ret);
 		return ret;
 	}
 
-	public String viewAllCourses() {
-		String ret = communicate("2 allCourses 0");
-		System.out.println("this -> " + ret);
+	public String addCourse(String name, int id) {
+		String line = "2 ";
+		line += name + " " + id;
+		ret = communicate(line);
+
 		return ret;
 	}
 
 	public String removeCourse(String name, int id) {
-		String ret = "";
-		if (checkError(name, id)) {
-			String line = "3";
-			line = line + " " + name + " " + id;
-			ret = communicate(line);
-		} else {
-			ret = null;
-		}
+		String line = "3 ";
+		line += name + " " + id;
+		ret = communicate(line);
+
 		return ("Course removed, " + ret);
 	}
 
-	public String addCourse(String name, int id) {
-		String ret = "";
-		if (checkError(name, id) == false) {
-			String line = "4";
-			line = line + " " + name + " " + id;
-			ret = communicate(line);
-		} else {
-			ret = null;
-		}
+	public String viewAllCourses() {
+		ret = communicate("4 allCourses 0");
+		System.out.println("this -> " + ret);
+
 		return ret;
 	}
 
-	public String searchCourse(String name, int id) {
-		String ret = "";
-		if (checkError(name, id) == false) {
-			String line = "5";
-			line = line + " " + name + " " + id;
-			ret = communicate(line);
-		} else {
-			ret = null;
-		}
-		return ret;
-	}
+	public String showStudentCourses() {
+		ret = communicate("5 stuCourses 0");
+		System.out.println("this -> " + ret);
 
-	public boolean checkError(String name, int id) {
-		if (name.isEmpty() || name == null || id == -1) {
-			return true;
-		}
-		return false;
+		return ret;
 	}
 
 	public void closeCon() {
+		communicate("6 closeCon 0");
 		try {
 			socketIn.close();
 			socketOut.close();
-		} catch (IOException e) {
+			System.out.println("Server connection aborted!!");
+		} catch (Exception e) {
 			e.getStackTrace();
 		}
 	}
 
+	public String communicate(String line) {
+		String response = "";
+
+		try {
+			socketOut.println(line); // sending info string to server
+			response = socketIn.readLine(); // recieving info string from server
+			System.out.println(response);
+		} catch (Exception e) {
+			System.out.println("Error in sending/receiving data to/from server\nError name: " + e.getMessage());
+		}
+
+		return response;
+	}
+
 	public static void main(String[] args) {
-		ClientCommunication clientCom = new ClientCommunication("localhost", 9898);
-		ClientGUI cgi = new ClientGUI(clientCom);
+		new ClientCommunication("localhost", 9898); // start new client
 	}
 }
