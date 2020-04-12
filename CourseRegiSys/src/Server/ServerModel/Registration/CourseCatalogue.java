@@ -8,8 +8,11 @@ public class CourseCatalogue {
     public CourseCatalogue() {
         DBManager db = new DBManager();
         courseList = new ArrayList<Course>();
-        courseList = db.readFromDataBase();
-    }
+        courseList = db.getCourseList();
+        /*
+         * for (int i = 0; i < courseList.size(); i++) {
+         * System.out.println(courseList.get(i).getCourseName()); }
+         */ }
 
     public void createCourseOffering(Course c, int secNum, int secCap) {
         if (c != null) {
@@ -45,10 +48,6 @@ public class CourseCatalogue {
 
     public ArrayList<Course> getCourseList() {
         return courseList;
-    }
-
-    public void setCourseList(ArrayList<Course> courseList) {
-        this.courseList = courseList;
     }
 
     @Override

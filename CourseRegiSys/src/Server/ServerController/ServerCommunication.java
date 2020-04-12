@@ -40,13 +40,14 @@ public class ServerCommunication {
 		String line = "";
 		boolean running = true;
 		while (running) {
-			System.out.println("\n");
+			// System.out.println("\n");
 			try {
 				line = socketIn.readLine();
 			} catch (Exception e) {
 				e.printStackTrace();
 				running = false;
 			}
+
 			if (line.isEmpty() || line == null) {
 				break;
 			}

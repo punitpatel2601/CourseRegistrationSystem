@@ -8,18 +8,16 @@ import java.util.Scanner;
 
 public class DBManager {
 	ArrayList<Course> courseList;
-	Scanner scan;
-	String fileName;
 
 	public DBManager() {
 		courseList = new ArrayList<Course>();
-
+		readFromDataBase();
 	}
 
-	public ArrayList<Course> readFromDataBase() {
+	public void readFromDataBase() {
 		try {
 			FileReader fr = new FileReader("courses.txt");
-			scan = new Scanner(fr);
+			Scanner scan = new Scanner(fr);
 			String line;
 			while (scan.hasNextLine()) {
 				line = scan.nextLine();
@@ -33,6 +31,10 @@ public class DBManager {
 		 * for (int i = 0; i < courseList.size(); i++) {
 		 * System.out.println(courseList.get(i).getCourseName()); }
 		 */
+
+	}
+
+	public ArrayList<Course> getCourseList() {
 		return courseList;
 	}
 }

@@ -61,13 +61,9 @@ public class Course {
 
     @Override
     public String toString() {
-        String st = "\n";
+        String st = "";
         st += getCourseName() + " " + getCourseNum();
-        st += "\nAll course sections:\n";
-        for (CourseOffering c : offeringList) {
-            st += c;
-        }
-        st += "\n-------\n";
+
         return st;
     }
 

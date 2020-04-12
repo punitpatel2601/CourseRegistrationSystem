@@ -18,6 +18,8 @@ public class ClientGUI extends JFrame {
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
         jta = new JTextArea();
+        jta.setLineWrap(true);
+        jta.setWrapStyleWord(true);
         prepareGUI();
     }
 

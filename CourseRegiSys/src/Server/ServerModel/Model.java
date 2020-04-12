@@ -19,7 +19,7 @@ public class Model {
 			return serr;
 		}
 
-		return courseSearched.toString();
+		return ("Found course: " + courseSearched.toString());
 	}
 
 	public String addCourse(String courseName, int courseId) {
