@@ -54,20 +54,16 @@ public class ClientCommunication {
 		line += name + " " + id;
 		ret = communicate(line);
 
-		return ("Course removed, " + ret);
+		return ret;
 	}
 
 	public String viewAllCourses() {
 		ret = communicate("4 allCourses 0");
-		System.out.println("this -> " + ret);
-
 		return ret;
 	}
 
 	public String showStudentCourses() {
 		ret = communicate("5 stuCourses 0");
-		System.out.println("this -> " + ret);
-
 		return ret;
 	}
 
@@ -87,7 +83,7 @@ public class ClientCommunication {
 
 		try {
 			socketOut.println(line); // sending info string to server
-			response = socketIn.readLine(); // recieving info string from server
+			response = socketIn.readLine(); // receiving info string from server
 			System.out.println(response);
 		} catch (Exception e) {
 			System.out.println("Error in sending/receiving data to/from server\nError name: " + e.getMessage());

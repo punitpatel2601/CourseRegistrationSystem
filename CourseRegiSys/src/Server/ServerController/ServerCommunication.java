@@ -4,22 +4,22 @@ import Server.ServerModel.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+//import java.util.concurrent.ExecutorService;
+//import java.util.concurrent.Executors;
 
 public class ServerCommunication {
 	private ServerSocket serverSocket; // server socket
 	private Socket aSocket; // socket to which client is binded to
 	private BufferedReader socketIn; // msg to write to client
 	private PrintWriter socketOut; // msg to read from socket
-	private ExecutorService pool; // threadpool
+	//private ExecutorService pool; // threadpool
 	private Model model;
 	private boolean running;
 
 	public ServerCommunication(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
-			pool = Executors.newCachedThreadPool();
+			//pool = Executors.newCachedThreadPool();
 			System.out.println("Server is initialized!!	waiting for connection... ");
 		} catch (Exception e) {
 			e.getMessage();
@@ -63,10 +63,12 @@ public class ServerCommunication {
 			String courseName = inputs[1]; // args String
 			int courseId = Integer.parseInt(inputs[2]); // args String
 			int secNum = Integer.parseInt(inputs[3]);
+			System.out.println(inputs[0] + " " + inputs[1] + " " + inputs[2]);
 
 			switch (choice) {
 				case 0:
 					model.initializeStudent(courseName, courseId);
+					socketOut.println("Hello " + courseName);
 				case 1:
 					String searchedCourse = model.searchCourse(courseName, courseId);
 					socketOut.println(searchedCourse);

@@ -3,8 +3,6 @@ package Client.ClientView;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,7 +14,8 @@ import javax.swing.JTextArea;
 import Client.ClientController.ClientCommunication;
 
 public class ClientGUI extends JFrame {
-    private ClientCommunication actions;
+	private static final long serialVersionUID = 1L;
+	private ClientCommunication actions;
     private JTextArea jta;
     private String cName;
     private int cID;

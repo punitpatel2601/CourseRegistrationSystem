@@ -1,7 +1,5 @@
 package Server.ServerModel;
 
-import java.util.ArrayList;
-
 import Server.ServerModel.Registration.*;
 
 public class Model {

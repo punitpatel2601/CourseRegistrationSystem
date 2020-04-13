@@ -31,20 +31,9 @@ public class CourseCatalogue {
 
         return null;
     }
-
-    // Typically, methods that are called from other methods of the class
-    // are private and are not exposed for use by other classes.
-    // These methods are refereed to as helper methods or utility methods
+    
     public String displayCourseNotFoundError() {
         return "Course/s was not found!# #It does not exists.";
-    }
-
-    public String displayCourseNotAddedError() {
-        return ("Course was not added!# #Please view our catalogue to see all courses avaliable.");
-    }
-
-    public String displayCourseNotRemovedError() {
-        return ("Course was not removed!# #Please recheck the course or#It might have been removed already");
     }
 
     public ArrayList<Course> getCourseList() {
@@ -58,16 +47,6 @@ public class CourseCatalogue {
             st += "#" + c.getCourseName() + " " + c.getCourseNum(); // This line invokes the toString() method
         }
         return st;
-    }
-
-    public ArrayList<Course> coursesTaken() {
-        ArrayList<Course> courses = new ArrayList<Course>();
-        for (Course c : courseList) {
-            if (c.checkStudentNumber() != 0) {
-                courses.add(c);
-            }
-        }
-        return courses;
     }
 
     public void removeCourse(String coursename, int coursenum) {
