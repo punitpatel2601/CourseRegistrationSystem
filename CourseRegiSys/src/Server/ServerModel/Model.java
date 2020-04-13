@@ -10,8 +10,8 @@ public class Model {
 	CourseCatalogue stuCat; // student selected courses
 
 	public Model() {
-		cat = new CourseCatalogue();
-		stuCat = new CourseCatalogue();
+		cat = new CourseCatalogue(true);
+		stuCat = new CourseCatalogue(false);
 	}
 
 	public String searchCourse(String courseName, int courseId) {
@@ -26,25 +26,34 @@ public class Model {
 	}
 
 	public String addCourse(String courseName, int courseId) {
-		Course confirm = stuCat.searchCat(courseName, courseId);
-
+		Course confirm = cat.searchCat(courseName, courseId);
 		if (confirm == null) {
-			stuCat.getCourseList().add(new Course(courseName, courseId));
-			addCourse(courseName, courseId);
+			return stuCat.displayCourseNotAddedError();
 		}
 
-		return cat.searchCat(courseName, courseId).toString() + " was successfully added!";
+		confirm = stuCat.searchCat(courseName, courseId);
+		if (confirm != null) {
+			return stuCat.displayCourseNotAddedError();
+		}
+
+		stuCat.getCourseList().add(cat.searchCat(courseName, courseId));
+
+		return (stuCat.searchCat(courseName, courseId).toString() + " was successfully added!# # #" + coursesTaken());
 	}
 
 	public String removeCourse(String courseName, int courseId) {
 		Course remove = stuCat.searchCat(courseName, courseId);
+		if (remove == null) {
+			return stuCat.displayCourseNotRemovedError();
+		}
+		stuCat.removeCourse(courseName, courseId);
 
+		remove = stuCat.searchCat(courseName, courseId);
 		if (remove != null) {
-			stuCat.removeCourse(courseName, courseId);
-			removeCourse(courseName, courseId);
+			return stuCat.displayCourseNotRemovedError();
 		}
 
-		return ("Course: " + courseName + " was successfully removed!");
+		return ("Course: " + courseName + " was successfully removed!# # #" + coursesTaken());
 	}
 
 	public String viewAllCourses() {
@@ -55,11 +64,16 @@ public class Model {
 	}
 
 	public String coursesTaken() {
-		ArrayList<Course> courses = stuCat.coursesTaken();
-		String takenCourses = "";
+		// ArrayList<Course> courses = stuCat.coursesTaken();
 
-		for (Course c : courses) {
-			takenCourses += c.toString() + "#";
+		if (stuCat.getCourseList().isEmpty()) {
+			return stuCat.displayCourseNotFoundError();
+		}
+
+		String takenCourses = "Courses taken by the student are:# #";
+
+		for (Course c : stuCat.getCourseList()) {
+			takenCourses += c.toString();
 		}
 
 		return takenCourses;

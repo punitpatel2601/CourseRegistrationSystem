@@ -32,7 +32,7 @@ public class DBManager {
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File Error");
+			System.out.println("File Error: file not found!!");
 		}
 		/*
 		 * for (int i = 0; i < courseList.size(); i++) {

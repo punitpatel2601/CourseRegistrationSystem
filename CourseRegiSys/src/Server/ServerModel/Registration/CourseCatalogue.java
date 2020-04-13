@@ -5,14 +5,17 @@ import java.util.ArrayList;
 public class CourseCatalogue {
     private ArrayList<Course> courseList;
 
-    public CourseCatalogue() {
-        DBManager db = new DBManager();
+    public CourseCatalogue(boolean activation) {
         courseList = new ArrayList<Course>();
-        courseList = db.getCourseList();
-        /*
-         * for (int i = 0; i < courseList.size(); i++) {
-         * System.out.println(courseList.get(i).getCourseName()); }
-         */ }
+        if (activation == true) {
+            DBManager db = new DBManager();
+            courseList = db.getCourseList();
+            /*
+             * for (int i = 0; i < courseList.size(); i++) {
+             * System.out.println(courseList.get(i).getCourseName()); }
+             */
+        }
+    }
 
     public void createCourseOffering(Course c, int secNum, int secCap) {
         if (c != null) {
@@ -35,15 +38,15 @@ public class CourseCatalogue {
     // are private and are not exposed for use by other classes.
     // These methods are refereed to as helper methods or utility methods
     public String displayCourseNotFoundError() {
-        return "Course was not found!";
+        return "Course/s was not found!# #It does not exists.";
     }
 
     public String displayCourseNotAddedError() {
-        return "Course was not added!";
+        return ("Course was not added!# #Please view our catalogue to see all courses avaliable.");
     }
 
     public String displayCourseNotRemovedError() {
-        return "Course was not removed!";
+        return ("Course was not removed!# #Please recheck the course or#It might have been removed already");
     }
 
     public ArrayList<Course> getCourseList() {
@@ -54,8 +57,7 @@ public class CourseCatalogue {
     public String toString() {
         String st = "All courses in the catalogue: #";
         for (Course c : courseList) {
-            st += " " + c.getCourseName() + " " + c.getCourseNum(); // This line invokes the toString() method of Course
-            st += "#";
+            st += "#" + c.getCourseName() + " " + c.getCourseNum(); // This line invokes the toString() method
         }
         return st;
     }

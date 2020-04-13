@@ -1,9 +1,8 @@
 package Client.ClientView;
 
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,6 +23,7 @@ public class ClientGUI extends JFrame {
         actions = ccm;
         jta = new JTextArea(
                 "Welcome!\n This is a course registration system (beta).\n Please select from options below.");
+        jta.setMargin(new Insets(3, 7, 3, 5));
         // jta.setLineWrap(true);
         // jta.setWrapStyleWord(true);
         prepareGUI();
@@ -47,10 +47,10 @@ public class ClientGUI extends JFrame {
         jp.setLayout(new BoxLayout(jp, 1));
 
         JButton search = new JButton("Search courses in Course Catalogue");
-        JButton addCourse = new JButton("Add course to student' course");
-        JButton remove = new JButton("Remove course from student's courses");
+        JButton addCourse = new JButton("Add course to Student's course");
+        JButton remove = new JButton("Remove course from Student's courses");
         JButton viewAll = new JButton("View all the courses in Catalogue");
-        JButton viewStuCourses = new JButton("View all the courses taken by students");
+        JButton viewStuCourses = new JButton("View all the courses taken by Student");
         JButton quit = new JButton("Quit the application");
 
         jp.add(new JLabel(" ")); // creating spaces between buttons
@@ -152,6 +152,8 @@ public class ClientGUI extends JFrame {
             return; // don't ask for id input if name not entered correctly
         }
         this.cID = callInputForID();
+
+        this.cName.toUpperCase();
     }
 
     private int callInputForID() {
