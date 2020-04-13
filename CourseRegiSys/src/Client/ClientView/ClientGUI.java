@@ -18,6 +18,7 @@ public class ClientGUI extends JFrame {
     private JTextArea jta;
     private String cName;
     private int cID;
+    private int cSec;
 
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
@@ -132,9 +133,9 @@ public class ClientGUI extends JFrame {
 
     private String addTheCourse() {
         callForInput();
-        System.out.println(cName + "\t" + cID);
+        System.out.println(cName + "\t" + cID + "\t" + cSec);
 
-        return actions.addCourse(cName, cID);
+        return actions.addCourse(cName, cID, cSec);
     }
 
     private String searchCourse() {
@@ -152,8 +153,20 @@ public class ClientGUI extends JFrame {
             return; // don't ask for id input if name not entered correctly
         }
         this.cID = callInputForID();
+        this.cSec = callInputForSection();
 
         this.cName.toUpperCase();
+    }
+    
+    private int callInputForSection() {
+    	int sec = 1;
+    	try {
+    		sec = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the Section Number: "));
+    	} catch (Exception e) {
+    		JOptionPane.showMessageDialog(null, "Invalid section entered, Please try again", "Error",
+    									  JOptionPane.ERROR_MESSAGE);
+    	}
+    	return sec;
     }
 
     private int callInputForID() {

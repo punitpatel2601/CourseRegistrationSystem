@@ -5,16 +5,14 @@ import java.util.ArrayList;
 public class CourseCatalogue {
     private ArrayList<Course> courseList;
 
-    public CourseCatalogue(boolean activation) {
+    public CourseCatalogue() {
         courseList = new ArrayList<Course>();
-        if (activation == true) {
             DBManager db = new DBManager();
             courseList = db.getCourseList();
             /*
              * for (int i = 0; i < courseList.size(); i++) {
              * System.out.println(courseList.get(i).getCourseName()); }
              */
-        }
     }
 
     public void createCourseOffering(Course c, int secNum, int secCap) {

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public class Student {
     private String studentName;
     private int studentId;
-    @SuppressWarnings("unused")
-    private ArrayList<CourseOffering> offeringList;
     private ArrayList<Registration> studentRegList;
 
     public Student(String studentName, int studentId) {
@@ -46,7 +44,7 @@ public class Student {
     }
 
     public boolean maxCourse() {
-        if (this.studentRegList.size() > 6)
+        if (this.studentRegList.size() < 6)
             return false;
         return true;
     }

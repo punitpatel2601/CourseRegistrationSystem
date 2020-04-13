@@ -62,6 +62,7 @@ public class ServerCommunication {
 			int choice = Integer.parseInt(inputs[0]); // commandString
 			String courseName = inputs[1]; // args String
 			int courseId = Integer.parseInt(inputs[2]); // args String
+			int secNum = Integer.parseInt(inputs[3]);
 
 			switch (choice) {
 				case 1:
@@ -70,7 +71,7 @@ public class ServerCommunication {
 					// socketOut.println("Option 1");
 					break;
 				case 2:
-					String addedCourse = model.addCourse(courseName, courseId);
+					String addedCourse = model.addCourse(courseName, courseId, secNum);
 					socketOut.println(addedCourse);
 					// socketOut.println("option 2");
 					break;

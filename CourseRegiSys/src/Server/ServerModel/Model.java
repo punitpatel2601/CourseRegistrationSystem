@@ -6,12 +6,12 @@ import Server.ServerModel.Registration.*;
 
 public class Model {
 
-	CourseCatalogue cat; // the database catalogue, contains all courses avaliable
-	CourseCatalogue stuCat; // student selected courses
+	private CourseCatalogue cat; // the database catalogue, contains all courses avaliable
+	private ArrayList<Registration> stuRegs; // student registrations
 
 	public Model() {
-		cat = new CourseCatalogue(true);
-		stuCat = new CourseCatalogue(false);
+		cat = new CourseCatalogue();
+		stuRegs = new ArrayList<Registration>();
 	}
 
 	public String searchCourse(String courseName, int courseId) {
@@ -25,10 +25,14 @@ public class Model {
 		return ("Found course: #" + courseSearched.toString());
 	}
 
-	public String addCourse(String courseName, int courseId) {
-		Course confirm = cat.searchCat(courseName, courseId);
-		if (confirm == null) {
-			return stuCat.displayCourseNotAddedError();
+	public String addCourse(String courseName, int courseId, int secNum) {
+		Course c = cat.searchCat(courseName, courseId);
+		Registration reg = new Registration();
+		
+		
+		/*
+		Course c = cat.searchCat(courseName, courseId);
+		
 		}
 
 		confirm = stuCat.searchCat(courseName, courseId);
@@ -39,6 +43,7 @@ public class Model {
 		stuCat.getCourseList().add(cat.searchCat(courseName, courseId));
 
 		return (stuCat.searchCat(courseName, courseId).toString() + " was successfully added!# # #" + coursesTaken());
+		*/
 	}
 
 	public String removeCourse(String courseName, int courseId) {

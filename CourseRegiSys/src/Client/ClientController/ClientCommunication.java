@@ -35,9 +35,9 @@ public class ClientCommunication {
 		return ret;
 	}
 
-	public String addCourse(String name, int id) {
+	public String addCourse(String name, int id, int sec) {
 		String line = "2 ";
-		line += name + " " + id;
+		line += name + " " + id + " " + sec;
 		ret = communicate(line);
 
 		return ret;
