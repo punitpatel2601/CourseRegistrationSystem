@@ -36,7 +36,7 @@ public class CourseOffering {
         return theCourse;
     }
 
-    public void setCourse(Course course) {
+    public void setTheCourse(Course course) {
         theCourse = course;
     }
 
@@ -61,9 +61,6 @@ public class CourseOffering {
     public void removeMaxOffering() {
         offeringRegList.remove(offeringRegList.size() - 1);
         studentList.remove(studentList.size() - 1);
-    }
-
-    public void setTheCourse(Course course) {
     }
 
 }

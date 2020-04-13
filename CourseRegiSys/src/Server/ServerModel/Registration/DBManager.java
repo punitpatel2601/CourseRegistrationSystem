@@ -1,6 +1,5 @@
 package Server.ServerModel.Registration;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -22,8 +21,16 @@ public class DBManager {
 			while (scan.hasNextLine()) {
 				line = scan.nextLine();
 				String[] inputs = line.split(" ");
-				courseList.add(new Course(inputs[0], Integer.parseInt(inputs[1])));
+				int courseNum = Integer.parseInt(inputs[1]);
+				int secNum = Integer.parseInt(inputs[2]);
+				int secCap = Integer.parseInt(inputs[3]);
+				Course c = new Course(inputs[0], courseNum);
+				for (int i = 1; i <= secNum; i++) {
+					c.addOffering(new CourseOffering(i, secCap));
+				}
+				courseList.add(c);
 			}
+			scan.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File Error");
 		}
