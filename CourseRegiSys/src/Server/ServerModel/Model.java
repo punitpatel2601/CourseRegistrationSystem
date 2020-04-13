@@ -7,11 +7,14 @@ import Server.ServerModel.Registration.*;
 public class Model {
 
 	private CourseCatalogue cat; // the database catalogue, contains all courses avaliable
-	private ArrayList<Registration> stuRegs; // student registrations
+	private Student theStudent; // the student/user
 
 	public Model() {
 		cat = new CourseCatalogue();
-		stuRegs = new ArrayList<Registration>();
+	}
+	
+	public void initializeStudent(String studentName, int studentId) {
+		theStudent = new Student(studentName, studentId);
 	}
 
 	public String searchCourse(String courseName, int courseId) {
@@ -22,70 +25,45 @@ public class Model {
 			return serr;
 		}
 
-		return ("Found course: #" + courseSearched.toString());
+		return ("Found course: " + courseSearched.toString());
 	}
 
 	public String addCourse(String courseName, int courseId, int secNum) {
-		Course c = cat.searchCat(courseName, courseId);
+		Course add = cat.searchCat(courseName, courseId);
 		Registration reg = new Registration();
-		
-		
-		/*
-		Course c = cat.searchCat(courseName, courseId);
-		
-		}
-
-		confirm = stuCat.searchCat(courseName, courseId);
-		if (confirm != null) {
-			return stuCat.displayCourseNotAddedError();
-		}
-
-		stuCat.getCourseList().add(cat.searchCat(courseName, courseId));
-
-		return (stuCat.searchCat(courseName, courseId).toString() + " was successfully added!# # #" + coursesTaken());
-		*/
+		return reg.completeRegistration(theStudent, add.getCourseOfferingAt(secNum - 1));
 	}
 
 	public String removeCourse(String courseName, int courseId) {
-		Course remove = stuCat.searchCat(courseName, courseId);
-		if (remove == null) {
-			return stuCat.displayCourseNotRemovedError();
+		if (theStudent.removeRegistration(courseName)) {
+			return courseName + " " + courseId + " is successfully removed!";
+		} else {
+			return "The course was not found, so it could not be removed!";
 		}
-		stuCat.removeCourse(courseName, courseId);
-
-		remove = stuCat.searchCat(courseName, courseId);
-		if (remove != null) {
-			return stuCat.displayCourseNotRemovedError();
-		}
-
-		return ("Course: " + courseName + " was successfully removed!# # #" + coursesTaken());
 	}
 
 	public String viewAllCourses() {
 		if (cat.getCourseList().isEmpty()) {
 			return ("Critical Error: No DataBase Found!!");
 		}
-		return cat.toString(); // if null?
+		return cat.toString();
+	}
+	
+	public void setTheStudent(String name, int id) {
+		theStudent = new Student(name, id);
 	}
 
 	public String coursesTaken() {
-		// ArrayList<Course> courses = stuCat.coursesTaken();
-
-		if (stuCat.getCourseList().isEmpty()) {
-			return stuCat.displayCourseNotFoundError();
+		if (theStudent.getStudentRegList().isEmpty()) {
+			return "You currently have no courses added.";
 		}
 
-		String takenCourses = "Courses taken by the student are:# #";
+		String takenCourses = "Courses taken by the student are:\n";
 
-		for (Course c : stuCat.getCourseList()) {
-			takenCourses += c.toString();
+		for (Registration r : theStudent.getStudentRegList()) {
+			takenCourses += r.getTheOffering().getTheCourse().toString();
 		}
 
 		return takenCourses;
 	}
-
-	/*
-	 * public static void main(String[] args) { Model m = new Model();
-	 * System.out.println("Model is initialized"); }
-	 */
 }

@@ -38,13 +38,26 @@ public class Student {
     public void addRegistration(Registration registration) {
         studentRegList.add(registration);
     }
+    
+    public boolean removeRegistration(String courseName) {
+    	int count = 0;
+    	boolean removed = false;
+    	for (Registration r : studentRegList) {
+    		if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)) {
+    			studentRegList.remove(count);
+    			removed = true;
+    			break;
+    		}
+    	}
+    	return removed;
+    }
 
     public ArrayList<Registration> getStudentRegList() {
         return studentRegList;
     }
 
     public boolean maxCourse() {
-        if (this.studentRegList.size() < 6)
+        if (this.studentRegList.size() >= 6)
             return false;
         return true;
     }

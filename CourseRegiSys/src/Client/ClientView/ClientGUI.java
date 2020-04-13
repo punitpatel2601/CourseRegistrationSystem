@@ -3,6 +3,8 @@ package Client.ClientView;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,8 @@ public class ClientGUI extends JFrame {
     private String cName;
     private int cID;
     private int cSec;
+    private String studentName;
+    private int studentId;
 
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
@@ -41,6 +45,17 @@ public class ClientGUI extends JFrame {
         add(addButtons());
 
         setVisible(true);
+        getStudentInfo();
+    }
+    
+    private void getStudentInfo() {
+    	try {
+    		studentName = JOptionPane.showInputDialog(null, "Please enter your name");
+    		studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
+    	} catch (Exception e) {
+    		e.getStackTrace();
+    	}
+    	actions.passStudentInfo(studentName, studentId);
     }
 
     public JPanel addButtons() {
@@ -94,7 +109,7 @@ public class ClientGUI extends JFrame {
 
         jta.setText(""); // resetting text area
         if (serverOutput == null) { // checking if null response from server
-            jta.setText("Error in your input, Server didn't respond!!");
+            jta.setText("Error in your input, Server didn't respond!");
             return;
         }
 

@@ -65,6 +65,8 @@ public class ServerCommunication {
 			int secNum = Integer.parseInt(inputs[3]);
 
 			switch (choice) {
+				case 0:
+					model.initializeStudent(courseName, courseId);
 				case 1:
 					String searchedCourse = model.searchCourse(courseName, courseId);
 					socketOut.println(searchedCourse);

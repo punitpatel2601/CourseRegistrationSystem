@@ -3,23 +3,26 @@ package Server.ServerModel.Registration;
 public class Registration {
     private Student theStudent;
     private CourseOffering theOffering;
-    private char grade;
 
-    void completeRegistration(Student st, CourseOffering of) {
-        theStudent = st;
+    public String completeRegistration(Student st, CourseOffering of) {
+        String ret;
+    	theStudent = st;
         theOffering = of;
         addRegistration();
         if (!(theStudent.maxCourse())) {
-            System.out.println(st.getStudentName() + " cannot register for" + of.getTheCourse().getCourseName() + "  "
-                    + of.getTheCourse().getCourseNum()
-                    + " . This student is only allowed to have 6 courses at maximum .");
             theStudent.removeMaxCourse();
             theOffering.removeMaxOffering();
+            ret = "You cannot register for " + of.getTheCourse().getCourseName() + " " + of.getTheCourse().getCourseNum() +
+            		" Section " + of.getSecNum() +  ".\nYou are only allowed to register for a maximum of 6 courses.";
+            
+        } else if (theOffering.numberOfStudentsOffering() >= theOffering.getSecCap()) {
+        	ret = "Sorry! There is currently no available place in " + of.getTheCourse().getCourseName() + " " +
+        			of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
+        } else {
+        	ret = theStudent.getStudentName() + ", you have successfully registered for " + of.getTheCourse().getCourseName() +
+        			" " + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
         }
-        if (theOffering.numberOfStudentsOffering() >= theOffering.getSecCap()) {
-            System.out.println("There is currently no available place in " + of.getTheCourse().getCourseName() + " "
-                    + of.getTheCourse().getCourseNum());
-        }
+        return ret;
     }
 
     private void addRegistration() {
@@ -43,20 +46,11 @@ public class Registration {
         this.theOffering = theOffering;
     }
 
-    public char getGrade() {
-        return grade;
-    }
-
-    public void setGrade(char grade) {
-        this.grade = grade;
-    }
-
     @Override
     public String toString() {
         String st = "\n";
         st += "Student Name: " + getTheStudent() + ".\n";
         st += "The Offering: " + getTheOffering() + ".\n";
-        st += "Grade: " + getGrade();
         st += ".\n------------------\n";
         return st;
     }

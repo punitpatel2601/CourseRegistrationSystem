@@ -60,10 +60,8 @@ public class Course {
 
     @Override
     public String toString() {
-        String st = "";
-        st += getCourseName() + " " + getCourseNum() + "#";
-
-        return st;
+        return getCourseName() + " " + getCourseNum() + "(" + offeringList.size() +
+        " Sections)\n";
     }
 
     public CourseOffering getCourseOfferingAt(int i) {

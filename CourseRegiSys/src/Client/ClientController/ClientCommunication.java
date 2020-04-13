@@ -26,6 +26,12 @@ public class ClientCommunication {
 			e.getStackTrace();
 		}
 	}
+	
+	public void passStudentInfo(String studentName, int studentId) {
+		String line = "0 ";
+		line += studentName + " " + studentId;
+		communicate(line);
+	}
 
 	public String searchCourse(String name, int id) {
 		String line = "1 ";
