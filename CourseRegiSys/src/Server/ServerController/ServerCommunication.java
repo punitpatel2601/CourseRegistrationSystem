@@ -26,12 +26,12 @@ public class ServerCommunication {
 	private Socket aSocket;
 
 	/**
-	 * Message reader to server
+	 * Reader of input from server
 	 */
 	private BufferedReader socketIn;
 
 	/**
-	 * Message sender from server
+	 * Printer of output to server
 	 */
 	private PrintWriter socketOut;
 

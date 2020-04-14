@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Contains logic and datafields to create a CourseCatalogue list which
- * simulates a database
+ * simulates a database of courses.
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020

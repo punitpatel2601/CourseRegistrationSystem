@@ -3,7 +3,7 @@ package Server.ServerModel.Registration;
 import java.util.ArrayList;
 
 /**
- * Provides data fields and methoods to construct a Student object
+ * Provides data fields and methods to construct a Student object
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
