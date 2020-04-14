@@ -5,17 +5,36 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
 import Client.ClientView.ClientGUI;
 
+/**
+ * Creates the clientCommunication class and connects with server to pass the
+ * information , Also acts as actionlistener class for buttons in ClientGUI
+ */
 public class ClientCommunication {
-	private Socket aSocket; // socket
-	private PrintWriter socketOut; // msg to send to server
-	private BufferedReader socketIn; // msg to read from socket
-	private String ret; // return string to clientGUI
 
+	/**
+	 * Socket
+	 */
+	private Socket aSocket;
+
+	/**
+	 * Message sender to server
+	 */
+	private PrintWriter socketOut;
+
+	/**
+	 * Message reader from server
+	 */
+	private BufferedReader socketIn; // msg to read from socket
+
+	/**
+	 * Constructs the object of this class and connects it with server
+	 * 
+	 * @param serverName name of the server
+	 * @param port       port where the server is hosted
+	 */
 	public ClientCommunication(String serverName, int port) {
-		ret = "";
 		new ClientGUI(this);
 
 		try {
@@ -26,49 +45,88 @@ public class ClientCommunication {
 			e.getStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Passes the student information to the server
+	 * 
+	 * @param studentName name of the student
+	 * @param studentId   student id
+	 */
 	public void passStudentInfo(String studentName, int studentId) {
 		String line = "0 ";
-		line += studentName + " " + studentId;
+		line += studentName + " " + studentId + " 0";
 		communicate(line);
 	}
 
+	/**
+	 * Searches the course in server database, returns server response to ClientGUI
+	 * as string
+	 * 
+	 * @param name course name
+	 * @param id   course id
+	 * @return String of server response
+	 */
 	public String searchCourse(String name, int id) {
 		String line = "1 ";
-		line += name + " " + id;
-		ret = communicate(line);
+		line += name + " " + id + " 0";
 
-		return ret;
+		return communicate(line);
 	}
 
+	/**
+	 * Adds new course to student in server, returns server response as string
+	 * 
+	 * @param name course name
+	 * @param id   course id
+	 * @param sec  course section
+	 * @return string of server response
+	 */
 	public String addCourse(String name, int id, int sec) {
 		String line = "2 ";
 		line += name + " " + id + " " + sec;
-		ret = communicate(line);
 
-		return ret;
+		return communicate(line);
 	}
 
+	/**
+	 * removes any course from the student, returns server response
+	 * 
+	 * @param name course name
+	 * @param id   course id
+	 * @return string of server response
+	 */
 	public String removeCourse(String name, int id) {
 		String line = "3 ";
-		line += name + " " + id;
-		ret = communicate(line);
+		line += name + " " + id + " 0";
 
-		return ret;
+		return communicate(line);
 	}
 
+	/**
+	 * shows all the courses by invoking server functions and returning the response
+	 * to ClientGUI
+	 * 
+	 * @return server response string
+	 */
 	public String viewAllCourses() {
-		ret = communicate("4 allCourses 0");
-		return ret;
+		return communicate("4 allCourses 0 0");
 	}
 
+	/**
+	 * shows all the student's courses by invoking server functions and returning
+	 * the response to ClientGUI
+	 * 
+	 * @return server response string
+	 */
 	public String showStudentCourses() {
-		ret = communicate("5 stuCourses 0");
-		return ret;
+		return communicate("5 stuCourses 0 0");
 	}
 
+	/**
+	 * Closes the connection to server and turns off the server
+	 */
 	public void closeCon() {
-		communicate("6 closeCon 0");
+		communicate("6 closeCon 0 0");
 		try {
 			socketIn.close();
 			socketOut.close();
@@ -78,6 +136,12 @@ public class ClientCommunication {
 		}
 	}
 
+	/**
+	 * helps other functions to send the data to server
+	 * 
+	 * @param line string containing commands and arugment to server
+	 * @return server response
+	 */
 	public String communicate(String line) {
 		String response = "";
 
@@ -92,6 +156,11 @@ public class ClientCommunication {
 		return response;
 	}
 
+	/**
+	 * Runs the client side
+	 * 
+	 * @param args String argument
+	 */
 	public static void main(String[] args) {
 		new ClientCommunication("localhost", 9898); // start new client
 	}

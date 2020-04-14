@@ -7,32 +7,72 @@ import java.net.Socket;
 //import java.util.concurrent.ExecutorService;
 //import java.util.concurrent.Executors;
 
+/**
+ * Creates the object instances of the class and connects with client to get and
+ * pass the informations requested by the user
+ */
 public class ServerCommunication {
-	private ServerSocket serverSocket; // server socket
-	private Socket aSocket; // socket to which client is binded to
-	private BufferedReader socketIn; // msg to write to client
-	private PrintWriter socketOut; // msg to read from socket
-	//private ExecutorService pool; // threadpool
+	/**
+	 * server Socket
+	 */
+	private ServerSocket serverSocket;
+
+	/**
+	 * Socket where client connects
+	 */
+	private Socket aSocket;
+
+	/**
+	 * Message reader to server
+	 */
+	private BufferedReader socketIn;
+
+	/**
+	 * Message sender from server
+	 */
+	private PrintWriter socketOut;
+
+	/**
+	 * Threadpool to runs multiple clients(coming soon)
+	 */
+	// private ExecutorService pool;
+
+	/**
+	 * Instance of class Model
+	 */
 	private Model model;
+
+	/**
+	 * boolean to check if server is running
+	 */
 	private boolean running;
 
+	/**
+	 * Initializes the server object, also calls other functions which connects to
+	 * client
+	 * 
+	 * @param port port where server is hosted
+	 */
 	public ServerCommunication(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
-			//pool = Executors.newCachedThreadPool();
+			// pool = Executors.newCachedThreadPool();
 			System.out.println("Server is initialized!!	waiting for connection... ");
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		model = new Model();
 		running = true;
-		initializeServer(); // initialize server with client
+		initializeServer(); // initialize server with a client
 		runServer(); // run the server
 	}
 
+	/**
+	 * Connects to the client, defines the input and output paths
+	 */
 	public void initializeServer() {
 		try {
-			aSocket = serverSocket.accept(); // checks if client joined
+			aSocket = serverSocket.accept(); // client joining
 			System.out.println("Connection accepted by server!");
 			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
 			socketOut = new PrintWriter(aSocket.getOutputStream(), true);
@@ -41,6 +81,9 @@ public class ServerCommunication {
 		}
 	}
 
+	/**
+	 * Runs the server, reads the commands from clients and sends the response back
+	 */
 	public void runServer() {
 		String line = "";
 
@@ -60,27 +103,25 @@ public class ServerCommunication {
 
 			String[] inputs = line.split(" "); // splits input string into different command and argument strings
 			int choice = Integer.parseInt(inputs[0]); // commandString
-			String courseName = inputs[1]; // args String
-			int courseId = Integer.parseInt(inputs[2]); // args String
-			int secNum = Integer.parseInt(inputs[3]);
-			System.out.println(inputs[0] + " " + inputs[1] + " " + inputs[2]);
+			String name = inputs[1]; // args String passed into int
+			int id = Integer.parseInt(inputs[2]); // args String
+			int secNum = Integer.parseInt(inputs[3]); // args String passed into int
 
 			switch (choice) {
 				case 0:
-					model.initializeStudent(courseName, courseId);
-					socketOut.println("Hello " + courseName);
+					model.initializeStudent(name, id);
 				case 1:
-					String searchedCourse = model.searchCourse(courseName, courseId);
+					String searchedCourse = model.searchCourse(name, id);
 					socketOut.println(searchedCourse);
 					// socketOut.println("Option 1");
 					break;
 				case 2:
-					String addedCourse = model.addCourse(courseName, courseId, secNum);
+					String addedCourse = model.addCourse(name, id, secNum);
 					socketOut.println(addedCourse);
 					// socketOut.println("option 2");
 					break;
 				case 3:
-					String remove = model.removeCourse(courseName, courseId);
+					String remove = model.removeCourse(name, id);
 					socketOut.println(remove);
 					// socketOut.println("option 3");
 					break;
@@ -103,6 +144,9 @@ public class ServerCommunication {
 		}
 	}
 
+	/**
+	 * Closes the connection with client
+	 */
 	public void closeConnection() {
 		try {
 			socketIn.close();
@@ -113,6 +157,11 @@ public class ServerCommunication {
 		System.out.println("Client Disconnected!!");
 	}
 
+	/**
+	 * Runs the server side
+	 * 
+	 * @param args String argument
+	 */
 	public static void main(String[] args) {
 		ServerCommunication serverCom = new ServerCommunication(9898);
 		if (serverCom.running == true) {
