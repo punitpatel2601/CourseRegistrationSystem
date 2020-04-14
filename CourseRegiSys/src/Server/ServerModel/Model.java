@@ -115,7 +115,8 @@ public class Model {
 		String takenCourses = "Current Courses taken by the student are: #";
 
 		for (Registration r : theStudent.getStudentRegList()) {
-			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + r.getTheOffering().getSecNum();
+			takenCourses += r.getTheOffering().getTheCourse().toString() + " in Section "
+					+ r.getTheOffering().getSecNum() + "#";
 		}
 
 		return takenCourses;
