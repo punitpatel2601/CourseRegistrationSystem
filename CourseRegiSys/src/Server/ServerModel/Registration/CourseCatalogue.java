@@ -3,7 +3,7 @@ package Server.ServerModel.Registration;
 import java.util.ArrayList;
 
 /**
- * Contains logic and datafields to create a CourseCatalogue list which
+ * Contains logic and data-fields to create a CourseCatalogue list which
  * simulates a database of courses.
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
@@ -29,7 +29,7 @@ public class CourseCatalogue {
     }
 
     /**
-     * Creates a new CourseOffering for a specifed Course
+     * Creates a new CourseOffering for a specified Course
      * @param c
      * @param secNum
      * @param secCap
@@ -83,7 +83,7 @@ public class CourseCatalogue {
     }
 
     /**
-     * removes specifed course from Course list
+     * removes specified course from Course list
      * @param coursename
      * @param coursenum
      */
@@ -95,7 +95,7 @@ public class CourseCatalogue {
     }
 
     /**
-     * gets the index where specifed Course is located within CourseCatalogue list
+     * gets the index where specified Course is located within CourseCatalogue list
      * @param cname
      * @param cid
      * @return int value representing index
@@ -122,7 +122,7 @@ public class CourseCatalogue {
     }
 
     /**
-     * gets Course infomation based on name and id
+     * gets Course information based on name and id
      * @param n
      * @param id
      */

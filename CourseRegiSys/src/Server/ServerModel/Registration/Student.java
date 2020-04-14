@@ -20,12 +20,12 @@ public class Student {
     private int studentId;
 
     /**
-     * list of registrations student is in ie courses
+     * list of registrations student has i.e. courses
      */
     private ArrayList<Registration> studentRegList;
 
     /**
-     * Constructs a Student object with specifed name and id
+     * Constructs a Student object with specified name and id
      * Initializes registrations list
      * @param studentName
      * @param studentId
@@ -75,7 +75,7 @@ public class Student {
     }
 
     /**
-     * adds specifed Registration object into Student's registration list
+     * adds specified Registration object into Student's registration list
      * @param registration
      */
     public void addRegistration(Registration registration) {
@@ -83,7 +83,7 @@ public class Student {
     }
     
     /**
-     * Removes specifed course from Student's registered courses
+     * Removes specified course from Student's registered courses
      * @param courseName
      * @return True if removal was successful, false otherwise
      */
@@ -109,7 +109,7 @@ public class Student {
     }
 
     /**
-     * Restricts each Student to be able to take a maximun of 6 courses
+     * Restricts each Student to be able to take a maximum of 6 courses
      */
     public boolean maxCourse() {
         if (this.studentRegList.size() >= 6)

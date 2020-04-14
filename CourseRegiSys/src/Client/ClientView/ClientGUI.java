@@ -32,7 +32,7 @@ public class ClientGUI extends JFrame {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Links gui to communication class, acts as action listner to buttons in gui
+     * Links GUI to communication class, acts as action listener to buttons in GUI
      */
     private ClientCommunication actions;
 
@@ -150,7 +150,7 @@ public class ClientGUI extends JFrame {
     }
 
     /**
-     * Creates another gui and shows the Server output on it
+     * Creates another GUI and shows the Server output on it
      * 
      * @param serverOutput String containing server output
      */
@@ -164,8 +164,8 @@ public class ClientGUI extends JFrame {
         }
 
         // showing server output to text area
-        String[] outputs = serverOutput.split("#"); // spliting different lines by #
-        for (String o : outputs) { // showing outpus
+        String[] outputs = serverOutput.split("#"); // splitting different lines by #
+        for (String o : outputs) { // showing output
             jta.append(o);
             jta.append("\n");
         }
@@ -188,7 +188,7 @@ public class ClientGUI extends JFrame {
     }
 
     /**
-     * Returns student courses to the buttons, student courses are recieved from
+     * Returns student courses to the buttons, student courses are received from
      * server through clientCommunication
      * 
      * @return studentCourses String
@@ -198,7 +198,7 @@ public class ClientGUI extends JFrame {
     }
 
     /**
-     * Returns allCourses to the buttons, allCourses are recieved from server
+     * Returns allCourses to the buttons, allCourses are received from server
      * through clientCommunication
      * 
      * @return allCourses String

@@ -15,7 +15,7 @@ public class Course {
     private String courseName;
 
     /**
-     * course id or number associated with it ie ENGG 200
+     * course id or number associated with it (e.g. ENGG 200)
      */
     private int courseNum;
 
@@ -30,7 +30,7 @@ public class Course {
     private ArrayList<CourseOffering> offeringList;
 
     /**
-     * constructs a course object and assings it preReqs and sessions
+     * constructs a course object and assigns it preReqs and sections
      * @param courseName
      * @param courseNum
      */
@@ -57,7 +57,7 @@ public class Course {
     }
 
     /**
-     * getter function
+     * gets course name
      * @return course name
      */
     public String getCourseName() {
@@ -65,7 +65,7 @@ public class Course {
     }
 
     /**
-     * setter function, sets course name
+     * sets course name
      * @param courseName
      */
     public void setCourseName(String courseName) {
@@ -73,7 +73,7 @@ public class Course {
     }
 
     /**
-     * getter function
+     * gets course number
      * @return course number
      */
     public int getCourseNum() {
@@ -137,10 +137,4 @@ public class Course {
     public void addPreReq(Course preReq) {
         this.preReq.add(preReq);
     }
-
-    /*
-     * public static void main(String[] args) { Course c = new Course("ENSF", 1);
-     * System.out.println(c.getCourseName()); System.out.println(c.getCourseNum());
-     * }
-     */
 }

@@ -5,7 +5,8 @@ import Server.ServerModel.Registration.*;
 /**
  * Provides data fields and methods to define, search, view a catalogue database
  * and to view/edit a student's courses
- * Serves as a communication link between ServerCommunication and the backend(Registration package)
+ * Serves as a communication link between ServerCommunication and the logic and database of the
+ * program (Registration package)
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -41,7 +42,7 @@ public class Model {
 	 * searches database for specified course 
 	 * @param courseName
 	 * @param courseId
-	 * @return String object containing msg representing infomation about the searched course
+	 * @return String object containing message representing information about the searched course
 	 */
 	public String searchCourse(String courseName, int courseId) {
 		Course courseSearched = cat.searchCat(courseName, courseId);
@@ -59,7 +60,7 @@ public class Model {
 	 * @param courseName
 	 * @param courseId
 	 * @param secNum
-	 * @return String object containing message representing infomation about student's registration
+	 * @return String object containing message representing information about student's registration
 	 */
 	public String addCourse(String courseName, int courseId, int secNum) {
 		Course add = cat.searchCat(courseName, courseId);
@@ -71,7 +72,7 @@ public class Model {
 	 * removes specified course from the student
 	 * @param courseName
 	 * @param courseId
-	 * @return	String object containing message representing infomation about removal of a course from a Student object
+	 * @return	String object containing message representing information about removal of a course from a Student object
 	 */
 	public String removeCourse(String courseName, int courseId) {
 		if (theStudent.removeRegistration(courseName)) {

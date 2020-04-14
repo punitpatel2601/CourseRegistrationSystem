@@ -9,7 +9,7 @@ import Client.ClientView.ClientGUI;
 
 /**
  * Creates the clientCommunication class and connects with server to pass the
- * information , Also acts as actionlistener class for buttons in ClientGUI
+ * information, also acts as actionListener class for buttons in ClientGUI
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -29,7 +29,7 @@ public class ClientCommunication {
 	/**
 	 * Message reader from server
 	 */
-	private BufferedReader socketIn; // msg to read from socket
+	private BufferedReader socketIn; // message to read from socket
 
 	/**
 	 * Constructs the object of this class and connects it with server
@@ -142,7 +142,7 @@ public class ClientCommunication {
 	/**
 	 * helps other functions to send the data to server
 	 * 
-	 * @param line string containing commands and arugment to server
+	 * @param line string containing commands and argument to server
 	 * @return server response
 	 */
 	public String communicate(String line) {

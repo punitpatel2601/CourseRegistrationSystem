@@ -22,7 +22,7 @@ public class Registration {
      * registers specified Student for specified CourseOffering
      * @param st
      * @param of
-     * @return String containing registration infomation
+     * @return String containing registration information
      */
     public String completeRegistration(Student st, CourseOffering of) {
         String ret;
@@ -46,7 +46,7 @@ public class Registration {
     }
 
     /**
-     * links this Registration object with specifed student and CourseOffering
+     * links this Registration object with specified student and CourseOffering
      */
     private void addRegistration() {
         theStudent.addRegistration(this);
