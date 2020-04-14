@@ -3,7 +3,8 @@ package Server.ServerModel.Registration;
 import java.util.ArrayList;
 
 /**
- * Provides data fields and methods to construct a Student object
+ * Provides data fields and methoods to construct a Student object
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -25,20 +26,23 @@ public class Student {
     private ArrayList<Registration> studentRegList;
 
     /**
-     * Constructs a Student object with specified name and id
-     * Initializes registrations list
-     * @param studentName
-     * @param studentId
+     * Constructs a Student object with specifed name and id Initializes
+     * registrations list
+     * 
+     * @param studentName name of the student
+     * @param studentId   id of the student
      */
     public Student(String studentName, int studentId) {
         this.setStudentName(studentName);
         this.setStudentId(studentId);
         studentRegList = new ArrayList<Registration>();
+        System.out.println("Student not null initialized");
     }
 
     /**
      * gets Student's name
-     * @return
+     * 
+     * @return studentName student name
      */
     public String getStudentName() {
         return studentName;
@@ -46,7 +50,8 @@ public class Student {
 
     /**
      * sets Student name
-     * @param studentName
+     * 
+     * @param studentName name of the student
      */
     public void setStudentName(String studentName) {
         this.studentName = studentName;
@@ -54,7 +59,8 @@ public class Student {
 
     /**
      * gets Student's Id
-     * @return
+     * 
+     * @return student id
      */
     public int getStudentId() {
         return studentId;
@@ -62,7 +68,8 @@ public class Student {
 
     /**
      * sets Student Id
-     * @param studentId
+     * 
+     * @param studentId id of the student
      */
     public void setStudentId(int studentId) {
         this.studentId = studentId;
@@ -75,34 +82,38 @@ public class Student {
     }
 
     /**
-     * adds specified Registration object into Student's registration list
-     * @param registration
+     * adds specifed Registration object into Student's registration list
+     * 
+     * @param registration registration object instance
      */
     public void addRegistration(Registration registration) {
         studentRegList.add(registration);
     }
-    
+
     /**
-     * Removes specified course from Student's registered courses
-     * @param courseName
+     * Removes specifed course from Student's registered courses
+     * 
+     * @param courseName course name
      * @return True if removal was successful, false otherwise
      */
     public boolean removeRegistration(String courseName) {
-    	int count = 0;
-    	boolean removed = false;
-    	for (Registration r : studentRegList) {
-    		if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)) {
-    			studentRegList.remove(count);
-    			removed = true;
-    			break;
-    		}
-    	}
-    	return removed;
+        int count = 0;
+        boolean removed = false;
+        for (Registration r : studentRegList) {
+            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)) {
+                studentRegList.remove(count);
+                removed = true;
+                break;
+            }
+            count++;
+        }
+        return removed;
     }
 
     /**
      * gets list of courses student is in
-     * @return
+     * 
+     * @return arraylist
      */
     public ArrayList<Registration> getStudentRegList() {
         return studentRegList;

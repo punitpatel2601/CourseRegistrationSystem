@@ -74,7 +74,7 @@ public class ClientGUI extends JFrame {
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
         jta = new JTextArea(
-                "Welcome!\n This is a course registration system (beta).\n Please select from options below.");
+                "Welcome!\n This is a course registration system (beta).\n Please start by entering your details..\n\nCRITICAL WARNING: You can not do anything without entering your details.");
         jta.setMargin(new Insets(3, 7, 3, 5));
         // jta.setLineWrap(true);
         // jta.setWrapStyleWord(true);
@@ -95,7 +95,6 @@ public class ClientGUI extends JFrame {
         add(addButtons());
 
         setVisible(true);
-        getStudentInfo();
     }
 
     /**
@@ -112,8 +111,13 @@ public class ClientGUI extends JFrame {
         JButton remove = new JButton("Remove course from Student's courses");
         JButton viewAll = new JButton("View all the courses in Catalogue");
         JButton viewStuCourses = new JButton("View all the courses taken by Student");
+        JButton enterDetails = new JButton("Enter my details");
         JButton quit = new JButton("Quit the application");
 
+        jp.add(new JLabel(" "));
+        jp.add(enterDetails);
+        jp.add(new JLabel(" "));
+        jp.add(new JLabel(" "));
         jp.add(new JLabel(" ")); // creating spaces between buttons
         jp.add(search);
         jp.add(new JLabel(" "));
@@ -127,6 +131,9 @@ public class ClientGUI extends JFrame {
         jp.add(new JLabel(" "));
         jp.add(quit);
 
+        enterDetails.addActionListener((ActionEvent e) -> {
+            guiSerOutput(getStudentInfo());
+        });
         search.addActionListener((ActionEvent e) -> {
             guiSerOutput(searchCourse());
         });
@@ -157,9 +164,9 @@ public class ClientGUI extends JFrame {
     private void guiSerOutput(String serverOutput) {
         System.out.println("gui -> " + serverOutput);
 
-        jta.setText(" "); // resetting text area
+        jta.setText(""); // resetting text area
         if (serverOutput == null) { // checking if null response from server
-            jta.append("Error in your input, Server didn't respond!");
+            jta.setText("Error in your input, Server didn't respond!");
             return;
         }
 
@@ -213,7 +220,7 @@ public class ClientGUI extends JFrame {
      * @return confirmation String confirming the status of removal
      */
     private String removeCourse() {
-        callForInput();
+        callForInput(false);
         System.out.println(cName + "\t" + cID);
 
         return actions.removeCourse(cName, cID);
@@ -225,8 +232,7 @@ public class ClientGUI extends JFrame {
      * @return String confirmation of addition of course
      */
     private String addTheCourse() {
-        callForInput();
-        callInputForSection();
+        callForInput(true); // true prompts for input of section number
         System.out.println(cName + "\t" + cID + "\t" + cSec);
 
         return actions.addCourse(cName, cID, cSec);
@@ -236,7 +242,7 @@ public class ClientGUI extends JFrame {
      * Searches for the course
      */
     private String searchCourse() {
-        callForInput();
+        callForInput(false);
         System.out.println(cName + "\t" + cID);
 
         return actions.searchCourse(cName, cID);
@@ -245,7 +251,7 @@ public class ClientGUI extends JFrame {
     /**
      * Helps other functions to get input for course name and id
      */
-    private void callForInput() {
+    private void callForInput(boolean act) {
         this.cName = callInputForName();
         if (cName.isEmpty() || (cName.compareTo(" ") == 0) || cName == null) {
             JOptionPane.showMessageDialog(null, "Invalid name entered, Please enter a String", "Error!",
@@ -254,21 +260,28 @@ public class ClientGUI extends JFrame {
         }
         this.cID = callInputForID();
         this.cName = this.cName.toUpperCase();
+        if (act == true) {
+            callInputForSection();
+        }
     }
 
     /**
-     * Prompt the user to enter their name and id to access the system
+     * Prompt the user to enter their name and id to access the system, keeps asking
+     * till input is not valid
      */
-    private void getStudentInfo() {
-        try {
-            studentName = JOptionPane.showInputDialog(null, "Please enter your name");
-            studentName = studentName.toUpperCase();
-            studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
+    private String getStudentInfo() {
+        while (true) {
+            try {
+                studentName = JOptionPane.showInputDialog(null, "Please enter your name");
+                studentName = studentName.toUpperCase();
+                studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
+                continue;
+            }
+            break;
         }
-
-        actions.passStudentInfo(studentName, studentId);
+        return actions.passStudentInfo(studentName, studentId);
     }
 
     /**
@@ -310,7 +323,7 @@ public class ClientGUI extends JFrame {
     private String callInputForName() {
         String name = "";
         try {
-            name = JOptionPane.showInputDialog(null, "Enter the name of the course");
+            name = JOptionPane.showInputDialog(null, "Enter the name of the Course");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Invalid name entered, Please enter a String", "Error!",
                     JOptionPane.ERROR_MESSAGE);
