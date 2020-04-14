@@ -21,10 +21,13 @@ These are the following directories in the repository and their descriptions.
 @Authors
 
 Punit Patel     -   30064251
-punit.patel1@ucalgary.ca
+
+	punit.patel1@ucalgary.ca
 
 Tom Pritchard   -   30053765
-    *** email id ***
+	
+	tom.pritchard1@ucalgary.ca
 
 Armaan Mohar    -   30055449
-armaan.mohar1@ucalgary.ca
+
+	armaan.mohar1@ucalgary.ca
