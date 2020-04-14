@@ -2,9 +2,22 @@ package Server.ServerModel.Registration;
 
 import java.util.ArrayList;
 
+/**
+ * Contains logic and datafields to create a CourseCatalogue list which
+ * simulates a database
+ * @author A. Mohar, T. Pritchard, P. Patel
+ * @version 1.0
+ * @since April 13, 2020
+ */
 public class CourseCatalogue {
+    /**
+     * the list of course available
+     */
     private ArrayList<Course> courseList;
 
+    /**
+     * constructs a course list and initializes it to the data in text file(database)
+     */
     public CourseCatalogue() {
         courseList = new ArrayList<Course>();
             DBManager db = new DBManager();
@@ -15,6 +28,12 @@ public class CourseCatalogue {
              */
     }
 
+    /**
+     * Creates a new CourseOffering for a specifed Course
+     * @param c
+     * @param secNum
+     * @param secCap
+     */
     public void createCourseOffering(Course c, int secNum, int secCap) {
         if (c != null) {
             CourseOffering theOffering = new CourseOffering(secNum, secCap);
@@ -22,6 +41,12 @@ public class CourseCatalogue {
         }
     }
 
+    /**
+     * searches catalogue for Course based on name and number
+     * @param courseName
+     * @param courseNum
+     * @return
+     */
     public Course searchCat(String courseName, int courseNum) {
         for (Course c : courseList) {
             if (courseName.equals(c.getCourseName()) && courseNum == c.getCourseNum()) {
@@ -32,10 +57,18 @@ public class CourseCatalogue {
         return null;
     }
     
+    /**
+     * Course not found error message
+     * @return String error message
+     */
     public String displayCourseNotFoundError() {
         return "Course/s was not found!# #It does not exists.";
     }
 
+    /**
+     * gets the course list
+     * @return
+     */
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
@@ -49,6 +82,11 @@ public class CourseCatalogue {
         return st;
     }
 
+    /**
+     * removes specifed course from Course list
+     * @param coursename
+     * @param coursenum
+     */
     public void removeCourse(String coursename, int coursenum) {
         String courseUpper = coursename.toUpperCase();
         int index = indexOfName(courseUpper, coursenum);
@@ -56,6 +94,12 @@ public class CourseCatalogue {
         courseList.remove(index);
     }
 
+    /**
+     * gets the index where specifed Course is located within CourseCatalogue list
+     * @param cname
+     * @param cid
+     * @return int value representing index
+     */
     private int indexOfName(String cname, int cid) {
         int index = -1;
         for (int i = 0; i < courseList.size(); i++) {
@@ -67,6 +111,9 @@ public class CourseCatalogue {
         return index;
     }
 
+    /**
+     * prints all courses currently in CourseCatalogue
+     */
     public void printAllCourses() {
         System.out.println();
         for (int i = 0; i < courseList.size(); i++) {
@@ -74,6 +121,11 @@ public class CourseCatalogue {
         }
     }
 
+    /**
+     * gets Course infomation based on name and id
+     * @param n
+     * @param id
+     */
     public void getCourseDetails(String n, int id) {
         int i;
         for (i = 0; i < courseList.size(); i++) {

@@ -5,14 +5,29 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Simulates a database, provides logic and data fields to load data in from a text file containing course records
+ * @author A. Mohar, T. Pritchard, P. Patel
+ * @version 1.0
+ * @since April 13, 2020
+ */
 public class DBManager {
+	/**
+	 * the list of courses in text file
+	 */
 	ArrayList<Course> courseList;
 
+	/**
+	 * Constructs a list of courses
+	 */
 	public DBManager() {
 		courseList = new ArrayList<Course>();
 		readFromDataBase();
 	}
 
+	/**
+	 * Reads data from text file and inserts it accordingly into courseList
+	 */
 	public void readFromDataBase() {
 		try {
 			FileReader fr = new FileReader("courses.txt");
@@ -41,6 +56,10 @@ public class DBManager {
 
 	}
 
+	/**
+	 * gets the course list
+	 * @return
+	 */
 	public ArrayList<Course> getCourseList() {
 		return courseList;
 	}
