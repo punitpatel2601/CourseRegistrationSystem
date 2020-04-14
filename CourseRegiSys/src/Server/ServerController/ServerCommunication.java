@@ -10,6 +10,9 @@ import java.net.Socket;
 /**
  * Creates the object instances of the class and connects with client to get and
  * pass the informations requested by the user
+ * @author A. Mohar, T. Pritchard, P. Patel
+ * @version 1.0
+ * @since April 13, 2020
  */
 public class ServerCommunication {
 	/**

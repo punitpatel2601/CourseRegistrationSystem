@@ -10,6 +10,9 @@ import Client.ClientView.ClientGUI;
 /**
  * Creates the clientCommunication class and connects with server to pass the
  * information , Also acts as actionlistener class for buttons in ClientGUI
+ * @author A. Mohar, T. Pritchard, P. Patel
+ * @version 1.0
+ * @since April 13, 2020
  */
 public class ClientCommunication {
 
