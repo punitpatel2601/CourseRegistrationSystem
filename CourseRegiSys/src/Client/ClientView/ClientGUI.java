@@ -162,8 +162,6 @@ public class ClientGUI extends JFrame {
      * @param serverOutput String containing server output
      */
     private void guiSerOutput(String serverOutput) {
-        System.out.println("gui -> " + serverOutput);
-
         jta.setText(""); // resetting text area
         if (serverOutput == null) { // checking if null response from server
             jta.setText("Error in your input, Server didn't respond!");
@@ -221,8 +219,6 @@ public class ClientGUI extends JFrame {
      */
     private String removeCourse() {
         callForInput(false);
-        System.out.println(cName + "\t" + cID);
-
         return actions.removeCourse(cName, cID);
     }
 
@@ -233,8 +229,6 @@ public class ClientGUI extends JFrame {
      */
     private String addTheCourse() {
         callForInput(true); // true prompts for input of section number
-        System.out.println(cName + "\t" + cID + "\t" + cSec);
-
         return actions.addCourse(cName, cID, cSec);
     }
 
@@ -243,8 +237,6 @@ public class ClientGUI extends JFrame {
      */
     private String searchCourse() {
         callForInput(false);
-        System.out.println(cName + "\t" + cID);
-
         return actions.searchCourse(cName, cID);
     }
 

@@ -84,7 +84,8 @@ public class CourseCatalogue {
     public String toString() {
         String st = "All courses in the catalogue: #";
         for (Course c : courseList) {
-            st += "#" + c.getCourseName() + " " + c.getCourseNum(); // This line invokes the toString() method
+            st += "#" + c.getCourseName() + " " + c.getCourseNum() + " (" + 
+            		c.getOfferingList().size() + " Sections)"; // This line invokes the toString() method
         }
         return st;
     }
@@ -131,7 +132,7 @@ public class CourseCatalogue {
     }
 
     /**
-     * gets Course infomation based on name and id
+     * gets Course information based on name and id
      * 
      * @param n
      * @param id
@@ -148,9 +149,5 @@ public class CourseCatalogue {
         if (i == courseList.size()) {
             System.out.println(n + " " + id + " not found in the catalogue\n");
         }
-    }
-
-    public void displayToString() {
-        System.out.println(toString());
     }
 }

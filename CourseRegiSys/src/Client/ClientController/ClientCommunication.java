@@ -154,10 +154,8 @@ public class ClientCommunication {
 		String response = "";
 
 		try {
-			System.out.println("Sending .. " + line);
 			socketOut.println(line); // sending info string to server
 			response = socketIn.readLine(); // receiving info string from server
-			System.out.println(response);
 		} catch (Exception e) {
 			System.out.println("Error in sending/receiving data to/from server\nError name: " + e.getMessage());
 		}

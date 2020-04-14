@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Provides data fields and methods to create a Java data-type, representing a
- * Course
+ * University Course.
  * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
@@ -32,7 +32,7 @@ public class Course {
     private ArrayList<CourseOffering> offeringList;
 
     /**
-     * constructs a course object and assings it preReqs and sessions
+     * constructs a course object and assigns it preReqs and sessions
      * 
      * @param courseName
      * @param courseNum
@@ -95,6 +95,10 @@ public class Course {
     public void setCourseNum(int courseNum) {
         this.courseNum = courseNum;
     }
+    
+    public ArrayList<CourseOffering> getOfferingList() {
+    	return offeringList;
+    }
 
     /**
      * checks the number of students registered in course
@@ -122,13 +126,13 @@ public class Course {
 
     @Override
     public String toString() {
-        return (getCourseName() + " " + getCourseNum() + "(" + offeringList.size() + " Sections)#");
+        return (getCourseName() + " " + getCourseNum());
     }
 
     /**
      * gets course offering at specified index
      * 
-     * @param i
+     * @param i the index of the offeringList
      * @return offering at specified index
      */
     public CourseOffering getCourseOfferingAt(int i) {

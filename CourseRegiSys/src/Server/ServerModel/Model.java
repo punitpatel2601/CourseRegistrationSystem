@@ -48,7 +48,7 @@ public class Model {
 	 * 
 	 * @param courseName course name
 	 * @param courseId   course id
-	 * @return String object containing msg representing infomation about the
+	 * @return String object containing msg representing information about the
 	 *         searched course
 	 */
 	public String searchCourse(String courseName, int courseId) {
@@ -67,13 +67,17 @@ public class Model {
 	 * @param courseName course name
 	 * @param courseId   course id
 	 * @param secNum     course section number
-	 * @return String object containing message representing infomation about
+	 * @return String object containing message representing information about
 	 *         student's registration
 	 */
 	public String addCourse(String courseName, int courseId, int secNum) {
 		Course addi = cat.searchCat(courseName, courseId);
 		if (addi == null) {
 			return ("Course is not in Catalogue# #Please view the Catalogue to see all avaliable courses#");
+		} else if (secNum > addi.getOfferingList().size() || secNum < 1) {
+			return ("That section does not exist for this course");
+		} else if (theStudent.hasRegAdded(courseName, courseId)) {
+			return ("You are already registered for this course!");
 		}
 		Registration reg = new Registration();
 		// doubtful
@@ -85,11 +89,11 @@ public class Model {
 	 * 
 	 * @param courseName course name
 	 * @param courseId   course id
-	 * @return String object containing message representing infomation about
+	 * @return String object containing message representing information about
 	 *         removal of a course from a Student object
 	 */
 	public String removeCourse(String courseName, int courseId) {
-		if (theStudent.removeRegistration(courseName)) {
+		if (theStudent.removeRegistration(courseName, courseId)) {
 			return courseName + " " + courseId + " is successfully removed!";
 		} else {
 			return "The course was not found, so it could not be removed!";
@@ -121,7 +125,8 @@ public class Model {
 		String takenCourses = "Courses taken by the student are: #";
 
 		for (Registration r : theStudent.getStudentRegList()) {
-			takenCourses += r.getTheOffering().getTheCourse().toString();
+			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + 
+							r.getTheOffering().getSecNum();
 		}
 
 		return takenCourses;

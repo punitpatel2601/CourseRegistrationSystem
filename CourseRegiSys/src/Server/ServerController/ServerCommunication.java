@@ -96,12 +96,12 @@ public class ServerCommunication {
 				line = socketIn.readLine();
 			} catch (Exception e) {
 				running = false;
-				System.out.println("Error while receiving");
+				socketOut.println("Error while receiving");
 				e.getMessage();
 			}
 
 			if (line.isEmpty() || line == null) { // double checks for wrong input in server
-				System.out.println("Invalid request string.");
+				socketOut.println("Invalid request string.");
 				break;
 			}
 			System.out.println(line);

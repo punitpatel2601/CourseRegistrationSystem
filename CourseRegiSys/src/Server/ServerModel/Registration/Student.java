@@ -47,6 +47,16 @@ public class Student {
     public String getStudentName() {
         return studentName;
     }
+    
+    public boolean hasRegAdded(String courseName, int courseId) {
+    	for (Registration r : studentRegList) {
+    		if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName) &&
+    			r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     /**
      * sets Student name
@@ -96,11 +106,12 @@ public class Student {
      * @param courseName course name
      * @return True if removal was successful, false otherwise
      */
-    public boolean removeRegistration(String courseName) {
+    public boolean removeRegistration(String courseName, int courseId) {
         int count = 0;
         boolean removed = false;
         for (Registration r : studentRegList) {
-            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)) {
+            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName) &&
+            	r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
                 studentRegList.remove(count);
                 removed = true;
                 break;
