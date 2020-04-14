@@ -53,7 +53,6 @@ public class Course {
         if (offering != null && offering.getTheCourse() == null) {
             offering.setTheCourse(this);
             if (!offering.getTheCourse().getCourseName().equals(courseName)) {
-                System.err.println("Error! This section belongs to another course!");
                 return;
             }
             offeringList.add(offering);
@@ -95,9 +94,9 @@ public class Course {
     public void setCourseNum(int courseNum) {
         this.courseNum = courseNum;
     }
-    
+
     public ArrayList<CourseOffering> getOfferingList() {
-    	return offeringList;
+        return offeringList;
     }
 
     /**

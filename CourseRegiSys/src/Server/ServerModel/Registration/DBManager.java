@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Simulates a database, provides logic and data fields to load data in from a text file containing course records
+ * Simulates a database, provides logic and data fields to load data in from a
+ * text file containing course records
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -49,15 +51,11 @@ public class DBManager {
 		} catch (FileNotFoundException e) {
 			System.out.println("File Error: file not found!!");
 		}
-		/*
-		 * for (int i = 0; i < courseList.size(); i++) {
-		 * System.out.println(courseList.get(i).getCourseName()); }
-		 */
-
 	}
 
 	/**
 	 * gets the course list
+	 * 
 	 * @return
 	 */
 	public ArrayList<Course> getCourseList() {

@@ -138,10 +138,10 @@ public class ClientCommunication {
 		try {
 			socketIn.close();
 			socketOut.close();
-			System.out.println("Server connection aborted!!");
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
+		System.out.println("Server connection aborted!!");
 	}
 
 	/**

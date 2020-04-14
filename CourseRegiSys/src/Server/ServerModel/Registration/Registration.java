@@ -9,6 +9,7 @@ package Server.ServerModel.Registration;
  * @since April 12, 2020
  */
 public class Registration {
+
     /**
      * the student that wants to register
      */
@@ -31,29 +32,23 @@ public class Registration {
         this.theStudent = st;
         this.theOffering = of;
 
-        if (theStudent == null) {
-            System.out.println("St null");
-        }
-        if (theOffering == null) {
-            System.out.println("Of null");
-        }
-
         if (!(theStudent.maxCourse())) {
             theStudent.removeMaxCourse();
             theOffering.removeMaxOffering();
-            ret = "You cannot register for " + of.getTheCourse().getCourseName() + " "
-                    + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum()
-                    + ".#You are only allowed to register for a maximum of 6 courses.";
+            ret = "#You cannot register for " + of.getTheCourse().getCourseName() + " "
+                    + of.getTheCourse().getCourseNum() + " in Section " + of.getSecNum()
+                    + ".# #You are only allowed to register for a maximum of 6 courses.";
 
         } else if (theOffering.numberOfStudentsOffering() >= theOffering.getSecCap()) {
             ret = "Sorry! There is currently no available place in " + of.getTheCourse().getCourseName() + " "
-                    + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
+                    + of.getTheCourse().getCourseNum() + " in Section " + of.getSecNum();
         } else {
             ret = theStudent.getStudentName() + ", you have successfully registered for "
-                    + of.getTheCourse().getCourseName() + " " + of.getTheCourse().getCourseNum() + " Section "
+                    + of.getTheCourse().getCourseName() + " " + of.getTheCourse().getCourseNum() + " in Section "
                     + of.getSecNum();
         }
         addRegistration();
+
         return ret;
     }
 

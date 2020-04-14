@@ -67,17 +67,24 @@ public class ClientGUI extends JFrame {
     private int studentId;
 
     /**
+     * boolean for showing different gui
+     */
+    private boolean detailsEntered;
+
+    /**
      * Creates and Initializes the GUI for the user
      * 
      * @param ccm a pointer to ClientCommunication class
      */
     public ClientGUI(ClientCommunication ccm) {
         actions = ccm;
+        detailsEntered = false;
+
         jta = new JTextArea(
                 "Welcome!\n This is a course registration system (beta).\n Please start by entering your details..\n\nCRITICAL WARNING: You can not do anything without entering your details.");
         jta.setMargin(new Insets(3, 7, 3, 5));
-        // jta.setLineWrap(true);
-        // jta.setWrapStyleWord(true);
+        jta.setEditable(false);
+
         prepareGUI();
     }
 
@@ -111,14 +118,22 @@ public class ClientGUI extends JFrame {
         JButton remove = new JButton("Remove course from Student's courses");
         JButton viewAll = new JButton("View all the courses in Catalogue");
         JButton viewStuCourses = new JButton("View all the courses taken by Student");
-        JButton enterDetails = new JButton("Enter my details");
+        JButton enterDetails = new JButton("Enter details");
         JButton quit = new JButton("Quit the application");
+
+        // setting visibilities of buttons
+        search.setVisible(detailsEntered);
+        addCourse.setVisible(detailsEntered);
+        remove.setVisible(detailsEntered);
+        viewAll.setVisible(detailsEntered);
+        viewStuCourses.setVisible(detailsEntered);
+        enterDetails.setVisible(!detailsEntered);
+        quit.setVisible(true);
 
         jp.add(new JLabel(" "));
         jp.add(enterDetails);
-        jp.add(new JLabel(" "));
-        jp.add(new JLabel(" "));
-        jp.add(new JLabel(" ")); // creating spaces between buttons
+
+        // creating spaces between buttons using JLabel
         jp.add(search);
         jp.add(new JLabel(" "));
         jp.add(addCourse);
@@ -133,6 +148,16 @@ public class ClientGUI extends JFrame {
 
         enterDetails.addActionListener((ActionEvent e) -> {
             guiSerOutput(getStudentInfo());
+            detailsEntered = true;
+
+            // changing visibilty
+            search.setVisible(detailsEntered);
+            addCourse.setVisible(detailsEntered);
+            remove.setVisible(detailsEntered);
+            viewAll.setVisible(detailsEntered);
+            viewStuCourses.setVisible(detailsEntered);
+            enterDetails.setVisible(!detailsEntered);
+            quit.setVisible(true);
         });
         search.addActionListener((ActionEvent e) -> {
             guiSerOutput(searchCourse());
@@ -264,7 +289,7 @@ public class ClientGUI extends JFrame {
     private String getStudentInfo() {
         while (true) {
             try {
-                studentName = JOptionPane.showInputDialog(null, "Please enter your name");
+                studentName = JOptionPane.showInputDialog(null, "Please enter your First Name");
                 studentName = studentName.toUpperCase();
                 studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
             } catch (Exception e) {
@@ -272,6 +297,14 @@ public class ClientGUI extends JFrame {
                 continue;
             }
             break;
+        }
+
+        if (studentName.contains(" ")) {
+            String[] names = studentName.split(" ");
+            if (names[0].isEmpty()) {
+                studentName = names[1]; // return second words if first words entered was space or empty
+            }
+            studentName = names[0];
         }
         return actions.passStudentInfo(studentName, studentId);
     }

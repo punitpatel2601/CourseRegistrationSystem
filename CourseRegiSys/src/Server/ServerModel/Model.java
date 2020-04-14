@@ -24,24 +24,12 @@ public class Model {
 	private Student theStudent;
 
 	/**
-	 * constructs a catalogue
+	 * constructs a catalogue and assigns student
 	 */
 	public Model(String name, int id) {
 		cat = new CourseCatalogue();
 		theStudent = new Student(name, id);
 	}
-
-	/**
-	 * assigns user to a student object
-	 * 
-	 * @param studentName the Student object's name
-	 * @param studentId   the Student object's id
-	 */
-
-	/*
-	 * public void initializeStudent(String studentName, int studentId) {
-	 * this.theStudent = new Student(studentName, studentId); }
-	 */
 
 	/**
 	 * searches database for specified course
@@ -72,16 +60,18 @@ public class Model {
 	 */
 	public String addCourse(String courseName, int courseId, int secNum) {
 		Course addi = cat.searchCat(courseName, courseId);
+
 		if (addi == null) {
-			return ("Course is not in Catalogue# #Please view the Catalogue to see all avaliable courses#");
+			return ("Course is not in Catalogue# #Please view the Catalogue to see all avaliable courses# # # # #"
+					+ coursesTaken());
 		} else if (secNum > addi.getOfferingList().size() || secNum < 1) {
-			return ("That section does not exist for this course");
+			return ("That section does not exist for this course# # # #" + coursesTaken());
 		} else if (theStudent.hasRegAdded(courseName, courseId)) {
-			return ("You are already registered for this course!");
+			return ("You are already registered for this course!# # # #" + coursesTaken());
 		}
 		Registration reg = new Registration();
-		// doubtful
-		return reg.completeRegistration(theStudent, addi.getCourseOfferingAt(secNum - 1));
+
+		return (reg.completeRegistration(theStudent, addi.getCourseOfferingAt(secNum - 1)) + "# # #" + coursesTaken());
 	}
 
 	/**
@@ -94,9 +84,9 @@ public class Model {
 	 */
 	public String removeCourse(String courseName, int courseId) {
 		if (theStudent.removeRegistration(courseName, courseId)) {
-			return courseName + " " + courseId + " is successfully removed!";
+			return (courseName + " " + courseId + " is successfully removed!# # #" + coursesTaken());
 		} else {
-			return "The course was not found, so it could not be removed!";
+			return ("The course was not found, so it could not be removed!# # #" + coursesTaken());
 		}
 	}
 
@@ -122,11 +112,10 @@ public class Model {
 			return "You currently have no courses added.";
 		}
 
-		String takenCourses = "Courses taken by the student are: #";
+		String takenCourses = "Current Courses taken by the student are: #";
 
 		for (Registration r : theStudent.getStudentRegList()) {
-			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + 
-							r.getTheOffering().getSecNum();
+			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + r.getTheOffering().getSecNum();
 		}
 
 		return takenCourses;

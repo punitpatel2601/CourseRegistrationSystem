@@ -25,18 +25,14 @@ public class CourseCatalogue {
         courseList = new ArrayList<Course>();
         DBManager db = new DBManager();
         courseList = db.getCourseList();
-        /*
-         * for (int i = 0; i < courseList.size(); i++) {
-         * System.out.println(courseList.get(i).getCourseName()); }
-         */
     }
 
     /**
      * Creates a new CourseOffering for a specifed Course
      * 
-     * @param c
-     * @param secNum
-     * @param secCap
+     * @param c      course
+     * @param secNum section number
+     * @param secCap section cap
      */
     public void createCourseOffering(Course c, int secNum, int secCap) {
         if (c != null) {
@@ -48,8 +44,8 @@ public class CourseCatalogue {
     /**
      * searches catalogue for Course based on name and number
      * 
-     * @param courseName
-     * @param courseNum
+     * @param courseName coursename
+     * @param courseNum  course id
      * @return
      */
     public Course searchCat(String courseName, int courseNum) {
@@ -74,7 +70,7 @@ public class CourseCatalogue {
     /**
      * gets the course list
      * 
-     * @return
+     * @return courselist
      */
     public ArrayList<Course> getCourseList() {
         return courseList;
@@ -82,10 +78,10 @@ public class CourseCatalogue {
 
     @Override
     public String toString() {
-        String st = "All courses in the catalogue: #";
+        String st = "All courses in the catalogue:# #";
         for (Course c : courseList) {
-            st += "#" + c.getCourseName() + " " + c.getCourseNum() + " (" + 
-            		c.getOfferingList().size() + " Sections)"; // This line invokes the toString() method
+            // invokes toString method
+            st += "#" + c.getCourseName() + " " + c.getCourseNum() + " (" + c.getOfferingList().size() + " Sections)";
         }
         return st;
     }
@@ -93,8 +89,8 @@ public class CourseCatalogue {
     /**
      * removes specifed course from Course list
      * 
-     * @param coursename
-     * @param coursenum
+     * @param coursename course name
+     * @param coursenum  course id
      */
     public void removeCourse(String coursename, int coursenum) {
         String courseUpper = coursename.toUpperCase();
@@ -106,8 +102,8 @@ public class CourseCatalogue {
     /**
      * gets the index where specifed Course is located within CourseCatalogue list
      * 
-     * @param cname
-     * @param cid
+     * @param cname course name
+     * @param cid   course id
      * @return int value representing index
      */
     private int indexOfName(String cname, int cid) {
@@ -119,35 +115,5 @@ public class CourseCatalogue {
             }
         }
         return index;
-    }
-
-    /**
-     * prints all courses currently in CourseCatalogue
-     */
-    public void printAllCourses() {
-        System.out.println();
-        for (int i = 0; i < courseList.size(); i++) {
-            System.out.println(courseList.get(i).getCourseName() + " " + courseList.get(i).getCourseNum());
-        }
-    }
-
-    /**
-     * gets Course information based on name and id
-     * 
-     * @param n
-     * @param id
-     */
-    public void getCourseDetails(String n, int id) {
-        int i;
-        for (i = 0; i < courseList.size(); i++) {
-            if (n.equalsIgnoreCase(courseList.get(i).getCourseName()) && courseList.get(i).getCourseNum() == id) {
-                System.out.println(
-                        courseList.get(i).getCourseName() + "  " + courseList.get(i).getCourseNum() + " found\n");
-                break;
-            }
-        }
-        if (i == courseList.size()) {
-            System.out.println(n + " " + id + " not found in the catalogue\n");
-        }
     }
 }

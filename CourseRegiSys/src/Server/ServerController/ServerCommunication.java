@@ -91,20 +91,17 @@ public class ServerCommunication {
 		String line = "";
 
 		while (running) {
-			// System.out.println("\n");
 			try {
 				line = socketIn.readLine();
 			} catch (Exception e) {
 				running = false;
-				socketOut.println("Error while receiving");
-				e.getMessage();
 			}
 
 			if (line.isEmpty() || line == null) { // double checks for wrong input in server
 				socketOut.println("Invalid request string.");
 				break;
 			}
-			System.out.println(line);
+
 			String[] inputs = line.split(" "); // splits input string into different command and argument strings
 			int choice = Integer.parseInt(inputs[0]); // commandString
 			String name = inputs[1]; // args String passed into int
@@ -115,33 +112,27 @@ public class ServerCommunication {
 				case 1:
 					String searchedCourse = model.searchCourse(name, id);
 					socketOut.println(searchedCourse);
-					// socketOut.println("Option 1");
 					break;
 				case 2:
 					String addedCourse = model.addCourse(name, id, secNum);
 					socketOut.println(addedCourse);
-					// socketOut.println("option 2");
 					break;
 				case 3:
 					String remove = model.removeCourse(name, id);
 					socketOut.println(remove);
-					// socketOut.println("option 3");
 					break;
 				case 4:
 					String fullCatalogue = model.viewAllCourses();
 					socketOut.println(fullCatalogue);
-					// socketOut.println("option 4");
 					break;
 				case 5:
 					String takenCourses = model.coursesTaken();
 					socketOut.println(takenCourses);
-					// socketOut.println("option 5");
 					break;
 				case 6:
 					model = new Model(name, id);
-					socketOut.println("Welcome! " + name
-							+ "#Now you can use the system.. # # # REMEMBER: Don't enter your details again.");
-					// model.initializeStudent(name, id);
+					socketOut.println("Welcome! #\t" + name + " - " + id
+							+ "# # #Now you can use the system.. # # Please select from the following choices.");
 					break;
 				default:
 					socketOut.println("default");

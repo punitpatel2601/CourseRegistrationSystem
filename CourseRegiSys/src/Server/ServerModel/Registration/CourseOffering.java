@@ -3,13 +3,15 @@ package Server.ServerModel.Registration;
 import java.util.ArrayList;
 
 /**
- * Provides logic and functions to create a course offering or session
- * Each course can be offered in multiple sessions
+ * Provides logic and functions to create a course offering or session Each
+ * course can be offered in multiple sessions
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
  */
 public class CourseOffering {
+
     /**
      * section number
      */
@@ -37,6 +39,7 @@ public class CourseOffering {
 
     /**
      * constructs a CourseOffering Object with specified section number and cap
+     * 
      * @param sectionNumber
      * @param sectionCap
      */
@@ -49,6 +52,7 @@ public class CourseOffering {
 
     /**
      * sets section cap
+     * 
      * @param sectionCap
      */
     public void setSecCap(int sectionCap) {
@@ -57,6 +61,7 @@ public class CourseOffering {
 
     /**
      * sets section number
+     * 
      * @param sectionNumber
      */
     public void setSecNum(int sectionNumber) {
@@ -65,6 +70,7 @@ public class CourseOffering {
 
     /**
      * gets section number
+     * 
      * @return section number
      */
     public int getSecNum() {
@@ -73,6 +79,7 @@ public class CourseOffering {
 
     /**
      * gets section cap
+     * 
      * @return section cap
      */
     public int getSecCap() {
@@ -81,6 +88,7 @@ public class CourseOffering {
 
     /**
      * gets Course object
+     * 
      * @return the Course object
      */
     public Course getTheCourse() {
@@ -88,7 +96,8 @@ public class CourseOffering {
     }
 
     /**
-     * sets Course object 
+     * sets Course object
+     * 
      * @param course
      */
     public void setTheCourse(Course course) {
@@ -100,12 +109,15 @@ public class CourseOffering {
         String st = "#";
         st += getTheCourse().getCourseName() + " " + getTheCourse().getCourseNum() + "#";
         st += "Section Num: " + getSecNum() + ", section cap: " + getSecCap() + "#";
-        // We also want to print the names of all students in the section
+
+        // We also want to print the names of all students in the section but will do in
+        // milestone 3
         return st;
     }
 
     /**
      * registers a student for this offering
+     * 
      * @param registration
      * @param t
      */
@@ -116,6 +128,7 @@ public class CourseOffering {
 
     /**
      * number of students in course
+     * 
      * @return size of student list
      */
     public int numberOfStudentsOffering() {

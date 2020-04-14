@@ -36,7 +36,6 @@ public class Student {
         this.setStudentName(studentName);
         this.setStudentId(studentId);
         studentRegList = new ArrayList<Registration>();
-        System.out.println("Student not null initialized");
     }
 
     /**
@@ -47,15 +46,15 @@ public class Student {
     public String getStudentName() {
         return studentName;
     }
-    
+
     public boolean hasRegAdded(String courseName, int courseId) {
-    	for (Registration r : studentRegList) {
-    		if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName) &&
-    			r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
-    			return true;
-    		}
-    	}
-    	return false;
+        for (Registration r : studentRegList) {
+            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)
+                    && r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -87,7 +86,7 @@ public class Student {
 
     @Override
     public String toString() {
-        String st = "Student Name: " + getStudentName() + "\n" + "Student Id: " + getStudentId() + "\n\n";
+        String st = "Student Name: " + getStudentName() + "#" + "Student Id: " + getStudentId() + "# #";
         return st;
     }
 
@@ -110,8 +109,8 @@ public class Student {
         int count = 0;
         boolean removed = false;
         for (Registration r : studentRegList) {
-            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName) &&
-            	r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
+            if (r.getTheOffering().getTheCourse().getCourseName().contentEquals(courseName)
+                    && r.getTheOffering().getTheCourse().getCourseNum() == courseId) {
                 studentRegList.remove(count);
                 removed = true;
                 break;
