@@ -5,31 +5,35 @@ import java.util.ArrayList;
 /**
  * Contains logic and datafields to create a CourseCatalogue list which
  * simulates a database
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
  */
 public class CourseCatalogue {
+
     /**
      * the list of course available
      */
     private ArrayList<Course> courseList;
 
     /**
-     * constructs a course list and initializes it to the data in text file(database)
+     * constructs a course list and initializes it to the data in text
+     * file(database)
      */
     public CourseCatalogue() {
         courseList = new ArrayList<Course>();
-            DBManager db = new DBManager();
-            courseList = db.getCourseList();
-            /*
-             * for (int i = 0; i < courseList.size(); i++) {
-             * System.out.println(courseList.get(i).getCourseName()); }
-             */
+        DBManager db = new DBManager();
+        courseList = db.getCourseList();
+        /*
+         * for (int i = 0; i < courseList.size(); i++) {
+         * System.out.println(courseList.get(i).getCourseName()); }
+         */
     }
 
     /**
      * Creates a new CourseOffering for a specifed Course
+     * 
      * @param c
      * @param secNum
      * @param secCap
@@ -43,6 +47,7 @@ public class CourseCatalogue {
 
     /**
      * searches catalogue for Course based on name and number
+     * 
      * @param courseName
      * @param courseNum
      * @return
@@ -56,9 +61,10 @@ public class CourseCatalogue {
 
         return null;
     }
-    
+
     /**
      * Course not found error message
+     * 
      * @return String error message
      */
     public String displayCourseNotFoundError() {
@@ -67,6 +73,7 @@ public class CourseCatalogue {
 
     /**
      * gets the course list
+     * 
      * @return
      */
     public ArrayList<Course> getCourseList() {
@@ -84,6 +91,7 @@ public class CourseCatalogue {
 
     /**
      * removes specifed course from Course list
+     * 
      * @param coursename
      * @param coursenum
      */
@@ -96,6 +104,7 @@ public class CourseCatalogue {
 
     /**
      * gets the index where specifed Course is located within CourseCatalogue list
+     * 
      * @param cname
      * @param cid
      * @return int value representing index
@@ -123,6 +132,7 @@ public class CourseCatalogue {
 
     /**
      * gets Course infomation based on name and id
+     * 
      * @param n
      * @param id
      */

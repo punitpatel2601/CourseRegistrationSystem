@@ -10,6 +10,7 @@ import java.net.Socket;
 /**
  * Creates the object instances of the class and connects with client to get and
  * pass the informations requested by the user
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -64,7 +65,6 @@ public class ServerCommunication {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		model = new Model();
 		running = true;
 		initializeServer(); // initialize server with a client
 		runServer(); // run the server
@@ -96,6 +96,7 @@ public class ServerCommunication {
 				line = socketIn.readLine();
 			} catch (Exception e) {
 				running = false;
+				System.out.println("Error while receiving");
 				e.getMessage();
 			}
 
@@ -103,7 +104,7 @@ public class ServerCommunication {
 				System.out.println("Invalid request string.");
 				break;
 			}
-
+			System.out.println(line);
 			String[] inputs = line.split(" "); // splits input string into different command and argument strings
 			int choice = Integer.parseInt(inputs[0]); // commandString
 			String name = inputs[1]; // args String passed into int
@@ -111,8 +112,6 @@ public class ServerCommunication {
 			int secNum = Integer.parseInt(inputs[3]); // args String passed into int
 
 			switch (choice) {
-				case 0:
-					model.initializeStudent(name, id);
 				case 1:
 					String searchedCourse = model.searchCourse(name, id);
 					socketOut.println(searchedCourse);
@@ -137,6 +136,12 @@ public class ServerCommunication {
 					String takenCourses = model.coursesTaken();
 					socketOut.println(takenCourses);
 					// socketOut.println("option 5");
+					break;
+				case 6:
+					model = new Model(name, id);
+					socketOut.println("Welcome! " + name
+							+ "#Now you can use the system.. # # # REMEMBER: Don't enter your details again.");
+					// model.initializeStudent(name, id);
 					break;
 				default:
 					socketOut.println("default");

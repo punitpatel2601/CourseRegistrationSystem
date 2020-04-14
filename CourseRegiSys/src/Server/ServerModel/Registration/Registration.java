@@ -1,11 +1,12 @@
 package Server.ServerModel.Registration;
 
 /**
- * Provides data fields and methods to construct a Registration object and register a Student
+ * Provides data fields and methods to construct a Registration object and
+ * register a Student
  * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
- * @since April 13, 2020
+ * @since April 12, 2020
  */
 public class Registration {
     /**
@@ -20,28 +21,39 @@ public class Registration {
 
     /**
      * registers specified Student for specified CourseOffering
-     * @param st
-     * @param of
+     * 
+     * @param st student
+     * @param of course offering
      * @return String containing registration infomation
      */
     public String completeRegistration(Student st, CourseOffering of) {
         String ret;
-    	theStudent = st;
-        theOffering = of;
-        addRegistration();
+        this.theStudent = st;
+        this.theOffering = of;
+
+        if (theStudent == null) {
+            System.out.println("St null");
+        }
+        if (theOffering == null) {
+            System.out.println("Of null");
+        }
+
         if (!(theStudent.maxCourse())) {
             theStudent.removeMaxCourse();
             theOffering.removeMaxOffering();
-            ret = "You cannot register for " + of.getTheCourse().getCourseName() + " " + of.getTheCourse().getCourseNum() +
-            		" Section " + of.getSecNum() +  ".\nYou are only allowed to register for a maximum of 6 courses.";
-            
+            ret = "You cannot register for " + of.getTheCourse().getCourseName() + " "
+                    + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum()
+                    + ".#You are only allowed to register for a maximum of 6 courses.";
+
         } else if (theOffering.numberOfStudentsOffering() >= theOffering.getSecCap()) {
-        	ret = "Sorry! There is currently no available place in " + of.getTheCourse().getCourseName() + " " +
-        			of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
+            ret = "Sorry! There is currently no available place in " + of.getTheCourse().getCourseName() + " "
+                    + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
         } else {
-        	ret = theStudent.getStudentName() + ", you have successfully registered for " + of.getTheCourse().getCourseName() +
-        			" " + of.getTheCourse().getCourseNum() + " Section " + of.getSecNum();
+            ret = theStudent.getStudentName() + ", you have successfully registered for "
+                    + of.getTheCourse().getCourseName() + " " + of.getTheCourse().getCourseNum() + " Section "
+                    + of.getSecNum();
         }
+        addRegistration();
         return ret;
     }
 
@@ -55,6 +67,7 @@ public class Registration {
 
     /**
      * gets the Student
+     * 
      * @return the Student
      */
     public Student getTheStudent() {
@@ -70,6 +83,7 @@ public class Registration {
 
     /**
      * gets the CourseOffering
+     * 
      * @return the course offering
      */
     public CourseOffering getTheOffering() {
@@ -78,7 +92,8 @@ public class Registration {
 
     /**
      * sets the CourseOffering
-     * @param theOffering
+     * 
+     * @param theOffering course offering
      */
     public void setTheOffering(CourseOffering theOffering) {
         this.theOffering = theOffering;
@@ -86,10 +101,10 @@ public class Registration {
 
     @Override
     public String toString() {
-        String st = "\n";
-        st += "Student Name: " + getTheStudent() + ".\n";
-        st += "The Offering: " + getTheOffering() + ".\n";
-        st += ".\n------------------\n";
+        String st = "#";
+        st += "Student Name: " + getTheStudent() + ".#";
+        st += "The Offering: " + getTheOffering() + ".#";
+        st += ".#------------------#";
         return st;
     }
 }

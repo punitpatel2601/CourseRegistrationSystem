@@ -3,7 +3,9 @@ package Server.ServerModel.Registration;
 import java.util.ArrayList;
 
 /**
- * Provides data fields and methods to create a Java data-type, representing a Course
+ * Provides data fields and methods to create a Java data-type, representing a
+ * Course
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
@@ -31,6 +33,7 @@ public class Course {
 
     /**
      * constructs a course object and assings it preReqs and sessions
+     * 
      * @param courseName
      * @param courseNum
      */
@@ -43,6 +46,7 @@ public class Course {
 
     /**
      * creates an offering for the course
+     * 
      * @param offering
      */
     public void addOffering(CourseOffering offering) {
@@ -58,6 +62,7 @@ public class Course {
 
     /**
      * getter function
+     * 
      * @return course name
      */
     public String getCourseName() {
@@ -66,6 +71,7 @@ public class Course {
 
     /**
      * setter function, sets course name
+     * 
      * @param courseName
      */
     public void setCourseName(String courseName) {
@@ -74,6 +80,7 @@ public class Course {
 
     /**
      * getter function
+     * 
      * @return course number
      */
     public int getCourseNum() {
@@ -82,6 +89,7 @@ public class Course {
 
     /**
      * sets course number
+     * 
      * @param courseNum
      */
     public void setCourseNum(int courseNum) {
@@ -90,6 +98,7 @@ public class Course {
 
     /**
      * checks the number of students registered in course
+     * 
      * @return number of students
      */
     public int checkStudentNumber() {
@@ -113,12 +122,12 @@ public class Course {
 
     @Override
     public String toString() {
-        return getCourseName() + " " + getCourseNum() + "(" + offeringList.size() +
-        " Sections)\n";
+        return (getCourseName() + " " + getCourseNum() + "(" + offeringList.size() + " Sections)#");
     }
 
     /**
      * gets course offering at specified index
+     * 
      * @param i
      * @return offering at specified index
      */
@@ -132,6 +141,7 @@ public class Course {
 
     /**
      * adds a prerequisite to the course
+     * 
      * @param preReq
      */
     public void addPreReq(Course preReq) {

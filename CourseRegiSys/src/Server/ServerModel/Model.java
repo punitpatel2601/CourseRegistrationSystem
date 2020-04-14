@@ -4,13 +4,15 @@ import Server.ServerModel.Registration.*;
 
 /**
  * Provides data fields and methods to define, search, view a catalogue database
- * and to view/edit a student's courses
- * Serves as a communication link between ServerCommunication and the backend(Registration package)
+ * and to view/edit a student's courses Serves as a communication link between
+ * ServerCommunication and the backend(Registration package)
+ * 
  * @author A. Mohar, T. Pritchard, P. Patel
  * @version 1.0
  * @since April 13, 2020
  */
 public class Model {
+
 	/**
 	 * the database catalogue, contains all courses available
 	 */
@@ -19,36 +21,41 @@ public class Model {
 	/**
 	 * the student/user that interacts with ClientGUI
 	 */
-	private Student theStudent; 
+	private Student theStudent;
 
 	/**
 	 * constructs a catalogue
 	 */
-	public Model() {
+	public Model(String name, int id) {
 		cat = new CourseCatalogue();
-	}
-	
-	/**
-	 * assigns user to a student object
-	 * @param studentName the Student object's name
-	 * @param studentId the Student object's id
-	 */
-	public void initializeStudent(String studentName, int studentId) {
-		theStudent = new Student(studentName, studentId);
+		theStudent = new Student(name, id);
 	}
 
 	/**
-	 * searches database for specified course 
-	 * @param courseName
-	 * @param courseId
-	 * @return String object containing msg representing infomation about the searched course
+	 * assigns user to a student object
+	 * 
+	 * @param studentName the Student object's name
+	 * @param studentId   the Student object's id
+	 */
+
+	/*
+	 * public void initializeStudent(String studentName, int studentId) {
+	 * this.theStudent = new Student(studentName, studentId); }
+	 */
+
+	/**
+	 * searches database for specified course
+	 * 
+	 * @param courseName course name
+	 * @param courseId   course id
+	 * @return String object containing msg representing infomation about the
+	 *         searched course
 	 */
 	public String searchCourse(String courseName, int courseId) {
 		Course courseSearched = cat.searchCat(courseName, courseId);
 
 		if (courseSearched == null) { // if not found,display error
-			String serr = cat.displayCourseNotFoundError();
-			return serr;
+			return cat.displayCourseNotFoundError();
 		}
 
 		return ("Found course: " + courseSearched.toString());
@@ -56,22 +63,30 @@ public class Model {
 
 	/**
 	 * registers student for specified course
-	 * @param courseName
-	 * @param courseId
-	 * @param secNum
-	 * @return String object containing message representing infomation about student's registration
+	 * 
+	 * @param courseName course name
+	 * @param courseId   course id
+	 * @param secNum     course section number
+	 * @return String object containing message representing infomation about
+	 *         student's registration
 	 */
 	public String addCourse(String courseName, int courseId, int secNum) {
-		Course add = cat.searchCat(courseName, courseId);
+		Course addi = cat.searchCat(courseName, courseId);
+		if (addi == null) {
+			return ("Course is not in Catalogue# #Please view the Catalogue to see all avaliable courses#");
+		}
 		Registration reg = new Registration();
-		return reg.completeRegistration(theStudent, add.getCourseOfferingAt(secNum - 1));
+		// doubtful
+		return reg.completeRegistration(theStudent, addi.getCourseOfferingAt(secNum - 1));
 	}
 
 	/**
 	 * removes specified course from the student
-	 * @param courseName
-	 * @param courseId
-	 * @return	String object containing message representing infomation about removal of a course from a Student object
+	 * 
+	 * @param courseName course name
+	 * @param courseId   course id
+	 * @return String object containing message representing infomation about
+	 *         removal of a course from a Student object
 	 */
 	public String removeCourse(String courseName, int courseId) {
 		if (theStudent.removeRegistration(courseName)) {
@@ -83,6 +98,7 @@ public class Model {
 
 	/**
 	 * shows all courses available in database
+	 * 
 	 * @return String object representing all courses in database
 	 */
 	public String viewAllCourses() {
@@ -91,24 +107,18 @@ public class Model {
 		}
 		return cat.toString();
 	}
-	
-	/**
-	 * setter function: sets user to Student object
-	 */
-	public void setTheStudent(String name, int id) {
-		theStudent = new Student(name, id);
-	}
 
 	/**
 	 * shows all courses taken by specified student
+	 * 
 	 * @return String object containing courses that the student took
 	 */
 	public String coursesTaken() {
-		if (theStudent.getStudentRegList().isEmpty()) {
+		if (theStudent.getStudentRegList().isEmpty() || theStudent.getStudentRegList() == null) {
 			return "You currently have no courses added.";
 		}
 
-		String takenCourses = "Courses taken by the student are:\n";
+		String takenCourses = "Courses taken by the student are: #";
 
 		for (Registration r : theStudent.getStudentRegList()) {
 			takenCourses += r.getTheOffering().getTheCourse().toString();

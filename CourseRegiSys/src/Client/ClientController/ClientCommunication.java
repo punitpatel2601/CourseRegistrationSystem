@@ -10,9 +10,13 @@ import Client.ClientView.ClientGUI;
 /**
  * Creates the clientCommunication class and connects with server to pass the
  * information , Also acts as actionlistener class for buttons in ClientGUI
- * @author A. Mohar, T. Pritchard, P. Patel
- * @version 1.0
- * @since April 13, 2020
+ * 
+ * @author Punit Patel
+ * @author Tom Pritchard
+ * @author Armaan Mohar
+ * 
+ * @version 1.0 (beta)
+ * @since April 10, 2020
  */
 public class ClientCommunication {
 
@@ -55,10 +59,11 @@ public class ClientCommunication {
 	 * @param studentName name of the student
 	 * @param studentId   student id
 	 */
-	public void passStudentInfo(String studentName, int studentId) {
-		String line = "0 ";
+	public String passStudentInfo(String studentName, int studentId) {
+		String line = "6 ";
 		line += studentName + " " + studentId + " 0";
-		communicate(line);
+
+		return communicate(line);
 	}
 
 	/**
@@ -129,7 +134,7 @@ public class ClientCommunication {
 	 * Closes the connection to server and turns off the server
 	 */
 	public void closeCon() {
-		communicate("6 closeCon 0 0");
+		communicate("7 closeCon 0 0");
 		try {
 			socketIn.close();
 			socketOut.close();
@@ -149,6 +154,7 @@ public class ClientCommunication {
 		String response = "";
 
 		try {
+			System.out.println("Sending .. " + line);
 			socketOut.println(line); // sending info string to server
 			response = socketIn.readLine(); // receiving info string from server
 			System.out.println(response);
