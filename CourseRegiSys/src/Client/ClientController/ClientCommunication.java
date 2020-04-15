@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 //import Client.ClientView.ClientGUI;
 import Client.ClientView.*;
@@ -48,7 +49,7 @@ public class ClientCommunication {
 		new View(this);
 
 		try {
-			aSocket = new Socket(serverName, port);
+			aSocket = new Socket(InetAddress.getByName("192.168.1.45"), port);  //change to your ip, this is ip of server
 			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
 			socketOut = new PrintWriter(aSocket.getOutputStream(), true);
 		} catch (IOException e) {
