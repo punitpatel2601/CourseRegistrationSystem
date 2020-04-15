@@ -110,6 +110,18 @@ public class ServerThread extends Thread {
                     socketOut.println("Welcome! #\t" + name + " - " + id
                             + "# # #Now you can use the system.. # # Please select from the following choices.");
                     break;
+                case 7:
+                   // model = new Model(name, id, secNum);
+                    if(name.equals("PAT") && id == 007){
+                        socketOut.println("Welcome! #\t" + name + " - " + id
+                        + "# # #Now you can use the system.. # # Please select from the following choices.");
+                    } else{
+                        socketOut.println("Error! # Invalid Credentials! #");
+                    }
+                    break;
+                case 8:
+                    socketOut.println("Add Course Not Completed Yet!");
+                    break;
                 default:
                     socketOut.println("default");
                     closeConnection();

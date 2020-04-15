@@ -24,60 +24,26 @@ import Client.ClientController.ClientCommunication;
  * @since April 08, 2020
  * @version 1.0 (beta)
  */
-public class ClientGUI extends JFrame {
+public class ClientGUI extends GUI {
 
     /**
      * serial id
      */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 42L;
 
-    /**
-     * Links GUI to communication class, acts as action listener to buttons in GUI
-     */
-    private ClientCommunication actions;
-
-    /**
-     * Text area where the output is shown to user
-     */
-    private JTextArea jta;
-
-    /**
-     * Name of course entered by user
-     */
-    private String cName;
-
-    /**
-     * Id of the course
-     */
-    private int cID;
-
-    /**
-     * Section of the class
-     */
-    private int cSec;
-
-    /**
-     * Name of the student accessing system
-     */
-    private String studentName;
-
-    /**
-     * Student ID
-     */
-    private int studentId;
-
-    /**
-     * boolean for showing different gui
-     */
-    private boolean detailsEntered;
 
     /**
      * Creates and Initializes the GUI for the user
      * 
      * @param ccm a pointer to ClientCommunication class
      */
-    public ClientGUI(ClientCommunication ccm) {
-        actions = ccm;
+    public ClientGUI(View v) {
+        //actions = ccm;
+        theView = v;
+        tGUI();
+    }
+
+    public void tGUI(){
         detailsEntered = false;
 
         jta = new JTextArea(
@@ -91,7 +57,7 @@ public class ClientGUI extends JFrame {
     /**
      * Prepares GUI for the user to interact with server
      */
-    private void prepareGUI() {
+    public void prepareGUI() {
         setTitle("Course Registration System");
         setSize(600, 750);
         setLayout(new GridLayout(2, 1));
@@ -147,7 +113,7 @@ public class ClientGUI extends JFrame {
         jp.add(quit);
 
         enterDetails.addActionListener((ActionEvent e) -> {
-            guiSerOutput(getStudentInfo());
+            guiSerOutput(getInfo());
             detailsEntered = true;
 
             // changing visibilty
@@ -186,7 +152,7 @@ public class ClientGUI extends JFrame {
      * 
      * @param serverOutput String containing server output
      */
-    private void guiSerOutput(String serverOutput) {
+    public void guiSerOutput(String serverOutput) {
         jta.setText(""); // resetting text area
         if (serverOutput == null) { // checking if null response from server
             jta.setText("Error in your input, Server didn't respond!");
@@ -204,11 +170,11 @@ public class ClientGUI extends JFrame {
     /**
      * Quits the applications, invokes other quit methods
      */
-    private void quit() {
+    public void quit() {
         int res = JOptionPane.showConfirmDialog(null, "Press OK to quit.", "Quit?", JOptionPane.OK_CANCEL_OPTION);
 
         if (res == JOptionPane.OK_OPTION) { // exit only if ok is pressed
-            actions.closeCon();
+            theView.getAction().closeCon();
             System.exit(0);
         } else if (res == JOptionPane.CANCEL_OPTION) { // otherwise back to program
             return;
@@ -223,8 +189,8 @@ public class ClientGUI extends JFrame {
      * 
      * @return studentCourses String
      */
-    private String studentCourses() {
-        return actions.showStudentCourses();
+    public String studentCourses() {
+        return theView.getAction().showStudentCourses();
     }
 
     /**
@@ -233,8 +199,8 @@ public class ClientGUI extends JFrame {
      * 
      * @return allCourses String
      */
-    private String viewAllCourses() {
-        return actions.viewAllCourses();
+    public String viewAllCourses() {
+        return theView.getAction().viewAllCourses();
     }
 
     /**
@@ -242,9 +208,9 @@ public class ClientGUI extends JFrame {
      * 
      * @return confirmation String confirming the status of removal
      */
-    private String removeCourse() {
+    public String removeCourse() {
         callForInput(false);
-        return actions.removeCourse(cName, cID);
+        return theView.getAction().removeCourse(cName, cID);
     }
 
     /**
@@ -252,23 +218,23 @@ public class ClientGUI extends JFrame {
      * 
      * @return String confirmation of addition of course
      */
-    private String addTheCourse() {
+    public String addTheCourse() {
         callForInput(true); // true prompts for input of section number
-        return actions.addCourse(cName, cID, cSec);
+        return theView.getAction().addCourse(cName, cID, cSec);
     }
 
     /**
      * Searches for the course
      */
-    private String searchCourse() {
+    public String searchCourse() {
         callForInput(false);
-        return actions.searchCourse(cName, cID);
+        return theView.getAction().searchCourse(cName, cID);
     }
 
     /**
      * Helps other functions to get input for course name and id
      */
-    private void callForInput(boolean act) {
+    public void callForInput(boolean act) {
         this.cName = callInputForName();
         if (cName.isEmpty() || (cName.compareTo(" ") == 0) || cName == null) {
             JOptionPane.showMessageDialog(null, "Invalid name entered, Please enter a String", "Error!",
@@ -286,7 +252,7 @@ public class ClientGUI extends JFrame {
      * Prompt the user to enter their name and id to access the system, keeps asking
      * till input is not valid
      */
-    private String getStudentInfo() {
+    public String getInfo() {
         while (true) {
             try {
                 studentName = JOptionPane.showInputDialog(null, "Please enter your First Name");
@@ -306,13 +272,14 @@ public class ClientGUI extends JFrame {
             }
             studentName = names[0];
         }
-        return actions.passStudentInfo(studentName, studentId);
+        return theView.getAction().passStudentInfo(studentName, studentId);
     }
+
 
     /**
      * Creates input dialog and asks for input from user, sets the input as cSec
      */
-    private void callInputForSection() {
+    public void callInputForSection() {
         int sec = 1;
         try {
             sec = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the Section Number: "));
@@ -328,7 +295,7 @@ public class ClientGUI extends JFrame {
      * 
      * @return id integer id entered
      */
-    private int callInputForID() {
+    public int callInputForID() {
         int id = -1;
         try {
             id = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the Course ID: "));
@@ -345,7 +312,7 @@ public class ClientGUI extends JFrame {
      * 
      * @return name first word of string of name
      */
-    private String callInputForName() {
+    public String callInputForName() {
         String name = "";
         try {
             name = JOptionPane.showInputDialog(null, "Enter the name of the Course");

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import Client.ClientView.ClientGUI;
+//import Client.ClientView.ClientGUI;
+import Client.ClientView.*;
+//import Client.ClientView.View;
 
 /**
  * Creates the clientCommunication class and connects with server to pass the
@@ -42,7 +44,8 @@ public class ClientCommunication {
 	 * @param port       port where the server is hosted
 	 */
 	public ClientCommunication(String serverName, int port) {
-		new ClientGUI(this);
+		//new ClientGUI(this);
+		new View(this);
 
 		try {
 			aSocket = new Socket(serverName, port);
@@ -63,6 +66,18 @@ public class ClientCommunication {
 		String line = "6 ";
 		line += studentName + " " + studentId + " 0";
 
+		return communicate(line);
+	}
+
+	public String addNewCourse(String name, int id, int sec){
+		String line = "8";
+		line += name + " " + id + " " + sec + " 0";
+		return communicate(line);
+	}
+
+	public String passAdminInfo(String adminName, int adminId){
+		String line = "7";
+		line += adminName + " " + adminId + " 0";
 		return communicate(line);
 	}
 
