@@ -257,7 +257,7 @@ public class AdminGUI extends GUI {
          * till input is not valid
          */
         public String getInfo() {
-            //while (true) {
+            while (true) {
                 try {
                     adminName = JOptionPane.showInputDialog(null, "Please enter your First Name: ");
                     adminName = studentName.toUpperCase();
@@ -265,11 +265,11 @@ public class AdminGUI extends GUI {
                 } catch (Exception e) {
                    // System.out.println(e.getMessage());
                     JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                  // continue;
+                  continue;
                 }
                 //if(adminName != null){
-                //break;
-               // }
+                break;
+                }
            // }
     
             if (adminName.contains(" ")) {
