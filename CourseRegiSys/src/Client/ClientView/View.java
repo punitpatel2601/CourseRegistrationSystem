@@ -70,8 +70,8 @@ public class View extends JFrame {
         return action;
     }
 
-   // public static void main(String [] args){
-     //   View myView = new View();
+    //public static void main(String [] args){
+   //View myView = new View();
     //}
 
 

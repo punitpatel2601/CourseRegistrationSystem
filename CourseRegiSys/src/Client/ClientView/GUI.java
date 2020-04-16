@@ -75,6 +75,7 @@ public abstract class GUI extends JFrame {
          * Prepares GUI for the user to interact with server
          */
         public abstract void prepareGUI();
+
     
         /**
          * Creates the JPanel which has multiple buttons in order to get choice of user

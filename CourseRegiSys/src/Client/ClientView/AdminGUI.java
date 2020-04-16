@@ -115,16 +115,44 @@ public class AdminGUI extends GUI {
             jp.add(quit);
     
             enterDetails.addActionListener((ActionEvent e) -> {
-                String s = "";
-                while(s == null){
-                 s = getInfo(); 
-                guiSerOutput(s);
-                }
-                detailsEntered = true;
+                JFrame log = new JFrame();
+                JPanel logIn = new JPanel(new GridLayout(3,1));
     
-                if(s.equals("VALID")){
-                // changing visibilty
-                search.setVisible(detailsEntered);
+                JLabel user = new JLabel();
+                JLabel pw = new JLabel("Enter password:");
+                JTextField userName = new JTextField(20);
+                JTextField passw = new JTextField(20);
+    
+                user.setText("Username: ");
+                pw.setText("ID: ");
+    
+                JButton submit = new JButton("SUBMIT");
+                log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+                logIn.add(user);
+                logIn.add(pw);
+                logIn.add(userName);
+                logIn.add(passw);
+                logIn.add(submit);
+    
+                log.add(logIn, BorderLayout.CENTER);
+                log.setTitle("Please login here");
+                log.setSize(300,100);
+                log.setVisible(true);
+    
+                submit.addActionListener((ActionEvent s) ->{
+                    this.adminName = userName.getText();
+                    this.adminId = Integer.parseInt(passw.getText());
+                    this.valid = validateCredentials(adminName, adminId);
+                    log.dispose();
+                   // updateGUI();
+                });
+                guiSerOutput(valid);
+               
+                if(valid.contains("VALID")){
+                    guiSerOutput(valid);
+                    detailsEntered = true;
+                    search.setVisible(detailsEntered);
                 addCourse.setVisible(detailsEntered);
                 remove.setVisible(detailsEntered);
                 viewAll.setVisible(detailsEntered);
@@ -132,11 +160,13 @@ public class AdminGUI extends GUI {
                 enterDetails.setVisible(!detailsEntered);
                 addNewCourse.setVisible(detailsEntered);
                 quit.setVisible(true);
-                } else{
-                    JOptionPane.showMessageDialog(null, "Incorrect Credentials!");
-                    quit.setVisible(true);
                 }
-               // quit.setVisible(true);
+                else{
+                    JOptionPane.showMessageDialog(null, "Incorrect Credentials!");
+                    enterDetails.setVisible(true);
+                    quit.setVisible(true);
+                    detailsEntered = false;
+                }
             });
             search.addActionListener((ActionEvent e) -> {
                 guiSerOutput(searchCourse());
@@ -162,6 +192,7 @@ public class AdminGUI extends GUI {
     
             return jp;
         }
+
 
         /**
          * adds a new course to database
@@ -298,19 +329,23 @@ public class AdminGUI extends GUI {
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent e) ->{
-                while(adminName == null && adminId == -1){
                 adminName = userName.getText();
                 adminId = Integer.parseInt(passw.getText());
                 valid = validateCredentials(adminName, adminId);
-                }
                 log.dispose();
             });
+           
             return valid;
+            
 
             //return theView.getAction().passAdminInfo(adminName, adminId);           
     }
 
     public String validateCredentials(String n, int p){
-        return theView.getAction().passAdminInfo(n, p);
+        String a = theView.getAction().passAdminInfo(n, p);
+        if(a != null){
+        return a;
+         }
+     return "# no reponse #";
     }
 }

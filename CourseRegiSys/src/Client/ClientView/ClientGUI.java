@@ -120,10 +120,41 @@ public class ClientGUI extends GUI {
         jp.add(quit);
 
         enterDetails.addActionListener((ActionEvent e) -> {
-            //logIn();
-            while(getInfo() == null){
-            guiSerOutput(getInfo());
-            }
+            JFrame log = new JFrame();
+            JPanel logIn = new JPanel(new GridLayout(3,1));
+
+            JLabel user = new JLabel();
+            JLabel pw = new JLabel("Enter password:");
+            JTextField userName = new JTextField(20);
+            JTextField passw = new JTextField(20);
+
+            user.setText("Username: ");
+            pw.setText("ID: ");
+
+            JButton submit = new JButton("SUBMIT");
+            log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            logIn.add(user);
+            logIn.add(pw);
+            logIn.add(userName);
+            logIn.add(passw);
+            logIn.add(submit);
+
+            log.add(logIn, BorderLayout.CENTER);
+            log.setTitle("Please login here");
+            log.setSize(300,100);
+            log.setVisible(true);
+
+            submit.addActionListener((ActionEvent s) ->{
+                this.studentName = userName.getText();
+                this.studentId = Integer.parseInt(passw.getText());
+                this.valid = validateCredentials(studentName, studentId);
+                log.dispose();
+            });
+
+            guiSerOutput(valid);
+            if(valid.contains("VALID")){
+            guiSerOutput(valid);
             detailsEntered = true;
 
             // changing visibilty
@@ -133,7 +164,12 @@ public class ClientGUI extends GUI {
             viewAll.setVisible(detailsEntered);
             viewStuCourses.setVisible(detailsEntered);
             enterDetails.setVisible(!detailsEntered);
-            quit.setVisible(true);
+            } else{
+                detailsEntered = false;
+                quit.setVisible(true);
+                enterDetails.setVisible(true);
+            }
+            
         });
         search.addActionListener((ActionEvent e) -> {
             guiSerOutput(searchCourse());
@@ -156,6 +192,8 @@ public class ClientGUI extends GUI {
 
         return jp;
     }
+
+
 
     /**
      * Creates another GUI and shows the Server output on it
@@ -289,11 +327,11 @@ public class ClientGUI extends GUI {
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent e) ->{
-                while(studentName == null && studentId == -1){
+               // while(studentName == null && studentId == -1){
                 studentName = userName.getText();
                 studentId = Integer.parseInt(passw.getText());
                 valid = validateCredentials(studentName, studentId);
-                }
+               // }
                 log.dispose();
             });
 
@@ -303,7 +341,11 @@ public class ClientGUI extends GUI {
     }
 
     public String validateCredentials(String n, int p){
-        return theView.getAction().passStudentInfo(n, p);
+        String a = theView.getAction().passStudentInfo(n, p);
+        if(a!=null){
+        return a;
+        }
+        return "# no reponse #";
     }
 
 

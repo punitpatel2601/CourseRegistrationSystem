@@ -107,7 +107,7 @@ public class ServerThread extends Thread {
                     break;
                 case 6:
                     model = new Model(name, id);
-                    socketOut.println("Welcome! #\t" + name + " - " + id
+                    socketOut.println("VALID #" + "Welcome! #\t" + name + " - " + id
                             + "# # #Now you can use the system.. # # Please select from the following choices.");
                     break;
                 case 7:
