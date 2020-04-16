@@ -44,6 +44,9 @@ public class ClientGUI extends GUI {
     public ClientGUI(View v) {
         //actions = ccm;
         theView = v;
+        studentName = "";
+        studentId = -1;
+        valid = "";
         tGUI();
     }
 
@@ -118,7 +121,9 @@ public class ClientGUI extends GUI {
 
         enterDetails.addActionListener((ActionEvent e) -> {
             //logIn();
+            while(getInfo() == null){
             guiSerOutput(getInfo());
+            }
             detailsEntered = true;
 
             // changing visibilty
@@ -284,13 +289,13 @@ public class ClientGUI extends GUI {
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent e) ->{
+                while(studentName == null && studentId == -1){
                 studentName = userName.getText();
                 studentId = Integer.parseInt(passw.getText());
                 valid = validateCredentials(studentName, studentId);
+                }
                 log.dispose();
             });
-
-            
 
             return valid;
 

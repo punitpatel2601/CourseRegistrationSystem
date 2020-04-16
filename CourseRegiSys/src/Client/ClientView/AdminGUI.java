@@ -35,8 +35,9 @@ public class AdminGUI extends GUI {
         public AdminGUI(View v) {
             //actions = ccm;
             theView = v;
-            //adminName = "PAT";
-            //adminId = 007;
+            adminName = "";
+            adminId = -1;
+            valid = "";
             tGUI();
         }
     
@@ -114,8 +115,11 @@ public class AdminGUI extends GUI {
             jp.add(quit);
     
             enterDetails.addActionListener((ActionEvent e) -> {
-                String s = getInfo();
+                String s = "";
+                while(s == null){
+                 s = getInfo(); 
                 guiSerOutput(s);
+                }
                 detailsEntered = true;
     
                 if(s.equals("VALID")){
@@ -294,14 +298,13 @@ public class AdminGUI extends GUI {
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent e) ->{
+                while(adminName == null && adminId == -1){
                 adminName = userName.getText();
                 adminId = Integer.parseInt(passw.getText());
                 valid = validateCredentials(adminName, adminId);
+                }
                 log.dispose();
             });
-
-            
-
             return valid;
 
             //return theView.getAction().passAdminInfo(adminName, adminId);           
