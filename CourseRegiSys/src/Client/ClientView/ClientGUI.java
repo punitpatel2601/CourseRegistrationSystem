@@ -1,5 +1,6 @@
 package Client.ClientView;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -9,8 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import Client.ClientController.ClientCommunication;
 
 /**
@@ -113,6 +117,7 @@ public class ClientGUI extends GUI {
         jp.add(quit);
 
         enterDetails.addActionListener((ActionEvent e) -> {
+            //logIn();
             guiSerOutput(getInfo());
             detailsEntered = true;
 
@@ -253,26 +258,47 @@ public class ClientGUI extends GUI {
      * till input is not valid
      */
     public String getInfo() {
-        while (true) {
-            try {
-                studentName = JOptionPane.showInputDialog(null, "Please enter your First Name");
-                studentName = studentName.toUpperCase();
-                studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                continue;
-            }
-            break;
-        }
+        JFrame log = new JFrame();
+            JPanel logIn = new JPanel(new GridLayout(3,1));
 
-        if (studentName.contains(" ")) {
-            String[] names = studentName.split(" ");
-            if (names[0].isEmpty()) {
-                studentName = names[1]; // return second words if first words entered was space or empty
-            }
-            studentName = names[0];
-        }
-        return theView.getAction().passStudentInfo(studentName, studentId);
+            JLabel user = new JLabel();
+            JLabel pw = new JLabel("Enter password:");
+            JTextField userName = new JTextField(20);
+            JTextField passw = new JTextField(20);
+
+            user.setText("Username: ");
+            pw.setText("ID: ");
+
+            JButton submit = new JButton("SUBMIT");
+            log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            logIn.add(user);
+            logIn.add(pw);
+            logIn.add(userName);
+            logIn.add(passw);
+            logIn.add(submit);
+
+            log.add(logIn, BorderLayout.CENTER);
+            log.setTitle("Please login here");
+            log.setSize(300,100);
+            log.setVisible(true);
+
+            submit.addActionListener((ActionEvent e) ->{
+                studentName = userName.getText();
+                studentId = Integer.parseInt(passw.getText());
+                valid = validateCredentials(studentName, studentId);
+                log.dispose();
+            });
+
+            
+
+            return valid;
+
+        //return theView.getAction().passStudentInfo(studentName, studentId);
+    }
+
+    public String validateCredentials(String n, int p){
+        return theView.getAction().passStudentInfo(n, p);
     }
 
 

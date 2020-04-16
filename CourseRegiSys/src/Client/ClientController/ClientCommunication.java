@@ -49,7 +49,7 @@ public class ClientCommunication {
 		new View(this);
 
 		try {
-			aSocket = new Socket(InetAddress.getByName("192.168.1.45"), port);  //change to your ip, this is ip of server
+			aSocket = new Socket(serverName, port);  //change to your ip, this is ip of server
 			socketIn = new BufferedReader(new InputStreamReader(aSocket.getInputStream()));
 			socketOut = new PrintWriter(aSocket.getOutputStream(), true);
 		} catch (IOException e) {
@@ -77,7 +77,7 @@ public class ClientCommunication {
 	}
 
 	public String passAdminInfo(String adminName, int adminId){
-		String line = "7";
+		String line = "7 ";
 		line += adminName + " " + adminId + " 0";
 		return communicate(line);
 	}

@@ -113,6 +113,7 @@ public class ServerThread extends Thread {
                 case 7:
                    // model = new Model(name, id, secNum);
                     if(name.equals("PAT") && id == 007){
+                        socketOut.println("VALID #");
                         socketOut.println("Welcome! #\t" + name + " - " + id
                         + "# # #Now you can use the system.. # # Please select from the following choices.");
                     } else{

@@ -1,5 +1,6 @@
 package Client.ClientView;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -9,8 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import Client.ClientController.ClientCommunication;
 
 public class AdminGUI extends GUI { 
@@ -110,9 +114,11 @@ public class AdminGUI extends GUI {
             jp.add(quit);
     
             enterDetails.addActionListener((ActionEvent e) -> {
-                guiSerOutput(getInfo());
+                String s = getInfo();
+                guiSerOutput(s);
                 detailsEntered = true;
     
+                if(s.equals("VALID")){
                 // changing visibilty
                 search.setVisible(detailsEntered);
                 addCourse.setVisible(detailsEntered);
@@ -122,6 +128,11 @@ public class AdminGUI extends GUI {
                 enterDetails.setVisible(!detailsEntered);
                 addNewCourse.setVisible(detailsEntered);
                 quit.setVisible(true);
+                } else{
+                    JOptionPane.showMessageDialog(null, "Incorrect Credentials!");
+                    quit.setVisible(true);
+                }
+               // quit.setVisible(true);
             });
             search.addActionListener((ActionEvent e) -> {
                 guiSerOutput(searchCourse());
@@ -257,30 +268,46 @@ public class AdminGUI extends GUI {
          * till input is not valid
          */
         public String getInfo() {
-            while (true) {
-                try {
-                    adminName = JOptionPane.showInputDialog(null, "Please enter your First Name: ");
-                    adminName = studentName.toUpperCase();
-                    adminId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter your ID number"));
-                } catch (Exception e) {
-                   // System.out.println(e.getMessage());
-                    JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                  continue;
-                }
-                //if(adminName != null){
-                break;
-                }
-           // }
-    
-            if (adminName.contains(" ")) {
-                String[] names = adminName.split(" ");
-                if (names[0].isEmpty()) {
-                    adminName = names[1]; // return second words if first words entered was space or empty
-                }
-                adminName = names[0];
-            }
+            JFrame log = new JFrame();
+            JPanel logIn = new JPanel(new GridLayout(3,1));
+
+            JLabel user = new JLabel();
+            JLabel pw = new JLabel("Enter password:");
+            JTextField userName = new JTextField(20);
+            JTextField passw = new JTextField(20);
+
+            user.setText("Username: ");
+            pw.setText("ID: ");
+
+            JButton submit = new JButton("SUBMIT");
+            log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            logIn.add(user);
+            logIn.add(pw);
+            logIn.add(userName);
+            logIn.add(passw);
+            logIn.add(submit);
+
+            log.add(logIn, BorderLayout.CENTER);
+            log.setTitle("Please login here");
+            log.setSize(300,100);
+            log.setVisible(true);
+
+            submit.addActionListener((ActionEvent e) ->{
+                adminName = userName.getText();
+                adminId = Integer.parseInt(passw.getText());
+                valid = validateCredentials(adminName, adminId);
+                log.dispose();
+            });
+
             
-           
-        return theView.getAction().passAdminInfo(adminName, adminId);
+
+            return valid;
+
+            //return theView.getAction().passAdminInfo(adminName, adminId);           
+    }
+
+    public String validateCredentials(String n, int p){
+        return theView.getAction().passAdminInfo(n, p);
     }
 }

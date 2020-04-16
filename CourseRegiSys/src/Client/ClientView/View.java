@@ -1,52 +1,60 @@
 package Client.ClientView;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
 
 import Client.ClientController.ClientCommunication;
 
-public class View {
+public class View extends JFrame {
     private ClientCommunication action;
     private ClientGUI cg;
     private AdminGUI ag;
 
     public View(ClientCommunication ccm){
+        super("Welcome to Course Registration System");
+        setSize(100,100);
         action = ccm;
-       String t = getDetails();
-       runView(t);
+      welcome();
     }
 
-    public String getDetails(){
-        String userType = "";
-        while(!userType.equals("ADMIN") || !userType.equals("STUDENT")){
-        try {
-            userType = JOptionPane.showInputDialog(null, "Are you a Student or Admin?");
-            userType = userType.toUpperCase();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Invalid type entered, Please enter a String", "Error!",
-                        JOptionPane.ERROR_MESSAGE);
-                        continue;
-                        
-        }
-        if(userType.equals("ADMIN"))
-        break;
+    public void welcome(){
+        JPanel p = new JPanel();
+        FlowLayout cl = new FlowLayout();
+        p.setLayout(cl);
+        JButton admin = new JButton("Admin log in");
+        JButton user = new JButton("Student log in");
+        admin.setVisible(true);
+        user.setVisible(true);
 
-        if(userType.equals("STUDENT"))
-        break;
+        //setSize(250,250);
+        p.add(admin);
+        p.add(user);
         
+        setContentPane(p);
+        setVisible(true);
 
+       
+
+        admin.addActionListener((ActionEvent e) ->{
+            String a = getType("admin");
+            runView(a);
+        });
+
+        user.addActionListener((ActionEvent e) ->{
+            String s = getType("student");
+            runView(s);
+        });
+        return;
+        
     }
 
-        if(userType.equals("ADMIN")){
-            return userType;
-        }
-
-        if(userType.equals("STUDENT")){
-            return userType;
-        }
-
-        return null;
-
+    public String getType(String t){
+        t = t.toUpperCase(); 
+        return t;       
     }
+
 
     public void runView(String userType){
         if(userType.equals("ADMIN")){
@@ -63,7 +71,7 @@ public class View {
     }
 
    // public static void main(String [] args){
-     //   View myView = new View();
+      // View myView = new View();
     //}
 
 

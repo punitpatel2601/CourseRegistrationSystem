@@ -61,6 +61,8 @@ public abstract class GUI extends JFrame {
         boolean detailsEntered;
 
         View theView;
+
+        String valid;
     
         /**
          * Creates and Initializes the GUI for the user
@@ -180,6 +182,8 @@ public abstract class GUI extends JFrame {
          * till input is not valid
          */
         abstract String getInfo();
+
+        abstract String validateCredentials(String n, int p);
     
         /**
          * Creates input dialog and asks for input from user, sets the input as cSec
