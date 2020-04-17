@@ -130,6 +130,10 @@ public class ServerThread extends Thread {
                     String runnable = model.runCourse(name, id);
                     socketOut.println(runnable);
                     break;
+                case 10:
+                    String list = model.classlist(name, id);
+                    socketOut.println(list);
+                    break;
                 default:
                     socketOut.println("default");
                     closeConnection();

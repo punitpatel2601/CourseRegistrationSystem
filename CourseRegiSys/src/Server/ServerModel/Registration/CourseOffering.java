@@ -50,6 +50,10 @@ public class CourseOffering {
         studentList = new ArrayList<Student>();
     }
 
+    public ArrayList<Registration> getRegisteredStudents(){
+        return offeringRegList;
+    }
+
     /**
      * sets section cap
      * 

@@ -66,7 +66,7 @@ public class ClientGUI extends GUI {
      */
     public void prepareGUI() {
         setTitle("Course Registration System");
-        setSize(600, 750);
+        setSize(600, 800);
         setLayout(new GridLayout(2, 1));
 
         JScrollPane jsp = new JScrollPane(jta);
@@ -142,7 +142,7 @@ public class ClientGUI extends GUI {
 
             log.add(logIn, BorderLayout.CENTER);
             log.setTitle("Please login here");
-            log.setSize(300,100);
+            log.setSize(300,300);
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent s) ->{

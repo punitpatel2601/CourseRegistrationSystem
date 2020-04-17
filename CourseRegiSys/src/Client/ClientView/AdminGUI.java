@@ -59,7 +59,7 @@ public class AdminGUI extends GUI {
          */
         public void prepareGUI() {
             setTitle("Course Registration System -- Admin");
-            setSize(600, 750);
+            setSize(600, 800);
             setLayout(new GridLayout(2, 1));
     
             JScrollPane jsp = new JScrollPane(jta);
@@ -87,6 +87,7 @@ public class AdminGUI extends GUI {
             JButton enterDetails = new JButton("Enter details");
             JButton addNewCourse = new JButton("Add course to Course Catalogue");
             JButton runCourse = new JButton("Check if Course can run");
+            JButton checkClassList = new JButton("Get classlists");
             JButton quit = new JButton("Quit the application");
     
             // setting visibilities of buttons
@@ -98,6 +99,7 @@ public class AdminGUI extends GUI {
             enterDetails.setVisible(!detailsEntered);
             addNewCourse.setVisible(detailsEntered);
             runCourse.setVisible(detailsEntered);
+            checkClassList.setVisible(detailsEntered);
             quit.setVisible(true);
     
             jp.add(new JLabel(" "));
@@ -117,6 +119,8 @@ public class AdminGUI extends GUI {
             jp.add(addNewCourse);
             jp.add(new JLabel(" "));
             jp.add(runCourse);
+            jp.add(new JLabel(" "));
+            jp.add(checkClassList);
             jp.add(new JLabel(" "));
             jp.add(quit);
     
@@ -143,7 +147,7 @@ public class AdminGUI extends GUI {
     
                 log.add(logIn, BorderLayout.CENTER);
                 log.setTitle("Please login here");
-                log.setSize(300,100);
+                log.setSize(300,300);
                 log.setVisible(true);
     
                 submit.addActionListener((ActionEvent s) ->{
@@ -161,6 +165,7 @@ public class AdminGUI extends GUI {
                     enterDetails.setVisible(!detailsEntered);
                     addNewCourse.setVisible(detailsEntered);
                     runCourse.setVisible(detailsEntered);
+                    checkClassList.setVisible(detailsEntered);
                     quit.setVisible(true);
                     }
                     else{
@@ -194,11 +199,19 @@ public class AdminGUI extends GUI {
             runCourse.addActionListener((ActionEvent e) -> {
                 guiSerOutput(runTheCourse());
             });
+            checkClassList.addActionListener((ActionEvent e) ->{
+                guiSerOutput(classlist());
+            });
             quit.addActionListener((ActionEvent e) -> {
                 quit();
             });
     
             return jp;
+        }
+
+        public String classlist(){
+            callForInput(true);
+            return theView.getAction().showClasslist(this.cName, this.cID);
         }
 
 
@@ -237,26 +250,7 @@ public class AdminGUI extends GUI {
          * @return studentCourses String
          */
         public String studentCourses() {
-            while (true) {
-                try {
-                    studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
-                    studentName = studentName.toUpperCase();
-                    studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-                break;
-            }
-    
-            if (studentName.contains(" ")) {
-                String[] names = studentName.split(" ");
-                if (names[0].isEmpty()) {
-                    studentName = names[1]; // return second words if first words entered was space or empty
-                }
-                studentName = names[0];
-            }
-            
+            getStudentInfo();            
             return theView.getAction().showStudentCourses();   //make a new admin show function or pass name & id
         }
     
@@ -267,27 +261,7 @@ public class AdminGUI extends GUI {
          * @return confirmation String confirming the status of removal
          */
         public String removeCourse() {
-            while (true) {
-                try {
-                    studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
-                    studentName = studentName.toUpperCase();
-                    studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-                break;
-            }
-    
-            if (studentName.contains(" ")) {
-                String[] names = studentName.split(" ");
-                if (names[0].isEmpty()) {
-                    studentName = names[1]; // return second words if first words entered was space or empty
-                }
-                studentName = names[0];
-            }
-
-
+            getStudentInfo();
             callForInput(false);
             return theView.getAction().removeCourse(cName, cID);
         }
@@ -299,26 +273,7 @@ public class AdminGUI extends GUI {
          * @return String confirmation of addition of course
          */
         public String addTheCourse() {
-            while (true) {
-                try {
-                    studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
-                    studentName = studentName.toUpperCase();
-                    studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                    continue;
-                }
-                break;
-            }
-    
-            if (studentName.contains(" ")) {
-                String[] names = studentName.split(" ");
-                if (names[0].isEmpty()) {
-                    studentName = names[1]; // return second words if first words entered was space or empty
-                }
-                studentName = names[0];
-            }
-
+            getStudentInfo();
             callForInput(true); // true prompts for input of section number
             return theView.getAction().addCourse(cName, cID, cSec);
         }
@@ -331,5 +286,27 @@ public class AdminGUI extends GUI {
         return a;
          }
      return "# no reponse #";
+    }
+
+    public void getStudentInfo(){
+        while (true) {
+            try {
+                studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
+                studentName = studentName.toUpperCase();
+                studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
+                continue;
+            }
+            break;
+        }
+
+        if (studentName.contains(" ")) {
+            String[] names = studentName.split(" ");
+            if (names[0].isEmpty()) {
+                studentName = names[1]; // return second words if first words entered was space or empty
+            }
+            studentName = names[0];
+        }
     }
 }

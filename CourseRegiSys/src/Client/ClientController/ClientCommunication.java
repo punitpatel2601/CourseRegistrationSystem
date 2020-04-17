@@ -70,6 +70,12 @@ public class ClientCommunication {
 		return communicate(line);
 	}
 
+	public String showClasslist(String name, int id){
+		String line = "10 ";
+		line += name + " " + id + " 0";
+		return communicate(line);
+	}
+
 	public String addNewCourse(String name, int id, int sec, int cap){
 		String line = "8 ";
 		line += name + " " + id + " " + sec +  " " + cap + " 0";
@@ -156,7 +162,7 @@ public class ClientCommunication {
 	 * Closes the connection to server and turns off the server
 	 */
 	public void closeCon() {
-		communicate("10 closeCon 0 0");
+		communicate("11 closeCon 0 0");
 		try {
 			socketIn.close();
 			socketOut.close();

@@ -141,4 +141,16 @@ public class Model {
 
 		return takenCourses;
 	}
+
+	public String classlist(String name, int id){
+		String list = "";
+		Course w = cat.searchCat(name, id);
+		for(CourseOffering c: w.getOfferingList()){
+			for(Registration r: c.getRegisteredStudents()){
+				list += r.toString();
+			}
+		}
+	//return list;
+	return "I am registered";
+	}
 }
