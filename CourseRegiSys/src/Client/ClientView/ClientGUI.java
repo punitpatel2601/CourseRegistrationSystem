@@ -296,49 +296,7 @@ public class ClientGUI extends GUI {
         }
     }
 
-    /**
-     * Prompt the user to enter their name and id to access the system, keeps asking
-     * till input is not valid
-     */
-    public String getInfo() {
-        JFrame log = new JFrame();
-            JPanel logIn = new JPanel(new GridLayout(3,1));
 
-            JLabel user = new JLabel();
-            JLabel pw = new JLabel("Enter password:");
-            JTextField userName = new JTextField(20);
-            JTextField passw = new JTextField(20);
-
-            user.setText("Username: ");
-            pw.setText("ID: ");
-
-            JButton submit = new JButton("SUBMIT");
-            log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            logIn.add(user);
-            logIn.add(pw);
-            logIn.add(userName);
-            logIn.add(passw);
-            logIn.add(submit);
-
-            log.add(logIn, BorderLayout.CENTER);
-            log.setTitle("Please login here");
-            log.setSize(300,100);
-            log.setVisible(true);
-
-            submit.addActionListener((ActionEvent e) ->{
-               // while(studentName == null && studentId == -1){
-                studentName = userName.getText();
-                studentId = Integer.parseInt(passw.getText());
-                valid = validateCredentials(studentName, studentId);
-               // }
-                log.dispose();
-            });
-
-            return valid;
-
-        //return theView.getAction().passStudentInfo(studentName, studentId);
-    }
 
     public String validateCredentials(String n, int p){
         String a = theView.getAction().passStudentInfo(n, p);

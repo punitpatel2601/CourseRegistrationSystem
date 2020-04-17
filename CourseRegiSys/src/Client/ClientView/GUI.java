@@ -178,11 +178,6 @@ public abstract class GUI extends JFrame {
             }
         }
     
-        /**
-         * Prompt the user to enter their name and id to access the system, keeps asking
-         * till input is not valid
-         */
-        abstract String getInfo();
 
         abstract String validateCredentials(String n, int p);
     
