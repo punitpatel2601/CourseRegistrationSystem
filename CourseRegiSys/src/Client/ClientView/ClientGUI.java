@@ -149,26 +149,26 @@ public class ClientGUI extends GUI {
                 this.studentName = userName.getText();
                 this.studentId = Integer.parseInt(passw.getText());
                 this.valid = validateCredentials(studentName, studentId);
+                if(valid.contains("VALID")){
+                    guiSerOutput(valid);
+                    detailsEntered = true;
+         
+                    // changing visibilty
+                    search.setVisible(detailsEntered);
+                    addCourse.setVisible(detailsEntered);
+                    remove.setVisible(detailsEntered);
+                    viewAll.setVisible(detailsEntered);
+                    viewStuCourses.setVisible(detailsEntered);
+                    enterDetails.setVisible(!detailsEntered);
+                    } else{
+                        detailsEntered = false;
+                        quit.setVisible(true);
+                        enterDetails.setVisible(true);
+                    }        
                 log.dispose();
             });
 
             guiSerOutput(valid);
-            if(valid.contains("VALID")){
-            guiSerOutput(valid);
-            detailsEntered = true;
-
-            // changing visibilty
-            search.setVisible(detailsEntered);
-            addCourse.setVisible(detailsEntered);
-            remove.setVisible(detailsEntered);
-            viewAll.setVisible(detailsEntered);
-            viewStuCourses.setVisible(detailsEntered);
-            enterDetails.setVisible(!detailsEntered);
-            } else{
-                detailsEntered = false;
-                quit.setVisible(true);
-                enterDetails.setVisible(true);
-            }
             
         });
         search.addActionListener((ActionEvent e) -> {

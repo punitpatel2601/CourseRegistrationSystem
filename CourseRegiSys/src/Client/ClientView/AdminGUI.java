@@ -144,29 +144,30 @@ public class AdminGUI extends GUI {
                     this.adminName = userName.getText();
                     this.adminId = Integer.parseInt(passw.getText());
                     this.valid = validateCredentials(adminName, adminId);
+                    if(valid.contains("VALID")){
+                        guiSerOutput(valid);
+                        detailsEntered = true;
+                        search.setVisible(detailsEntered);
+                    addCourse.setVisible(detailsEntered);
+                    remove.setVisible(detailsEntered);
+                    viewAll.setVisible(detailsEntered);
+                    viewStuCourses.setVisible(detailsEntered);
+                    enterDetails.setVisible(!detailsEntered);
+                    addNewCourse.setVisible(detailsEntered);
+                    quit.setVisible(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Incorrect Credentials!");
+                        enterDetails.setVisible(true);
+                        quit.setVisible(true);
+                        detailsEntered = false;
+                    }
                     log.dispose();
                    // updateGUI();
                 });
                 guiSerOutput(valid);
                
-                if(valid.contains("VALID")){
-                    guiSerOutput(valid);
-                    detailsEntered = true;
-                    search.setVisible(detailsEntered);
-                addCourse.setVisible(detailsEntered);
-                remove.setVisible(detailsEntered);
-                viewAll.setVisible(detailsEntered);
-                viewStuCourses.setVisible(detailsEntered);
-                enterDetails.setVisible(!detailsEntered);
-                addNewCourse.setVisible(detailsEntered);
-                quit.setVisible(true);
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Incorrect Credentials!");
-                    enterDetails.setVisible(true);
-                    quit.setVisible(true);
-                    detailsEntered = false;
-                }
+                
             });
             search.addActionListener((ActionEvent e) -> {
                 guiSerOutput(searchCourse());
