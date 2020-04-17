@@ -112,8 +112,8 @@ public class ServerThread extends Thread {
                     break;
                 case 7:
                    // model = new Model(name, id, secNum);
-                    if(name.toUpperCase().equals("PAT") && id == 007){
-                        socketOut.println("VALID #" + "Welcome! #\t" + name + " - " + id
+                    if(name.toUpperCase().equals("PAT") && id == 7){
+                        socketOut.println("VALID #" + "Welcome Admin! #\t" + name + " - " + id
                         + "# # #Now you can use the system.. # # Please select from the following choices.");
                     } else{
                         socketOut.println("Error! # Invalid Credentials! #");

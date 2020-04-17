@@ -56,7 +56,7 @@ public class AdminGUI extends GUI {
          * Prepares GUI for the user to interact with server
          */
         public void prepareGUI() {
-            setTitle("Course Registration System");
+            setTitle("Course Registration System -- Admin");
             setSize(600, 750);
             setLayout(new GridLayout(2, 1));
     
@@ -296,7 +296,7 @@ public class AdminGUI extends GUI {
         }
         
        
-        
+
     public String validateCredentials(String n, int p){
         String a = theView.getAction().passAdminInfo(n, p);
         if(a != null){
