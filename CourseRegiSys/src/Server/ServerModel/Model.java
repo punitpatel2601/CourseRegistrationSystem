@@ -74,6 +74,26 @@ public class Model {
 		return (reg.completeRegistration(theStudent, addi.getCourseOfferingAt(secNum - 1)) + "# # #" + coursesTaken());
 	}
 
+
+	public String addNewCourse(String courseName, int courseId, int secNums, int cap){
+		Course n = new Course(courseName, courseId);
+		n.addOffering(new CourseOffering(secNums, cap));
+		cat.getCourseList().add(n);
+		Course check = cat.searchCat(courseName, courseId);
+		if(check == null){
+			return "course not added! #";
+		}
+		return ("Course: "+ n.toString() + "# was successfully added!");
+	}
+
+	public String runCourse(String name, int id){
+		Course run = cat.searchCat(name, id);
+		if(run == null){
+			return "Course not found! #";
+		}
+		return run.conditionSNumThisCourse();
+	}
+
 	/**
 	 * removes specified course from the student
 	 * 

@@ -26,6 +26,8 @@ public class AdminGUI extends GUI {
         private int adminId;
 
         private String adminName;
+
+        private int cap;
     
         /**
          * Creates and Initializes the GUI for the user
@@ -84,6 +86,7 @@ public class AdminGUI extends GUI {
             JButton viewStuCourses = new JButton("View all the courses taken by Student");
             JButton enterDetails = new JButton("Enter details");
             JButton addNewCourse = new JButton("Add course to Course Catalogue");
+            JButton runCourse = new JButton("Check if Course can run");
             JButton quit = new JButton("Quit the application");
     
             // setting visibilities of buttons
@@ -94,6 +97,7 @@ public class AdminGUI extends GUI {
             viewStuCourses.setVisible(detailsEntered);
             enterDetails.setVisible(!detailsEntered);
             addNewCourse.setVisible(detailsEntered);
+            runCourse.setVisible(detailsEntered);
             quit.setVisible(true);
     
             jp.add(new JLabel(" "));
@@ -111,6 +115,8 @@ public class AdminGUI extends GUI {
             jp.add(viewStuCourses);
             jp.add(new JLabel(" "));
             jp.add(addNewCourse);
+            jp.add(new JLabel(" "));
+            jp.add(runCourse);
             jp.add(new JLabel(" "));
             jp.add(quit);
     
@@ -154,6 +160,7 @@ public class AdminGUI extends GUI {
                     viewStuCourses.setVisible(detailsEntered);
                     enterDetails.setVisible(!detailsEntered);
                     addNewCourse.setVisible(detailsEntered);
+                    runCourse.setVisible(detailsEntered);
                     quit.setVisible(true);
                     }
                     else{
@@ -184,6 +191,9 @@ public class AdminGUI extends GUI {
             addNewCourse.addActionListener((ActionEvent e) -> {
                 guiSerOutput(addNewCourse());
             });
+            runCourse.addActionListener((ActionEvent e) -> {
+                guiSerOutput(runTheCourse());
+            });
             quit.addActionListener((ActionEvent e) -> {
                 quit();
             });
@@ -198,7 +208,25 @@ public class AdminGUI extends GUI {
          */
         public String addNewCourse(){
             callForInput(true);
-            return theView.getAction().addNewCourse(this.cName, this.cID, this.cSec); 
+            callInputForCap();
+            return theView.getAction().addNewCourse(this.cName, this.cID, this.cSec, this.cap); 
+        }
+
+       public void callInputForCap()
+        {
+            int c = 1;
+            try {
+                c = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the Cap size: "));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid cap size entered, Please try again", "Error!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            this.cap = c;
+        }
+
+        public String runTheCourse(){
+            callForInput(true);
+            return theView.getAction().checkifCourseCanRun(this.cName, this.cID);
         }
         
         /**

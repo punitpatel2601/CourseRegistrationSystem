@@ -115,12 +115,14 @@ public class Course {
     /**
      * checks if course can run as a course requires 9 students to run
      */
-    public void conditionSNumThisCourse() {
+    public String conditionSNumThisCourse() {
         int studentNum = checkStudentNumber();
         if (studentNum < 8) {
-            System.out.println("Total number of student in " + courseName + "   " + courseNum
-                    + " is smaller than 8 , this course cannot be run ");
+            return("Total number of student in " + courseName + "   " + courseNum
+                    + " is " + checkStudentNumber() + ", this course cannot be run ");
         }
+        return ("Total number of student in " + courseName + "   " + courseNum
+        + " is " + checkStudentNumber() + ", this course can be run ");
     }
 
     @Override

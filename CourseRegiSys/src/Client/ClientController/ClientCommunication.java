@@ -70,9 +70,15 @@ public class ClientCommunication {
 		return communicate(line);
 	}
 
-	public String addNewCourse(String name, int id, int sec){
-		String line = "8";
-		line += name + " " + id + " " + sec + " 0";
+	public String addNewCourse(String name, int id, int sec, int cap){
+		String line = "8 ";
+		line += name + " " + id + " " + sec +  " " + cap + " 0";
+		return communicate(line);
+	}
+
+	public String checkifCourseCanRun(String courseName, int courseId){
+		String line = "9 ";
+		line += courseName + " " + courseId + " 0";
 		return communicate(line);
 	}
 
@@ -150,7 +156,7 @@ public class ClientCommunication {
 	 * Closes the connection to server and turns off the server
 	 */
 	public void closeCon() {
-		communicate("7 closeCon 0 0");
+		communicate("10 closeCon 0 0");
 		try {
 			socketIn.close();
 			socketOut.close();
