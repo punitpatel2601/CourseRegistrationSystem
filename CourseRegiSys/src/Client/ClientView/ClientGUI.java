@@ -18,14 +18,14 @@ import javax.swing.JTextField;
 import Client.ClientController.ClientCommunication;
 
 /**
- * Creates the graphical user interface for the user/Client computer. Passes the
- * input to ClientCommunication class
+ * Creates the graphical user interface for the Client user type.
+ * Authenticated users can use the application in Client view
  * 
  * @author Punit Patel
  * @author Armaan Mohar
  * @author Tom Pritchard
  * 
- * @since April 08, 2020
+ * @since April 17, 2020
  * @version 1.0 (beta)
  */
 public class ClientGUI extends GUI {
@@ -142,7 +142,7 @@ public class ClientGUI extends GUI {
 
             log.add(logIn, BorderLayout.CENTER);
             log.setTitle("Please login here");
-            log.setSize(300,300);
+            log.setSize(1000,200);
             log.setVisible(true);
 
             submit.addActionListener((ActionEvent s) ->{
@@ -273,6 +273,7 @@ public class ClientGUI extends GUI {
 
     /**
      * Searches for the course
+     * @return the course info
      */
     public String searchCourse() {
         callForInput(false);
@@ -297,7 +298,12 @@ public class ClientGUI extends GUI {
     }
 
 
-
+    /**
+     * Validation function to confirm credentials with reponse
+     * @param n name of user
+     * @param p id of user
+     * @return server response
+     */
     public String validateCredentials(String n, int p){
         String a = theView.getAction().passStudentInfo(n, p);
         if(a!=null){

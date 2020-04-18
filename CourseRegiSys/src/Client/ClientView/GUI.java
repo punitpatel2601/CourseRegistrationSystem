@@ -13,7 +13,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import Client.ClientController.ClientCommunication;
 
-
+/**
+ * Abstract class which holds the general functions that AdminGUI and ClientGUi can use
+ * @author Punit Patel
+ * @author Armaan Mohar
+ * @author Tom Pritchard
+ * 
+ * @since April 17, 2020
+ * @version 1.0 (beta)
+ */
 public abstract class GUI extends JFrame {    
         /**
          * serial id
@@ -60,8 +68,14 @@ public abstract class GUI extends JFrame {
          */
         boolean detailsEntered;
 
+        /**
+         * the view controller
+         */
         View theView;
 
+        /**
+         * reponse from server to validate credentials
+         */
         String valid;
     
         /**
@@ -178,7 +192,12 @@ public abstract class GUI extends JFrame {
             }
         }
     
-
+        /**
+         * Validation function to confirm credentials with reponse
+         * @param name of user
+         * @param p id of user
+         * @return server response
+         */
         abstract String validateCredentials(String n, int p);
     
         /**

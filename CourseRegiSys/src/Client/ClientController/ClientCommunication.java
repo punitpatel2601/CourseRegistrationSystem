@@ -41,6 +41,7 @@ public class ClientCommunication {
 	/**
 	 * Constructs the object of this class and connects it with server
 	 * 
+	 * 
 	 * @param serverName name of the server
 	 * @param port       port where the server is hosted
 	 */
@@ -62,6 +63,7 @@ public class ClientCommunication {
 	 * 
 	 * @param studentName name of the student
 	 * @param studentId   student id
+	 * @return
 	 */
 	public String passStudentInfo(String studentName, int studentId) {
 		String line = "6 ";
@@ -70,24 +72,50 @@ public class ClientCommunication {
 		return communicate(line);
 	}
 
+	/**
+	 * Gets the classlist, name of students, registered in said class
+	 * @param name course name
+	 * @param id course id
+	 * @return
+	 */
 	public String showClasslist(String name, int id){
 		String line = "10 ";
 		line += name + " " + id + " 0";
 		return communicate(line);
 	}
 
+	/**
+	 * Adds a new Course to database as specified by admin user
+	 * @param name course name
+	 * @param id course id
+	 * @param sec number of sections
+	 * @param cap cap size of course
+	 * @return
+	 */
 	public String addNewCourse(String name, int id, int sec, int cap){
 		String line = "8 ";
 		line += name + " " + id + " " + sec +  " " + cap + " 0";
 		return communicate(line);
 	}
 
+	/**
+	 * Checks if the course specified can run currently
+	 * @param courseName course name
+	 * @param courseId course id
+	 * @return
+	 */
 	public String checkifCourseCanRun(String courseName, int courseId){
 		String line = "9 ";
 		line += courseName + " " + courseId + " 0";
 		return communicate(line);
 	}
 
+	/**
+	 * Passes admin infomation to the server
+	 * @param adminName name of admin
+	 * @param adminId id of admin
+	 * @return
+	 */
 	public String passAdminInfo(String adminName, int adminId){
 		String line = "7 ";
 		line += adminName + " " + adminId + " 0";

@@ -17,16 +17,37 @@ import javax.swing.JTextField;
 
 import Client.ClientController.ClientCommunication;
 
-public class AdminGUI extends GUI { 
+/**
+ * Creates the graphical user interface for the Admin user type.
+ * Authenticated users can use the application in Admin view
+ * 
+ * @author Punit Patel
+ * @author Armaan Mohar
+ * @author Tom Pritchard
+ * 
+ * @since April 17, 2020
+ * @version 1.0 (beta)
+ * 
+ */
+public class AdminGUI extends GUI  { 
         /**
          * serial id
          */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * id of admin
+         */
         private int adminId;
 
+        /**
+         * name of admin
+         */
         private String adminName;
 
+        /**
+         * cap number of a course
+         */
         private int cap;
     
         /**
@@ -147,7 +168,7 @@ public class AdminGUI extends GUI {
     
                 log.add(logIn, BorderLayout.CENTER);
                 log.setTitle("Please login here");
-                log.setSize(300,300);
+                log.setSize(1000,200);
                 log.setVisible(true);
     
                 submit.addActionListener((ActionEvent s) ->{
@@ -209,6 +230,10 @@ public class AdminGUI extends GUI {
             return jp;
         }
 
+        /**
+         * gets the list of students registered in course
+         * @return student list
+         */
         public String classlist(){
             callForInput(true);
             return theView.getAction().showClasslist(this.cName, this.cID);
@@ -225,6 +250,10 @@ public class AdminGUI extends GUI {
             return theView.getAction().addNewCourse(this.cName, this.cID, this.cSec, this.cap); 
         }
 
+        /**
+         * Sets cap data field via user input
+         * 
+         */
        public void callInputForCap()
         {
             int c = 1;
@@ -237,6 +266,10 @@ public class AdminGUI extends GUI {
             this.cap = c;
         }
 
+        /**
+         * statement regarding if the Course can be run
+         * @return number ofs tudents in course etc
+         */
         public String runTheCourse(){
             callForInput(true);
             return theView.getAction().checkifCourseCanRun(this.cName, this.cID);
@@ -280,33 +313,43 @@ public class AdminGUI extends GUI {
         
        
 
-    public String validateCredentials(String n, int p){
+        /**
+        * Validation function to confirm credentials with reponse
+        * @param n name of user
+        * @param p id of user
+        * @return server response
+        */
+        public String validateCredentials(String n, int p){
         String a = theView.getAction().passAdminInfo(n, p);
-        if(a != null){
-        return a;
-         }
-     return "# no reponse #";
-    }
-
-    public void getStudentInfo(){
-        while (true) {
-            try {
-                studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
-                studentName = studentName.toUpperCase();
-                studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
-                continue;
+            if(a != null){
+                return a;
             }
-            break;
+          return "# no reponse #";
         }
 
-        if (studentName.contains(" ")) {
-            String[] names = studentName.split(" ");
-            if (names[0].isEmpty()) {
-                studentName = names[1]; // return second words if first words entered was space or empty
+        /**
+         * Sets student name and id in order to access the student's records
+         * 
+         */
+        public void getStudentInfo(){
+            while (true) {
+                try {
+                    studentName = JOptionPane.showInputDialog(null, "Please enter Student name to access");
+                    studentName = studentName.toUpperCase();
+                    studentId = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter Student's ID number"));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Invalid details", "Error!", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                    }
+                break;
             }
-            studentName = names[0];
+
+            if (studentName.contains(" ")) {
+                String[] names = studentName.split(" ");
+                    if (names[0].isEmpty()) {
+                        studentName = names[1]; // return second words if first words entered was space or empty
+                    }
+                studentName = names[0];
+            }
         }
-    }
 }
