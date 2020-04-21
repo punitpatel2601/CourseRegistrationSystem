@@ -179,7 +179,13 @@ public class DBManager {
 	
 	public void updateCourseList() {
 		try {
-			
+			st = connection.createStatement();
+			String query = "select * from courses";
+			rs = st.executeQuery(query);
+			while (rs.next()) {
+				Course c = new Course(rs.getString("course_name"), rs.getInt("course_id"));
+				courseList.add(c);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
