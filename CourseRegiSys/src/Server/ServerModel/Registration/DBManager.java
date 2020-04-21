@@ -15,6 +15,7 @@ import java.sql.*;
  * @since April 18, 2020
  */
 public class DBManager {
+
 	/**
 	 * the list of courses in text file
 	 */
@@ -23,14 +24,22 @@ public class DBManager {
 	Connection connection;
 	Statement st;
 
+	String username;
+	String passcode;
+
 	/**
 	 * Constructs a list of courses
 	 */
 	public DBManager() {
+
+		username = "root";
+		passcode = "root";
+
 		courseList = new ArrayList<Course>();
 		connection = null;
 		st = null;
 		readFromDataBase();
+		createDatabase();
 	}
 
 	/**
@@ -75,8 +84,8 @@ public class DBManager {
 		 * //Class.forName("com.mysql.jdbc.Driver");
 		 * System.out.println("Connecting to database");
 		 * connection=DriverManager.getConnection(
-		 * "jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-		 * ,"root","helloworld"); System.out.println("CONNECTED");
+		 * "jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+		 * ,username,"helloworld"); System.out.println("CONNECTED");
 		 * st=connection.createStatement(); String sql="select * from COURSES";
 		 * ResultSet rs=st.executeQuery(sql); while(rs.next()) { String
 		 * coursename=rs.getString("course_name"); int
@@ -106,16 +115,16 @@ public class DBManager {
 
 	public void createDatabase() {
 		try {
-			System.out.println("Connecting to Database..");
+			System.out.println("Creating to Database..");
 
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "root");
+					"jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
 			System.out.println("CONNECTED");
 			st = connection.createStatement();
-			st.executeUpdate("CREATE DATABASE COURSE_REGISTRATION_SYSTEM");
+			st.executeUpdate("CREATE DATABASE CRS_P_A_T");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Database already exists, not created");
 		} finally {
 			try {
 				if (st != null)
@@ -130,6 +139,7 @@ public class DBManager {
 				System.out.println("SQL connection error");
 			}
 		}
+		createTable();
 	}
 
 	public void createTable() {
@@ -139,8 +149,8 @@ public class DBManager {
 		try {
 			System.out.println("Connecting to database");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "root");
+					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
@@ -155,7 +165,7 @@ public class DBManager {
 
 			System.out.println("created tables");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Tables already exists, not creating another ones.");
 		} finally {
 			try {
 				if (st != null)
@@ -169,11 +179,11 @@ public class DBManager {
 			} catch (SQLException sq) {
 
 			}
-
 		}
+		populateDB();
 	}
 
-	public void insert() {
+	public void populateDB() {
 		st = null;
 		connection = null;
 
@@ -182,8 +192,8 @@ public class DBManager {
 			// Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "root");
+					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
@@ -230,7 +240,7 @@ public class DBManager {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Duplicate entries.. not entering the existing data.");
 		} finally {
 			try {
 				if (st != null)
@@ -253,12 +263,10 @@ public class DBManager {
 		connection = null;
 
 		try {
-
-			// Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database");
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "root");
+					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
 			System.out.println("CONNECTED");
 			st = connection.createStatement();
 
@@ -277,23 +285,20 @@ public class DBManager {
 				if (st != null)
 					st.close();
 			} catch (SQLException sq) {
-
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (SQLException sq) {
-
 			}
-
 		}
 	}
 
 	public static void main(String[] args) {
-		DBManager db = new DBManager();
+		new DBManager();
 		// db.createDatabase();
-		db.createTable();
-		db.insert();
-		db.deleteTable();
+		// db.createTable();
+		// db.insert();
+		// db.deleteTable();
 	}
 }
