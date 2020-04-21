@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*;
-import lib.com.mysql.jdbc.Driver;
 
 /**
  * Simulates a database, provides logic and data fields to load data in from a
@@ -108,9 +107,10 @@ public class DBManager {
 	public void createDatabase() {
 		try {
 			System.out.println("Connecting to Database..");
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "root");
 
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					"root", "root");
 			System.out.println("CONNECTED");
 			st = connection.createStatement();
 			st.executeUpdate("CREATE DATABASE COURSE_REGISTRATION_SYSTEM");
@@ -138,8 +138,9 @@ public class DBManager {
 
 		try {
 			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
-					"root");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					"root", "root");
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
@@ -180,8 +181,9 @@ public class DBManager {
 
 			// Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
-					"root");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					"root", "root");
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
@@ -254,8 +256,9 @@ public class DBManager {
 
 			// Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
-					"root");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					"root", "root");
 			System.out.println("CONNECTED");
 			st = connection.createStatement();
 
@@ -288,6 +291,9 @@ public class DBManager {
 
 	public static void main(String[] args) {
 		DBManager db = new DBManager();
-		db.createDatabase(); // db.createTable(); //db.insert(); //db.deleteTable();
+		// db.createDatabase();
+		db.createTable();
+		db.insert();
+		db.deleteTable();
 	}
 }
