@@ -1,7 +1,6 @@
 package Testing;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import Server.ServerModel.Registration.*;
@@ -11,7 +10,7 @@ public class CourseTest {
 	private Course cTest = new Course("ENSF", 409);
 	
 	@BeforeEach
-	public void setUp() {
+	public void setUp() throws Exception {
 		// Initializes Course with 3 sections, each with a 
 		// student capacity of 50
 		for (int i = 1; i <= 3; i++) {
