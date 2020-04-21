@@ -21,8 +21,8 @@ public class DBManager {
 	 */
 	ArrayList<Course> courseList;
 	ArrayList<Student> studentlist;
-	Connection connection;
-	Statement st;
+	private static Connection connection;
+	private static Statement st;
 
 	String username;
 	String passcode;
@@ -64,6 +64,7 @@ public class DBManager {
 
 	/*
 	public void createDatabase() {
+		boolean dbexists = false;
 		try {
 			System.out.println("Creating to Database..");
 
@@ -77,37 +78,17 @@ public class DBManager {
 			st.executeUpdate("CREATE DATABASE CRS_P_A_T");
 		} catch (Exception e) {
 			System.out.println("Database already exists, not created");
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
+			dbexists = true;
 		}
-		createTable();
+		if (dbexists == false) {
+			createTable();
+		}
 	}
 	*/
 
 	public void createTable() {
-		st = null;
-		connection = null;
 
 		try {
-			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-
-			st = connection.createStatement();
-
 			String sql = "CREATE TABLE COURSES (course_name VARCHAR(255) not NULL, course_id INTEGER not NULL, secNum INTEGER , secCap INTEGER , PRIMARY KEY (course_id))";
 			st.executeUpdate(sql);
 
@@ -117,36 +98,14 @@ public class DBManager {
 			System.out.println("created tables");
 		} catch (Exception e) {
 			System.out.println("Tables already exists, not creating another ones.");
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
 		}
+
 		populateDB();
 	}
 
 	public void populateDB() {
-		st = null;
-		connection = null;
 
 		try {
-			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-
-			st = connection.createStatement();
-
 			String sql = "INSERT INTO COURSES VALUES('CPSC',319,2,30)";
 			st.executeUpdate(sql);
 
@@ -190,37 +149,13 @@ public class DBManager {
 			}
 		} catch (Exception e) {
 			System.out.println("Duplicate entries.. not entering the existing data.");
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
-
 		}
 	}
 
 	public void deleteAllTables() {
-		st = null;
-		connection = null;
 
 		try {
-			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-			st = connection.createStatement();
-
 			String sql = "DROP TABLE COURSES";
-
 			st.executeUpdate(sql);
 
 			sql = "DROP TABLE STUDENTS";
@@ -229,19 +164,6 @@ public class DBManager {
 			System.out.println("All tables deleted, database is empty");
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
 		}
 	}
 
@@ -250,15 +172,8 @@ public class DBManager {
 	 */
 	public void readFromDataBase() {
 		st = null;
-		connection = null;
 
 		try {
-			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-
 			st = connection.createStatement();
 			ResultSet rs = st.executeQuery("select * from COURSES");
 
@@ -275,52 +190,19 @@ public class DBManager {
 			}
 		} catch (Exception e) {
 			System.out.println("Database unreadable");
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
 		}
 		for (int i = 0; i < courseList.size(); i++) {
 			System.out.println(courseList.get(i).getCourseName() + " - " + courseList.get(i).getCourseNum());
 		}
 	}
 
-	public void insertIntoDB() {
-		st = null;
-		connection = null;
-		try {
-			System.out.println("Connecting to database");
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
+	// student database management
 
-			st = connection.createStatement();
+	public void addStudent(Student stu) {
 
-		} catch (Exception e) {
-			System.out.println("Database unreadable");
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL statement error");
-			}
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (SQLException sq) {
-				System.out.println("SQL connection error");
-			}
-		}
+	}
+
+	public static void main(String[] args) {
+		new DBManager();
 	}
 }

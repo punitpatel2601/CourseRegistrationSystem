@@ -25,8 +25,6 @@ public class CourseCatalogue {
      */
     public CourseCatalogue() {
         courseList = new ArrayList<Course>();
-        db = new DBManager();
-        courseList = db.getCourseList();
     }
 
     /**
@@ -117,5 +115,9 @@ public class CourseCatalogue {
             }
         }
         return index;
+    }
+
+    public void setDB(DBManager db) {
+        this.db = db;
     }
 }

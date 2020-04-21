@@ -23,12 +23,17 @@ public class Model {
 	 */
 	private Student theStudent;
 
+	private DBManager db;
+
 	/**
 	 * constructs a catalogue and assigns student
 	 */
 	public Model(String name, int id) {
+		db = new DBManager();
 		cat = new CourseCatalogue();
+		cat.setDB(db);
 		theStudent = new Student(name, id);
+		theStudent.setDB(db);
 	}
 
 	/**
@@ -74,21 +79,20 @@ public class Model {
 		return (reg.completeRegistration(theStudent, addi.getCourseOfferingAt(secNum - 1)) + "# # #" + coursesTaken());
 	}
 
-
-	public String addNewCourse(String courseName, int courseId, int secNums, int cap){
+	public String addNewCourse(String courseName, int courseId, int secNums, int cap) {
 		Course n = new Course(courseName, courseId);
 		n.addOffering(new CourseOffering(secNums, cap));
 		cat.getCourseList().add(n);
 		Course check = cat.searchCat(courseName, courseId);
-		if(check == null){
+		if (check == null) {
 			return "course not added! #";
 		}
-		return ("Course: "+ n.toString() + "# was successfully added!");
+		return ("Course: " + n.toString() + "# was successfully added!");
 	}
 
-	public String runCourse(String name, int id){
+	public String runCourse(String name, int id) {
 		Course run = cat.searchCat(name, id);
-		if(run == null){
+		if (run == null) {
 			return "Course not found! #";
 		}
 		return run.conditionSNumThisCourse();
@@ -142,15 +146,15 @@ public class Model {
 		return takenCourses;
 	}
 
-	public String classlist(String name, int id){
+	public String classlist(String name, int id) {
 		String list = "";
 		Course w = cat.searchCat(name, id);
-		for(CourseOffering c: w.getOfferingList()){
-			for(Registration r: c.getRegisteredStudents()){
+		for (CourseOffering c : w.getOfferingList()) {
+			for (Registration r : c.getRegisteredStudents()) {
 				list += r.toString();
 			}
 		}
-	//return list;
-	return "I am registered";
+		// return list;
+		return "I am registered";
 	}
 }

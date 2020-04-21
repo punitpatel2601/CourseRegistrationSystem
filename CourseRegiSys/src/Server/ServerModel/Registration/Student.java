@@ -25,6 +25,8 @@ public class Student {
      */
     private ArrayList<Registration> studentRegList;
 
+    private DBManager db;
+
     /**
      * Constructs a Student object with specifed name and id Initializes
      * registrations list
@@ -143,5 +145,9 @@ public class Student {
      */
     public void removeMaxCourse() {
         studentRegList.remove(studentRegList.size() - 1);
+    }
+
+    public void setDB(DBManager db) {
+        this.db = db;
     }
 }
