@@ -45,28 +45,36 @@ public class View extends JFrame {
      */
     public View(ClientCommunication ccm) {
         super("Welcome to Course Registration System");
-        setSize(100, 100);
+        setSize(550, 450);
         action = ccm;
-        welcome();
+        add(welcome());
     }
 
     /**
      * The welcome panel Runs the specified view
      */
-    public void welcome() {
+    public JPanel welcome() {
         JPanel p = new JPanel();
-        FlowLayout cl = new FlowLayout();
-        p.setLayout(cl);
-        JButton admin = new JButton("Admin log in");
-        JButton user = new JButton("Student log in");
-        admin.setVisible(true);
-        user.setVisible(true);
+        p.setLayout(new GridLayout(5, 3));
+        JButton admin = new JButton("Admin");
+        JButton user = new JButton("Student");
 
-        // setSize(250,250);
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
         p.add(admin);
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
         p.add(user);
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
+        p.add(new JLabel(" "));
 
-        setContentPane(p);
         setVisible(true);
 
         admin.addActionListener((ActionEvent e) -> {
@@ -78,8 +86,7 @@ public class View extends JFrame {
             String s = getType("student");
             runView(s);
         });
-        return;
-
+        return p;
     }
 
     /**
