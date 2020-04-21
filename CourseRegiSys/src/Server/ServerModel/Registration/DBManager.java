@@ -40,20 +40,26 @@ public class DBManager {
 	 * Passcode for the DB
 	 */
 	private String passcode;
-	
+
 	private ArrayList<Course> courseList;
 
 	/**
-	 * Constructs a DBManager with given credentials and calls
-	 * initializeConnection method.
+	 * Constructs a DBManager with given credentials and calls initializeConnection
+	 * method.
 	 */
 	public DBManager() {
 		username = "root";
 		passcode = "root";
 
-		connection = null;
-		st = null;
-		
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
+					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
+			System.out.println("CONNECTED");
+			st = connection.createStatement();
+		} catch (Exception e) {
+			System.out.println("Error 404");
+			e.printStackTrace();
+		}
 		courseList = new ArrayList<Course>();
 
 		initializeConnection();
@@ -61,37 +67,27 @@ public class DBManager {
 
 	public void initializeConnection() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
-					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
-			System.out.println("CONNECTED");
+			st.executeQuery("USE CRS_P_A_T");
 			selectAllCourses();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/*
-	public void createDatabase() {
-		boolean dbexists = false;
-		try {
-			System.out.println("Creating to Database..");
-
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
-												+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username
-
-					"jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-			st = connection.createStatement();
-			st.executeUpdate("CREATE DATABASE CRS_P_A_T");
-		} catch (Exception e) {
-			System.out.println("Database already exists, not created");
-			dbexists = true;
-		}
-		if (dbexists == false) {
-			createTable();
-		}
-	}
+	 * public void createDatabase() { boolean dbexists = false; try {
+	 * System.out.println("Creating to Database..");
+	 * 
+	 * connection = DriverManager.getConnection(
+	 * "jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant" +
+	 * "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username
+	 * 
+	 * "jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+	 * username, passcode); System.out.println("CONNECTED"); st =
+	 * connection.createStatement(); st.executeUpdate("CREATE DATABASE CRS_P_A_T");
+	 * } catch (Exception e) {
+	 * System.out.println("Database already exists, not created"); dbexists = true;
+	 * } if (dbexists == false) { createTable(); } }
 	 */
 
 	public void createTable() {
@@ -176,7 +172,7 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateCourseList() {
 		try {
 			st = connection.createStatement();
@@ -194,11 +190,10 @@ public class DBManager {
 	public void selectAllCourses() {
 		try {
 			st = connection.createStatement();
-			String query = "select * from courses";
+			String query = "SELECT * FROM COURSES";
 			rs = st.executeQuery(query);
 			while (rs.next()) {
-				System.out.println(rs.getString("course_name") + " " + 
-						rs.getString("course_id"));
+				System.out.println(rs.getString("course_name") + " " + rs.getString("course_id"));
 			}
 
 		} catch (SQLException e) {
@@ -211,7 +206,7 @@ public class DBManager {
 	 */
 	public void selectCourse(String cName, int cId) {
 		try {
-			String query = "select * from courses where course_name = ? and course_id = ?";
+			String query = "SELECT * FROM COURSES WHERE course_name = ? and course_id = ?";
 			PreparedStatement pStat = connection.prepareStatement(query);
 			pStat.setString(1, cName);
 			pStat.setInt(2, cId);
@@ -220,35 +215,27 @@ public class DBManager {
 				System.out.println(rs.getString(""));
 			}
 			pStat.close();
-		} catch (SQLException e ) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		/*
-		st = null;
-
-
-		try {
-			st = connection.createStatement();
-			ResultSet rs = st.executeQuery("select * from COURSES");
-
-			while (rs.next()) {
-				String coursename = rs.getString("course_name");
-				int courseNum = Integer.parseInt(rs.getString("course_id"));
-				int secNum = Integer.parseInt(rs.getString("secNum"));
-				int secCap = Integer.parseInt(rs.getString("secCap"));
-				Course c = new Course(coursename, courseNum);
-				for (int i = 1; i <= secNum; i++) {
-					c.addOffering(new CourseOffering(i, secCap));
-				}
-				courseList.add(c);
-			}
-		} catch (Exception e) {
-			System.out.println("Database unreadable");
-		}
-		for (int i = 0; i < courseList.size(); i++) {
-			System.out.println(courseList.get(i).getCourseName() + " - " + courseList.get(i).getCourseNum());
-		}
+		 * st = null;
+		 * 
+		 * 
+		 * try { st = connection.createStatement(); ResultSet rs =
+		 * st.executeQuery("select * from COURSES");
+		 * 
+		 * while (rs.next()) { String coursename = rs.getString("course_name"); int
+		 * courseNum = Integer.parseInt(rs.getString("course_id")); int secNum =
+		 * Integer.parseInt(rs.getString("secNum")); int secCap =
+		 * Integer.parseInt(rs.getString("secCap")); Course c = new Course(coursename,
+		 * courseNum); for (int i = 1; i <= secNum; i++) { c.addOffering(new
+		 * CourseOffering(i, secCap)); } courseList.add(c); } } catch (Exception e) {
+		 * System.out.println("Database unreadable"); } for (int i = 0; i <
+		 * courseList.size(); i++) {
+		 * System.out.println(courseList.get(i).getCourseName() + " - " +
+		 * courseList.get(i).getCourseNum()); }
 		 */
 	}
 
@@ -283,14 +270,15 @@ public class DBManager {
 
 	/**
 	 * Inserts new course into database
+	 * 
 	 * @param name
 	 * @param id
 	 * @param sec
 	 * @param cap
 	 */
-	public void insertNewCourse(String name, int id, int sec, int cap){
+	public void insertNewCourse(String name, int id, int sec, int cap) {
 		try {
-			String query = "INSERT INTO COURSES("+name+", "+id+", "+sec+", "+cap+")";
+			String query = "INSERT INTO COURSES(" + name + ", " + id + ", " + sec + ", " + cap + ")";
 			PreparedStatement pStat = connection.prepareStatement(query);
 			pStat.executeUpdate();
 			pStat.close();
