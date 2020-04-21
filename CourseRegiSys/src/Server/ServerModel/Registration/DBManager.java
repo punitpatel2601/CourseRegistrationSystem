@@ -15,17 +15,17 @@ import java.sql.*;
  * @since April 18, 2020
  */
 public class DBManager {
-	
+
 	/**
 	 * The connection to the DB
 	 */
 	private static Connection connection;
-	
+
 	/**
 	 * The statement to the DB
 	 */
 	private static Statement st;
-	
+
 	/**
 	 * The result set
 	 */
@@ -35,11 +35,13 @@ public class DBManager {
 	 * Username for the DB
 	 */
 	private String username;
-	
+
 	/**
 	 * Passcode for the DB
 	 */
 	private String passcode;
+	
+	private ArrayList<Course> courseList;
 
 	/**
 	 * Constructs a DBManager with given credentials and calls
@@ -51,10 +53,12 @@ public class DBManager {
 
 		connection = null;
 		st = null;
+		
+		courseList = new ArrayList<Course>();
 
 		initializeConnection();
 	}
-	
+
 	public void initializeConnection() {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
@@ -88,7 +92,7 @@ public class DBManager {
 			createTable();
 		}
 	}
-	*/
+	 */
 
 	public void createTable() {
 
@@ -173,6 +177,14 @@ public class DBManager {
 		}
 	}
 	
+	public void updateCourseList() {
+		try {
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void selectAllCourses() {
 		try {
 			st = connection.createStatement();
@@ -180,9 +192,9 @@ public class DBManager {
 			rs = st.executeQuery(query);
 			while (rs.next()) {
 				System.out.println(rs.getString("course_name") + " " + 
-									rs.getString("course_id"));
+						rs.getString("course_id"));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -205,10 +217,10 @@ public class DBManager {
 		} catch (SQLException e ) {
 			e.printStackTrace();
 		}
-		
+
 		/*
 		st = null;
-		 
+
 
 		try {
 			st = connection.createStatement();
@@ -231,9 +243,12 @@ public class DBManager {
 		for (int i = 0; i < courseList.size(); i++) {
 			System.out.println(courseList.get(i).getCourseName() + " - " + courseList.get(i).getCourseNum());
 		}
-		*/
+		 */
 	}
-	
+
+	/**
+	 * Closes all connections to Database
+	 */
 	public void close() {
 		try {
 			st.close();
@@ -244,10 +259,20 @@ public class DBManager {
 		}
 	}
 
-	// student database management
-
-	public void addStudent(Student stu) {
-
+	/*
+	 * Inserts a new student/user into the database
+	 */
+	public void insertStudent(Student stu) {
+		try {
+			String query = "INSERT INTO STUDENTS (student_name, student_id) values (?, ?)";
+			PreparedStatement pStat = connection.prepareStatement(query);
+			pStat.setString(1, stu.getStudentName());
+			pStat.setInt(2, stu.getStudentId());
+			pStat.executeUpdate();
+			pStat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
