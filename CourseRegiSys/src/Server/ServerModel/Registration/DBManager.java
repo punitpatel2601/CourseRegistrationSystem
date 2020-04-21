@@ -15,42 +15,44 @@ import java.sql.*;
  * @since April 18, 2020
  */
 public class DBManager {
-
+	
 	/**
-	 * the list of courses in text file
+	 * The connection to the DB
 	 */
-	ArrayList<Course> courseList;
-	ArrayList<Student> studentlist;
 	private static Connection connection;
+	
+	/**
+	 * The statement to the DB
+	 */
 	private static Statement st;
-
-	String username;
-	String passcode;
+	
+	/**
+	 * The result set
+	 */
+	private ResultSet rs;
 
 	/**
-	 * Constructs a list of courses
+	 * Username for the DB
+	 */
+	private String username;
+	
+	/**
+	 * Passcode for the DB
+	 */
+	private String passcode;
+
+	/**
+	 * Constructs a DBManager with given credentials and calls
+	 * initializeConnection method.
 	 */
 	public DBManager() {
 		username = "root";
 		passcode = "root";
 
-		courseList = new ArrayList<Course>();
 		connection = null;
 		st = null;
 
-		//createDatabase();
 		initializeConnection();
-		readFromDataBase();
-		deleteAllTables();
-	}
-
-	/**
-	 * gets the course list
-	 * 
-	 * @return
-	 */
-	public ArrayList<Course> getCourseList() {
-		return courseList;
 	}
 	
 	public void initializeConnection() {
@@ -58,6 +60,7 @@ public class DBManager {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
 					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
 			System.out.println("CONNECTED");
+			selectAllCourses();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -90,6 +93,7 @@ public class DBManager {
 	public void createTable() {
 
 		try {
+			st = connection.createStatement();
 			String sql = "CREATE TABLE COURSES (course_name VARCHAR(255) not NULL, course_id INTEGER not NULL, secNum INTEGER , secCap INTEGER , PRIMARY KEY (course_id))";
 			st.executeUpdate(sql);
 
@@ -107,6 +111,7 @@ public class DBManager {
 	public void populateDB() {
 
 		try {
+			st = connection.createStatement();
 			String sql = "INSERT INTO COURSES VALUES('CPSC',319,2,30)";
 			st.executeUpdate(sql);
 
@@ -167,12 +172,43 @@ public class DBManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void selectAllCourses() {
+		try {
+			st = connection.createStatement();
+			String query = "select * from courses";
+			rs = st.executeQuery(query);
+			while (rs.next()) {
+				System.out.println(rs.getString("course_name") + " " + 
+									rs.getString("course_id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Reads data from database and inserts it accordingly into courseList
 	 */
-	public void readFromDataBase() {
+	public void selectCourse(String cName, int cId) {
+		try {
+			String query = "select * from courses where course_name = ? and course_id = ?";
+			PreparedStatement pStat = connection.prepareStatement(query);
+			pStat.setString(1, cName);
+			pStat.setInt(2, cId);
+			rs = pStat.executeQuery();
+			while (rs.next()) {
+				System.out.println(rs.getString(""));
+			}
+			pStat.close();
+		} catch (SQLException e ) {
+			e.printStackTrace();
+		}
+		
+		/*
 		st = null;
+		 
 
 		try {
 			st = connection.createStatement();
@@ -194,6 +230,17 @@ public class DBManager {
 		}
 		for (int i = 0; i < courseList.size(); i++) {
 			System.out.println(courseList.get(i).getCourseName() + " - " + courseList.get(i).getCourseNum());
+		}
+		*/
+	}
+	
+	public void close() {
+		try {
+			st.close();
+			rs.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 

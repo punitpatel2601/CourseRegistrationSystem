@@ -23,6 +23,9 @@ public class Model {
 	 */
 	private Student theStudent;
 
+	/**
+	 * The database manager
+	 */
 	private DBManager db;
 
 	/**
