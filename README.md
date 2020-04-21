@@ -34,15 +34,12 @@ These are the following directories in the repository and their descriptions.
 Authors
 
 	Punit Patel     -   30064251
-
 		punit.patel1@ucalgary.ca
 
 	Tom Pritchard   -   30053765
-		
 		tom.pritchard1@ucalgary.ca
 
 	Armaan Mohar    -   30055449
-
 		armaan.mohar1@ucalgary.ca
 
 
@@ -54,7 +51,8 @@ The following steps will give you idea of how to use the system.
 		1) Run the Server by running the ServerCommunication
 		2) Then wait for client to connect
 		3) System will let the client join automatically, while you can track it on the console
-		4) Server will ask you if you want to run the server or close it when there are no clients connected, you must respond to this message by pressing 'y' or 'n'. No clients will be able to join if you don't press anything on console.
+		4) Server will ask you if you want to run the server or close it when there are no clients connected, you must respond to this message by pressing 'y' or 'n'. 
+		No clients will be able to join if you don't press anything on console.
 		5) To stop system, you must wait for all clients to disconnect and then press 'y'.
 
 	If you are client:
