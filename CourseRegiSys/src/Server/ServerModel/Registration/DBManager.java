@@ -39,6 +39,7 @@ public class DBManager {
 		st = null;
 
 		//createDatabase();
+		initializeConnection();
 		readFromDataBase();
 		deleteAllTables();
 	}
