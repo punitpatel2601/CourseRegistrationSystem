@@ -38,7 +38,7 @@ public class DBManager {
 		connection = null;
 		st = null;
 
-		createDatabase();
+		//createDatabase();
 		readFromDataBase();
 		deleteAllTables();
 	}
@@ -51,12 +51,25 @@ public class DBManager {
 	public ArrayList<Course> getCourseList() {
 		return courseList;
 	}
+	
+	public void initializeConnection() {
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
+					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
+			System.out.println("CONNECTED");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
+	/*
 	public void createDatabase() {
 		try {
 			System.out.println("Creating to Database..");
 
-			connection = DriverManager.getConnection(
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
+												+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username
+
 					"jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
 					username, passcode);
 			System.out.println("CONNECTED");
@@ -80,6 +93,7 @@ public class DBManager {
 		}
 		createTable();
 	}
+	*/
 
 	public void createTable() {
 		st = null;
