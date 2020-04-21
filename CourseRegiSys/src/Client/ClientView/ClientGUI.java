@@ -18,8 +18,8 @@ import javax.swing.JTextField;
 import Client.ClientController.ClientCommunication;
 
 /**
- * Creates the graphical user interface for the Client user type.
- * Authenticated users can use the application in Client view
+ * Creates the graphical user interface for the Client user type. Authenticated
+ * users can use the application in Client view
  * 
  * @author Punit Patel
  * @author Armaan Mohar
@@ -35,14 +35,13 @@ public class ClientGUI extends GUI {
      */
     private static final long serialVersionUID = 42L;
 
-
     /**
      * Creates and Initializes the GUI for the user
      * 
      * @param ccm a pointer to ClientCommunication class
      */
     public ClientGUI(View v) {
-        //actions = ccm;
+        // actions = ccm;
         theView = v;
         studentName = "";
         studentId = -1;
@@ -50,7 +49,7 @@ public class ClientGUI extends GUI {
         tGUI();
     }
 
-    public void tGUI(){
+    public void tGUI() {
         detailsEntered = false;
 
         jta = new JTextArea(
@@ -121,7 +120,7 @@ public class ClientGUI extends GUI {
 
         enterDetails.addActionListener((ActionEvent e) -> {
             JFrame log = new JFrame();
-            JPanel logIn = new JPanel(new GridLayout(3,1));
+            JPanel logIn = new JPanel(new GridLayout(3, 1));
 
             JLabel user = new JLabel();
             JLabel pw = new JLabel("Enter password:");
@@ -142,17 +141,17 @@ public class ClientGUI extends GUI {
 
             log.add(logIn, BorderLayout.CENTER);
             log.setTitle("Please login here");
-            log.setSize(1000,200);
+            log.setSize(1000, 200);
             log.setVisible(true);
 
-            submit.addActionListener((ActionEvent s) ->{
+            submit.addActionListener((ActionEvent s) -> {
                 this.studentName = userName.getText();
                 this.studentId = Integer.parseInt(passw.getText());
                 this.valid = validateCredentials(studentName, studentId);
-                if(valid.contains("VALID")){
+                if (valid.contains("VALID")) {
                     guiSerOutput(valid);
                     detailsEntered = true;
-         
+
                     // changing visibilty
                     search.setVisible(detailsEntered);
                     addCourse.setVisible(detailsEntered);
@@ -160,16 +159,16 @@ public class ClientGUI extends GUI {
                     viewAll.setVisible(detailsEntered);
                     viewStuCourses.setVisible(detailsEntered);
                     enterDetails.setVisible(!detailsEntered);
-                    } else{
-                        detailsEntered = false;
-                        quit.setVisible(true);
-                        enterDetails.setVisible(true);
-                    }        
+                } else {
+                    detailsEntered = false;
+                    quit.setVisible(true);
+                    enterDetails.setVisible(true);
+                }
                 log.dispose();
             });
 
             guiSerOutput(valid);
-            
+
         });
         search.addActionListener((ActionEvent e) -> {
             guiSerOutput(searchCourse());
@@ -192,8 +191,6 @@ public class ClientGUI extends GUI {
 
         return jp;
     }
-
-
 
     /**
      * Creates another GUI and shows the Server output on it
@@ -273,6 +270,7 @@ public class ClientGUI extends GUI {
 
     /**
      * Searches for the course
+     * 
      * @return the course info
      */
     public String searchCourse() {
@@ -297,21 +295,20 @@ public class ClientGUI extends GUI {
         }
     }
 
-
     /**
      * Validation function to confirm credentials with reponse
+     * 
      * @param n name of user
      * @param p id of user
      * @return server response
      */
-    public String validateCredentials(String n, int p){
+    public String validateCredentials(String n, int p) {
         String a = theView.getAction().passStudentInfo(n, p);
-        if(a!=null){
-        return a;
+        if (a != null) {
+            return a;
         }
         return "# no reponse #";
     }
-
 
     /**
      * Creates input dialog and asks for input from user, sets the input as cSec
@@ -363,5 +360,11 @@ public class ClientGUI extends GUI {
         }
 
         return mulWords[0]; // only accepting the first word entered as the name
+    }
+
+    @Override
+    String getInfo() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

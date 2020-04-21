@@ -4,27 +4,43 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.sql.*;
+import lib.com.mysql.jdbc.Driver;
 
 /**
  * Simulates a database, provides logic and data fields to load data in from a
  * text file containing course records
  * 
- * @author A. Mohar, T. Pritchard, P. Patel
+ * @author P. Patel, A. Mohar, T. Pritchard
  * @version 1.0
- * @since April 13, 2020
+ * @since April 18, 2020
  */
 public class DBManager {
 	/**
 	 * the list of courses in text file
 	 */
 	ArrayList<Course> courseList;
+	ArrayList<Student> studentlist;
+	Connection connection;
+	Statement st;
 
 	/**
 	 * Constructs a list of courses
 	 */
 	public DBManager() {
 		courseList = new ArrayList<Course>();
+		connection = null;
+		st = null;
 		readFromDataBase();
+	}
+
+	/**
+	 * gets the course list
+	 * 
+	 * @return
+	 */
+	public ArrayList<Course> getCourseList() {
+		return courseList;
 	}
 
 	/**
@@ -33,10 +49,10 @@ public class DBManager {
 	public void readFromDataBase() {
 		try {
 			FileReader fr = new FileReader("courses.txt");
-			Scanner scan = new Scanner(fr);
+			Scanner sc = new Scanner(fr);
 			String line;
-			while (scan.hasNextLine()) {
-				line = scan.nextLine();
+			while (sc.hasNextLine()) {
+				line = sc.nextLine();
 				String[] inputs = line.split(" ");
 				int courseNum = Integer.parseInt(inputs[1]);
 				int secNum = Integer.parseInt(inputs[2]);
@@ -47,18 +63,231 @@ public class DBManager {
 				}
 				courseList.add(c);
 			}
-			scan.close();
+			sc.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File Error: file not found!!");
 		}
+		/*
+		 * 
+		 * st=null; connection=null;
+		 * 
+		 * try {
+		 * 
+		 * //Class.forName("com.mysql.jdbc.Driver");
+		 * System.out.println("Connecting to database");
+		 * connection=DriverManager.getConnection(
+		 * "jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+		 * ,"root","helloworld"); System.out.println("CONNECTED");
+		 * st=connection.createStatement(); String sql="select * from COURSES";
+		 * ResultSet rs=st.executeQuery(sql); while(rs.next()) { String
+		 * coursename=rs.getString("course_name"); int
+		 * courseNum=Integer.parseInt(rs.getString("course_id")); int secNum =
+		 * Integer.parseInt(rs.getString("secNum")); int secCap =
+		 * Integer.parseInt(rs.getString("secCap")); Course c = new Course(coursename,
+		 * courseNum); for (int i = 1; i <= secNum; i++) { c.addOffering(new
+		 * CourseOffering(i, secCap)); } courseList.add(c);
+		 * 
+		 * }
+		 * 
+		 * } catch(Exception e) { e.printStackTrace(); } finally { try { if(st!=null)
+		 * st.close(); } catch(SQLException sq) {
+		 * 
+		 * } try { if(connection !=null) connection.close(); } catch(SQLException sq) {
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
+		/*
+		 * for (int i = 0; i < courseList.size(); i++) {
+		 * System.out.println(courseList.get(i).getCourseName()); }
+		 */
+
 	}
 
-	/**
-	 * returns the course list
-	 * 
-	 * @return the list of courses
-	 */
-	public ArrayList<Course> getCourseList() {
-		return courseList;
+	public void createDatabase() {
+		try {
+			System.out.println("Connecting to Database..");
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "root");
+
+			System.out.println("CONNECTED");
+			st = connection.createStatement();
+			st.executeUpdate("CREATE DATABASE COURSE_REGISTRATION_SYSTEM");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL statement error");
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL connection error");
+			}
+		}
+	}
+
+	public void createTable() {
+		st = null;
+		connection = null;
+
+		try {
+			System.out.println("Connecting to database");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
+					"root");
+			System.out.println("CONNECTED");
+
+			st = connection.createStatement();
+			String sql = "CREATE TABLE COURSES" + "(course_name VARCHAR(255) not NULL," + "course_id INTEGER not NULL,"
+					+ "secNum INTEGER ," + "secCap INTEGER ," + "PRIMARY KEY (course_id))";
+
+			st.executeUpdate(sql);
+
+			sql = "CREATE TABLE STUDENTS" + "(sName VARCHAR(255) not Null," + "sId INTEGER not NULL,"
+					+ "PRIMARY KEY (sId))";
+			st.executeUpdate(sql);
+
+			System.out.println("created tables");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+
+			}
+
+		}
+	}
+
+	public void insert() {
+		st = null;
+		connection = null;
+
+		try {
+
+			// Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Connecting to database");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
+					"root");
+			System.out.println("CONNECTED");
+
+			st = connection.createStatement();
+			String sql = "INSERT INTO  COURSES " + "VALUES('CPSC',319,2,30)";
+
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO  COURSES " + " VALUES('ENCM',369,3,50)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENEL',327,1,50)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENEL',353,1,100)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENGG',200,1,100)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENGG',233,2,75)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENSF',337,4,30)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('ENSF',409,3,30)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('MATH',211,2,100)";
+
+			st.executeUpdate(sql);
+			sql = "INSERT INTO  COURSES " + " VALUES('MATH',271,1,150)";
+
+			st.executeUpdate(sql);
+
+			System.out.println("INSERTED RECORDS");
+
+			sql = "select * from COURSES";
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				{
+					System.out.println(rs.getString("course_name") + " - " + rs.getString("course_id") + " - "
+							+ rs.getString("secNum") + " - " + rs.getString("secCap"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+
+			}
+
+		}
+	}
+
+	public void deleteTable() {
+		st = null;
+		connection = null;
+
+		try {
+
+			// Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Connecting to database");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/COURSE_REGISTRATION_SYSTEM", "root",
+					"root");
+			System.out.println("CONNECTED");
+			st = connection.createStatement();
+
+			String sql = "DROP TABLE COURSES";
+
+			st.executeUpdate(sql);
+
+			sql = "DROP TABLE STUDENTS";
+			st.executeUpdate(sql);
+
+			System.out.println("deleted table");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+
+			}
+
+		}
+	}
+
+	public static void main(String[] args) {
+		DBManager db = new DBManager();
+		db.createDatabase(); // db.createTable(); //db.insert(); //db.deleteTable();
 	}
 }

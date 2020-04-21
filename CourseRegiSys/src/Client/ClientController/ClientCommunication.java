@@ -18,7 +18,7 @@ import Client.ClientView.*;
  * @author Tom Pritchard
  * @author Armaan Mohar
  * 
- * @version 1.0 (beta)
+ * @version 2.0
  * @since April 10, 2020
  */
 public class ClientCommunication {

@@ -30,6 +30,9 @@ public class ServerCommunication {
 	 */
 	// private ExecutorService pool;
 
+	/**
+	 * Tracks number of clients connected
+	 */
 	private int clientCount;
 
 	/**
@@ -61,11 +64,6 @@ public class ServerCommunication {
 				clientCount++;
 				System.out.println("Connection accepted by server! Client number: " + clientCount + " joined.");
 				new ServerThread(aSocket, this).start();
-				/*
-				 * socketIn = new BufferedReader(new
-				 * InputStreamReader(aSocket.getInputStream())); socketOut = new
-				 * PrintWriter(aSocket.getOutputStream(), true);
-				 */
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}
@@ -101,5 +99,4 @@ public class ServerCommunication {
 	public static void main(String[] args) {
 		new ServerCommunication(9898);
 	}
-
 }

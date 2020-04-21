@@ -10,6 +10,12 @@ import Server.ServerModel.*;
 /**
  * Creates threads which enables server to be used by multiple clients
  * simultenously
+ * 
+ * @author Punit Patel
+ * @author Armaan Mohat
+ * @author Tom Pritchard
+ * @since April 14, 2020
+ * @version 2.0
  */
 public class ServerThread extends Thread {
 
@@ -65,7 +71,6 @@ public class ServerThread extends Thread {
      */
     public void run() {
         String line = "";
-        
 
         while (running) {
             try {
@@ -78,13 +83,13 @@ public class ServerThread extends Thread {
                 socketOut.println("Invalid request string.");
                 break;
             }
-            //String [] inputs = new String[5];
-            String [] inputs = line.split(" "); // splits input string into different command and argument strings
+            // String [] inputs = new String[5];
+            String[] inputs = line.split(" "); // splits input string into different command and argument strings
             int choice = Integer.parseInt(inputs[0]); // commandString
             String name = inputs[1]; // args String passed into int
             int id = Integer.parseInt(inputs[2]); // args String
             int secNum = Integer.parseInt(inputs[3]); // args String passed into int
-            //int cap = Integer.parseInt(inputs[4]);
+            // int cap = Integer.parseInt(inputs[4]);
 
             switch (choice) {
                 case 1:
@@ -114,17 +119,17 @@ public class ServerThread extends Thread {
                     break;
                 case 7:
                     model = new Model(name, id);
-                    if(name.toUpperCase().equals("PAT") && id == 7){
+                    if (name.toUpperCase().equals("PAT") && id == 7) {
                         socketOut.println("VALID #" + "Welcome Admin! #\t" + name + " - " + id
-                        + "# # #Now you can use the system.. # # Please select from the following choices.");
-                    } else{
+                                + "# # #Now you can use the system.. # # Please select from the following choices.");
+                    } else {
                         socketOut.println("Error! # Invalid Credentials! #");
                     }
                     break;
                 case 8:
                     socketOut.println("Add Course Not Completed Yet!");
-                   // String newCourse = model.addNewCourse(name, id, secNum, cap);
-                    //socketOut.println(newCourse);
+                    // String newCourse = model.addNewCourse(name, id, secNum, cap);
+                    // socketOut.println(newCourse);
                     break;
                 case 9:
                     String runnable = model.runCourse(name, id);
@@ -156,5 +161,4 @@ public class ServerThread extends Thread {
         System.out.println("\nClient Disconnected!!");
         serCom.clientDisconnect();
     }
-
 }
