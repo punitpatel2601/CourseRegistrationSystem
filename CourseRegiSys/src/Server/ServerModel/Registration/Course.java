@@ -113,7 +113,7 @@ public class Course {
     }
 
     /**
-     * checks if course can run as a course requires 9 students to run
+     * checks if course can run, as a course requires 9 students to run
      */
     public String conditionSNumThisCourse() {
         int studentNum = checkStudentNumber();
@@ -142,6 +142,22 @@ public class Course {
         } else {
             return offeringList.get(i);
         }
+    }
+    
+    /**
+     * returns the size of the offeringList
+     * @return the size of the offeringList
+     */
+    public int offeringListSize() {
+    	return offeringList.size();
+    }
+    
+    /**
+     * returns the preReq list size
+     * @return the size of the preReq list
+     */
+    public int preReqSize() {
+    	return preReq.size();
     }
 
     /**

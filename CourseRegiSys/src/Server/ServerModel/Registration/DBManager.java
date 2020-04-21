@@ -54,9 +54,9 @@ public class DBManager {
 	}
 
 	/**
-	 * gets the course list
+	 * returns the course list
 	 * 
-	 * @return
+	 * @return the list of courses
 	 */
 	public ArrayList<Course> getCourseList() {
 		return courseList;
