@@ -65,6 +65,9 @@ public class DBManager {
 		initializeConnection();
 	}
 
+	/**
+	 * initializes connection
+	 */
 	public void initializeConnection() {
 		try {
 			st.executeQuery("USE CRS_P_A_T");
@@ -90,6 +93,9 @@ public class DBManager {
 	 * } if (dbexists == false) { createTable(); } }
 	 */
 
+	 /**
+	  * creates course and student tables
+	  */
 	public void createTable() {
 
 		try {
@@ -108,6 +114,9 @@ public class DBManager {
 		populateDB();
 	}
 
+	/**
+	 * populates course table with enteries
+	 */
 	public void populateDB() {
 
 		try {
@@ -158,6 +167,9 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * deletes all tables
+	 */
 	public void deleteAllTables() {
 
 		try {
@@ -173,6 +185,9 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * adds course to courselist
+	 */
 	public void updateCourseList() {
 		try {
 			st = connection.createStatement();
@@ -187,6 +202,9 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * gets all courses
+	 */
 	public void selectAllCourses() {
 		try {
 			st = connection.createStatement();

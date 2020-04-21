@@ -123,6 +123,7 @@ public class Model {
 	 * @return String object representing all courses in database
 	 */
 	public String viewAllCourses() {
+		db.selectAllCourses();
 		if (cat.getCourseList().isEmpty()) {
 			return ("Critical Error: No DataBase Found!!");
 		}
