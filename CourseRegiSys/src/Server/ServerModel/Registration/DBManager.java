@@ -97,7 +97,7 @@ public class DBManager {
 			String sql = "CREATE TABLE COURSES (course_name VARCHAR(255) not NULL, course_id INTEGER not NULL, secNum INTEGER , secCap INTEGER , PRIMARY KEY (course_id))";
 			st.executeUpdate(sql);
 
-			sql = "CREATE TABLE STUDENTS (sName VARCHAR(255) not Null, sId INTEGER not NULL, PRIMARY KEY (sId))";
+			sql = "CREATE TABLE STUDENTS (student_name VARCHAR(255) not Null, student_id INTEGER not NULL, PRIMARY KEY (sId))";
 			st.executeUpdate(sql);
 
 			System.out.println("created tables");
@@ -144,7 +144,7 @@ public class DBManager {
 
 			System.out.println("INSERTED RECORDS ARE:");
 
-			sql = "select * from COURSES";
+			sql = "SELECT * FROM COURSES";
 			ResultSet rs = st.executeQuery(sql);
 
 			while (rs.next()) {
@@ -176,7 +176,7 @@ public class DBManager {
 	public void updateCourseList() {
 		try {
 			st = connection.createStatement();
-			String query = "select * from courses";
+			String query = "SELECT * FROM COURSES";
 			rs = st.executeQuery(query);
 			while (rs.next()) {
 				Course c = new Course(rs.getString("course_name"), rs.getInt("course_id"));
