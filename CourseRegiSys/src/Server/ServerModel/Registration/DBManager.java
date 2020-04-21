@@ -35,11 +35,18 @@ public class DBManager {
 		passcode = "root";
 
 		courseList = new ArrayList<Course>();
-		connection = null;
-		st = null;
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
+					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
 
-		//createDatabase();
+			st = connection.createStatement();
+		} catch (Exception e) {
+			System.out.println("error " + "404");
+		}
+		// createDatabase();
+
 		initializeConnection();
+		createTable();
 		readFromDataBase();
 		deleteAllTables();
 	}
@@ -52,40 +59,34 @@ public class DBManager {
 	public ArrayList<Course> getCourseList() {
 		return courseList;
 	}
-	
+
 	public void initializeConnection() {
+
+		System.out.println("CONNECTED");
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
-					+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, passcode);
-			System.out.println("CONNECTED");
-		} catch (SQLException e) {
-			e.printStackTrace();
+			st = connection.createStatement();
+			st.executeQuery("USE CRS_P_A_T");
+		} catch (Exception e) {
+			System.out.println("Unknown connection to db");
 		}
+
 	}
 
 	/*
-	public void createDatabase() {
-		boolean dbexists = false;
-		try {
-			System.out.println("Creating to Database..");
-
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant"
-												+ "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username
-
-					"jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					username, passcode);
-			System.out.println("CONNECTED");
-			st = connection.createStatement();
-			st.executeUpdate("CREATE DATABASE CRS_P_A_T");
-		} catch (Exception e) {
-			System.out.println("Database already exists, not created");
-			dbexists = true;
-		}
-		if (dbexists == false) {
-			createTable();
-		}
-	}
-	*/
+	 * public void createDatabase() { boolean dbexists = false; try {
+	 * System.out.println("Creating to Database..");
+	 * 
+	 * connection = DriverManager.getConnection(
+	 * "jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliant" +
+	 * "TimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username
+	 * 
+	 * "jdbc:mysql://localhost:3306/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+	 * username, passcode); System.out.println("CONNECTED"); st =
+	 * connection.createStatement(); st.executeUpdate("CREATE DATABASE CRS_P_A_T");
+	 * } catch (Exception e) {
+	 * System.out.println("Database already exists, not created"); dbexists = true;
+	 * } if (dbexists == false) { createTable(); } }
+	 */
 
 	public void createTable() {
 
