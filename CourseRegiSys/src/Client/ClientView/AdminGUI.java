@@ -15,8 +15,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import Client.ClientController.ClientCommunication;
-
 /**
  * Creates the graphical user interface for the Admin user type. Authenticated
  * users can use the application in Admin view
