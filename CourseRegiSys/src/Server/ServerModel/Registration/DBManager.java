@@ -281,6 +281,30 @@ public class DBManager {
 		}
 	}
 
+	/**
+	 * Inserts new course into database
+	 * @param name
+	 * @param id
+	 * @param sec
+	 * @param cap
+	 */
+	public void insertNewCourse(String name, int id, int sec, int cap){
+		try {
+			String query = "INSERT INTO COURSES("+name+", "+id+", "+sec+", "+cap+")";
+			PreparedStatement pStat = connection.prepareStatement(query);
+			pStat.executeUpdate();
+			pStat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			System.out.println("Updated Courses: ");
+			selectAllCourses();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 		new DBManager();
 	}
