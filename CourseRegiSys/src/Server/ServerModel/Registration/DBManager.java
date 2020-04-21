@@ -31,15 +31,16 @@ public class DBManager {
 	 * Constructs a list of courses
 	 */
 	public DBManager() {
-
 		username = "root";
 		passcode = "root";
 
 		courseList = new ArrayList<Course>();
 		connection = null;
 		st = null;
-		readFromDataBase();
+
 		createDatabase();
+		readFromDataBase();
+		deleteAllTables();
 	}
 
 	/**
@@ -49,68 +50,6 @@ public class DBManager {
 	 */
 	public ArrayList<Course> getCourseList() {
 		return courseList;
-	}
-
-	/**
-	 * Reads data from text file and inserts it accordingly into courseList
-	 */
-	public void readFromDataBase() {
-		try {
-			FileReader fr = new FileReader("courses.txt");
-			Scanner sc = new Scanner(fr);
-			String line;
-			while (sc.hasNextLine()) {
-				line = sc.nextLine();
-				String[] inputs = line.split(" ");
-				int courseNum = Integer.parseInt(inputs[1]);
-				int secNum = Integer.parseInt(inputs[2]);
-				int secCap = Integer.parseInt(inputs[3]);
-				Course c = new Course(inputs[0], courseNum);
-				for (int i = 1; i <= secNum; i++) {
-					c.addOffering(new CourseOffering(i, secCap));
-				}
-				courseList.add(c);
-			}
-			sc.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File Error: file not found!!");
-		}
-		/*
-		 * 
-		 * st=null; connection=null;
-		 * 
-		 * try {
-		 * 
-		 * //Class.forName("com.mysql.jdbc.Driver");
-		 * System.out.println("Connecting to database");
-		 * connection=DriverManager.getConnection(
-		 * "jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
-		 * ,username,"helloworld"); System.out.println("CONNECTED");
-		 * st=connection.createStatement(); String sql="select * from COURSES";
-		 * ResultSet rs=st.executeQuery(sql); while(rs.next()) { String
-		 * coursename=rs.getString("course_name"); int
-		 * courseNum=Integer.parseInt(rs.getString("course_id")); int secNum =
-		 * Integer.parseInt(rs.getString("secNum")); int secCap =
-		 * Integer.parseInt(rs.getString("secCap")); Course c = new Course(coursename,
-		 * courseNum); for (int i = 1; i <= secNum; i++) { c.addOffering(new
-		 * CourseOffering(i, secCap)); } courseList.add(c);
-		 * 
-		 * }
-		 * 
-		 * } catch(Exception e) { e.printStackTrace(); } finally { try { if(st!=null)
-		 * st.close(); } catch(SQLException sq) {
-		 * 
-		 * } try { if(connection !=null) connection.close(); } catch(SQLException sq) {
-		 * 
-		 * }
-		 * 
-		 * }
-		 */
-		/*
-		 * for (int i = 0; i < courseList.size(); i++) {
-		 * System.out.println(courseList.get(i).getCourseName()); }
-		 */
-
 	}
 
 	public void createDatabase() {
@@ -154,13 +93,11 @@ public class DBManager {
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
-			String sql = "CREATE TABLE COURSES" + "(course_name VARCHAR(255) not NULL," + "course_id INTEGER not NULL,"
-					+ "secNum INTEGER ," + "secCap INTEGER ," + "PRIMARY KEY (course_id))";
 
+			String sql = "CREATE TABLE COURSES (course_name VARCHAR(255) not NULL, course_id INTEGER not NULL, secNum INTEGER , secCap INTEGER , PRIMARY KEY (course_id))";
 			st.executeUpdate(sql);
 
-			sql = "CREATE TABLE STUDENTS" + "(sName VARCHAR(255) not Null," + "sId INTEGER not NULL,"
-					+ "PRIMARY KEY (sId))";
+			sql = "CREATE TABLE STUDENTS (sName VARCHAR(255) not Null, sId INTEGER not NULL, PRIMARY KEY (sId))";
 			st.executeUpdate(sql);
 
 			System.out.println("created tables");
@@ -171,13 +108,13 @@ public class DBManager {
 				if (st != null)
 					st.close();
 			} catch (SQLException sq) {
-
+				System.out.println("SQL statement error");
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (SQLException sq) {
-
+				System.out.println("SQL connection error");
 			}
 		}
 		populateDB();
@@ -188,8 +125,6 @@ public class DBManager {
 		connection = null;
 
 		try {
-
-			// Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database");
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
@@ -197,42 +132,42 @@ public class DBManager {
 			System.out.println("CONNECTED");
 
 			st = connection.createStatement();
-			String sql = "INSERT INTO  COURSES " + "VALUES('CPSC',319,2,30)";
 
+			String sql = "INSERT INTO COURSES VALUES('CPSC',319,2,30)";
 			st.executeUpdate(sql);
 
-			sql = "INSERT INTO  COURSES " + " VALUES('ENCM',369,3,50)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENEL',327,1,50)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENEL',353,1,100)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENGG',200,1,100)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENGG',233,2,75)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENSF',337,4,30)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('ENSF',409,3,30)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('MATH',211,2,100)";
-
-			st.executeUpdate(sql);
-			sql = "INSERT INTO  COURSES " + " VALUES('MATH',271,1,150)";
-
+			sql = "INSERT INTO COURSES VALUES('ENCM',369,3,50)";
 			st.executeUpdate(sql);
 
-			System.out.println("INSERTED RECORDS");
+			sql = "INSERT INTO COURSES VALUES('ENEL',327,1,50)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('ENEL',353,1,100)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('ENGG',200,1,100)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('ENGG',233,2,75)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('ENSF',337,4,30)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('ENSF',409,3,30)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('MATH',211,2,100)";
+			st.executeUpdate(sql);
+
+			sql = "INSERT INTO COURSES VALUES('MATH',271,1,150)";
+			st.executeUpdate(sql);
+
+			System.out.println("INSERTED RECORDS ARE:");
 
 			sql = "select * from COURSES";
 			ResultSet rs = st.executeQuery(sql);
+
 			while (rs.next()) {
 				{
 					System.out.println(rs.getString("course_name") + " - " + rs.getString("course_id") + " - "
@@ -246,19 +181,19 @@ public class DBManager {
 				if (st != null)
 					st.close();
 			} catch (SQLException sq) {
-
+				System.out.println("SQL statement error");
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (SQLException sq) {
-
+				System.out.println("SQL connection error");
 			}
 
 		}
 	}
 
-	public void deleteTable() {
+	public void deleteAllTables() {
 		st = null;
 		connection = null;
 
@@ -277,7 +212,7 @@ public class DBManager {
 			sql = "DROP TABLE STUDENTS";
 			st.executeUpdate(sql);
 
-			System.out.println("deleted table");
+			System.out.println("All tables deleted, database is empty");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -285,20 +220,93 @@ public class DBManager {
 				if (st != null)
 					st.close();
 			} catch (SQLException sq) {
+				System.out.println("SQL statement error");
 			}
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (SQLException sq) {
+				System.out.println("SQL connection error");
 			}
 		}
 	}
 
-	public static void main(String[] args) {
-		new DBManager();
-		// db.createDatabase();
-		// db.createTable();
-		// db.insert();
-		// db.deleteTable();
+	/**
+	 * Reads data from database and inserts it accordingly into courseList
+	 */
+	public void readFromDataBase() {
+		st = null;
+		connection = null;
+
+		try {
+			System.out.println("Connecting to database");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
+			System.out.println("CONNECTED");
+
+			st = connection.createStatement();
+			ResultSet rs = st.executeQuery("select * from COURSES");
+
+			while (rs.next()) {
+				String coursename = rs.getString("course_name");
+				int courseNum = Integer.parseInt(rs.getString("course_id"));
+				int secNum = Integer.parseInt(rs.getString("secNum"));
+				int secCap = Integer.parseInt(rs.getString("secCap"));
+				Course c = new Course(coursename, courseNum);
+				for (int i = 1; i <= secNum; i++) {
+					c.addOffering(new CourseOffering(i, secCap));
+				}
+				courseList.add(c);
+			}
+		} catch (Exception e) {
+			System.out.println("Database unreadable");
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL statement error");
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL connection error");
+			}
+		}
+		for (int i = 0; i < courseList.size(); i++) {
+			System.out.println(courseList.get(i).getCourseName() + " - " + courseList.get(i).getCourseNum());
+		}
+	}
+
+	public void insertIntoDB() {
+		st = null;
+		connection = null;
+		try {
+			System.out.println("Connecting to database");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/CRS_P_A_T?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+					username, passcode);
+			System.out.println("CONNECTED");
+
+			st = connection.createStatement();
+
+		} catch (Exception e) {
+			System.out.println("Database unreadable");
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL statement error");
+			}
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException sq) {
+				System.out.println("SQL connection error");
+			}
+		}
 	}
 }

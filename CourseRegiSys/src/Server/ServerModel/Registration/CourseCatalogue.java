@@ -17,13 +17,15 @@ public class CourseCatalogue {
      */
     private ArrayList<Course> courseList;
 
+    private DBManager db;
+
     /**
      * constructs a course list and initializes it to the data in text
      * file(database)
      */
     public CourseCatalogue() {
         courseList = new ArrayList<Course>();
-        DBManager db = new DBManager();
+        db = new DBManager();
         courseList = db.getCourseList();
     }
 
