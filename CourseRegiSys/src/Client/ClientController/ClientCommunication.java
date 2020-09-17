@@ -158,6 +158,7 @@ public class ClientCommunication {
 			response = socketIn.readLine(); // receiving info string from server
 		} catch (Exception e) {
 			System.out.println("Error in sending/receiving data to/from server\nError name: " + e.getMessage());
+			response = null;
 		}
 
 		return response;

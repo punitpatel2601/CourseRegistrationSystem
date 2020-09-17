@@ -86,7 +86,7 @@ public class Model {
 		if (theStudent.removeRegistration(courseName, courseId)) {
 			return (courseName + " " + courseId + " is successfully removed!# # #" + coursesTaken());
 		} else {
-			return ("The course was not found, so it could not be removed!# # #" + coursesTaken());
+			return ("The course was not taken, so it could not be removed!# # #" + coursesTaken());
 		}
 	}
 
@@ -115,7 +115,8 @@ public class Model {
 		String takenCourses = "Current Courses taken by the student are: #";
 
 		for (Registration r : theStudent.getStudentRegList()) {
-			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + r.getTheOffering().getSecNum();
+			takenCourses += r.getTheOffering().getTheCourse().toString() + " Section " + r.getTheOffering().getSecNum()
+					+ "#";
 		}
 
 		return takenCourses;

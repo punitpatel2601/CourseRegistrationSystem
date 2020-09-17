@@ -132,7 +132,7 @@ public class ServerCommunication {
 				case 6:
 					model = new Model(name, id);
 					socketOut.println("Welcome! #\t" + name + " - " + id
-							+ "# # #Now you can use the system.. # # Please select from the following choices.");
+							+ "# # #Now you can use the system.. # #Please select from the following choices. (Buttons below)");
 					break;
 				default:
 					socketOut.println("default");

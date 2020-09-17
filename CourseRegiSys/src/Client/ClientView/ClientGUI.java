@@ -189,7 +189,7 @@ public class ClientGUI extends JFrame {
     private void guiSerOutput(String serverOutput) {
         jta.setText(""); // resetting text area
         if (serverOutput == null) { // checking if null response from server
-            jta.setText("Error in your input, Server didn't respond!");
+            jta.setText("Server didn't respond! \n Try connecting again.. ");
             return;
         }
 
@@ -210,11 +210,7 @@ public class ClientGUI extends JFrame {
         if (res == JOptionPane.OK_OPTION) { // exit only if ok is pressed
             actions.closeCon();
             System.exit(0);
-        } else if (res == JOptionPane.CANCEL_OPTION) { // otherwise back to program
-            return;
         }
-
-        return;
     }
 
     /**
